@@ -6,6 +6,29 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.4.0] - 2026-08-06
+
+### Added
+
+- CLI `organize` command
+- Directory argument support
+- Automatic help display when no command is provided
+
+### Improved
+
+- Integrated the CLI with the File Organizer
+- Removed the need for temporary test scripts
+- Improved command-line user experience
+
+### Tested
+
+- CLI command execution
+- File organization workflow
+- Duplicate file protection
+- Automated unit tests with pytest
+
+---
+
 ## [v0.3.0] - 2026-08-06
 
 ### Added

@@ -8,9 +8,11 @@ A collection of practical Python utilities for file management, automation, and 
 
 ## Current Features
 
-### CLI Foundation
+### CLI
 - Command-line interface
-- Help and version commands
+- Help command
+- Version command
+- Organize command
 
 ### File Organizer
 - Analyze files in a directory
@@ -71,30 +73,38 @@ Display version
 python main.py --version
 ```
 
+Organize a directory
+
+```bash
+python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
+```
+
 ---
 
 ## Current Development Status
 
 ### Completed
 
-- CLI foundation
+- CLI integration
 - File categorization
 - Directory analysis
+- Category folder creation
+- Safe file movement
+- Duplicate protection
+- Automated unit testing
 - Modular project architecture
 
 ### In Progress
 
-- Folder creation
-- File moving
-- Duplicate filename handling
+- Additional CLI commands
+- Better error handling
 
 ### Planned
 
+- Analyze command
 - Dry-run mode
-- Summary report
-- Automated tests with pytest
-- Logging
 - Configuration module
+- Logging
 - GitHub Actions CI/CD
 
 ---
@@ -103,7 +113,7 @@ python main.py --version
 
 Current Version:
 
-**v0.3.0**
+**v0.4.0**
 
 ---
 
