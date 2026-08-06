@@ -98,3 +98,23 @@ def analyze_files(directory):
         category = get_file_category(extension)
 
         print(f"{file.name:<30} -> {category}")
+        
+        
+def get_required_categories(directory):
+    categories = set()
+    files = get_files(directory)
+
+    for file in files:
+        extension = file.suffix
+        category = get_file_category(extension)
+        categories.add(category)
+
+    return categories
+
+
+def create_category_folders(directory):
+    folder = Path(directory)
+    categories = get_required_categories(directory)
+
+    for category in categories:
+        (folder / category).mkdir(exist_ok=True)
