@@ -17,7 +17,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Categorize files by extension
 - Detect required categories
 - Create category folders automatically
-- Uses `pathlib` for file operations
+- Move files into category folders
+- Skip duplicate files safely
+- Display organization summary
+- Built using `pathlib` for modern file handling
 
 ---
 
@@ -96,7 +99,7 @@ python main.py --version
 
 Current Version:
 
-**v0.2.1**
+**v0.2.3**
 
 ---
 

@@ -6,6 +6,7 @@ and organizing files.
 """
 
 from pathlib import Path
+import shutil
 
 
 FILE_CATEGORIES = {
@@ -118,3 +119,29 @@ def create_category_folders(directory):
 
     for category in categories:
         (folder / category).mkdir(exist_ok=True)
+
+
+def move_files(directory):
+    folder = Path(directory)
+    files = get_files(directory)
+
+    moved = 0
+    skipped = 0
+
+    for file in files:
+        category = get_file_category(file.suffix)
+        destination = folder / category / file.name
+
+        if destination.exists():
+            print(f"Skipped: {file.name} (already exists)")
+            skipped += 1
+            continue
+
+        shutil.move(file, destination)
+        moved += 1
+
+    
+    print("\nOrganization Complete")
+    print("-" * 25)
+    print(f"Moved   : {moved}")
+    print(f"Skipped : {skipped}")

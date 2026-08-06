@@ -6,6 +6,26 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.2.3] - 2026-08-06
+
+### Added
+
+- Automatic file movement into category folders
+- Duplicate file protection
+- Organization summary after completion
+
+### Implemented
+
+- `move_files()`
+
+### Improved
+
+- Prevents overwriting existing files
+- Safe file organization workflow
+- Better execution feedback with moved/skipped counters
+
+---
+
 ## [v0.2.1] - 2026-08-06
 
 ### Added
