@@ -9,6 +9,11 @@ from pathlib import Path
 import shutil
 
 
+
+# ============================
+# File Categories
+# ============================
+
 FILE_CATEGORIES = {
     "Images": {
         ".jpg",
@@ -64,7 +69,17 @@ FILE_CATEGORIES = {
 }
 
 
+# ============================
+# File Analysis
+# ============================
+
+
+# Determine the category of a file
+
 def get_file_category(extension):
+    
+    """Return the category for a file extension."""
+    
     extension = extension.lower()
 
     for category, extensions in FILE_CATEGORIES.items():
@@ -73,6 +88,10 @@ def get_file_category(extension):
 
     return "Others"
 
+    """Return the category for a file extension."""
+
+
+# Read all files from a directory
 
 def get_files(directory):
     folder = Path(directory)
@@ -90,6 +109,10 @@ def get_files(directory):
 
     return files
 
+    """Return all files in the specified directory."""
+    
+
+# Analyze files in a directory
 
 def analyze_files(directory):
     files = get_files(directory)
@@ -100,7 +123,15 @@ def analyze_files(directory):
 
         print(f"{file.name:<30} -> {category}")
         
-        
+        """Display file names and their categories."""
+
+# ============================
+# Folder Management
+# ============================
+
+
+# Get required categories
+
 def get_required_categories(directory):
     categories = set()
     files = get_files(directory)
@@ -112,6 +143,9 @@ def get_required_categories(directory):
 
     return categories
 
+    """Return the unique categories found in a directory."""
+
+# Create category folders
 
 def create_category_folders(directory):
     folder = Path(directory)
@@ -120,8 +154,18 @@ def create_category_folders(directory):
     for category in categories:
         (folder / category).mkdir(exist_ok=True)
 
+        """Create category folders if they do not exist."""
+
+# ============================
+# File Operations
+# ============================
+
+
+# Move files safely
 
 def move_files(directory):
+    """Move files into their category folders safely."""
+    
     folder = Path(directory)
     files = get_files(directory)
 

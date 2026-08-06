@@ -20,7 +20,11 @@ A collection of practical Python utilities for file management, automation, and 
 - Move files into category folders
 - Skip duplicate files safely
 - Display organization summary
-- Built using `pathlib` for modern file handling
+
+### Code Quality
+- Type hints
+- Function docstrings
+- Automated unit tests with pytest
 
 ---
 
@@ -99,7 +103,7 @@ python main.py --version
 
 Current Version:
 
-**v0.2.3**
+**v0.3.0**
 
 ---
 

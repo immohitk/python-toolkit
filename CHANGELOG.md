@@ -6,6 +6,28 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.3.0] - 2026-08-06
+
+### Added
+
+- Automated unit tests with pytest
+- Type hints for all public functions
+- Function docstrings
+
+### Improved
+
+- Better code organization
+- Cleaner project structure
+- Improved code readability and maintainability
+
+### Tested
+
+- File category detection
+- Unknown file handling
+- Multiple file type validation
+
+---
+
 ## [v0.2.3] - 2026-08-06
 
 ### Added
