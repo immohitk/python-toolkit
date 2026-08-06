@@ -6,6 +6,25 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.2.1] - 2026-08-06
+
+### Added
+
+- Automatic detection of required file categories
+- Automatic creation of category folders
+
+### Implemented
+
+- `get_required_categories()`
+- `create_category_folders()`
+
+### Improved
+
+- Reused existing helper functions to reduce duplicate code
+- Folder creation now uses `exist_ok=True` to safely handle existing folders
+
+---
+
 ## [v0.2.0] - 2026-08-05
 
 ### Added

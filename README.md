@@ -9,21 +9,15 @@ A collection of practical Python utilities for file management, automation, and 
 ## Current Features
 
 ### CLI Foundation
-- Command-line interface using `argparse`
-- `--help` support
-- `--version` support
+- Command-line interface
+- Help and version commands
 
-### File Organizer (Analysis)
-- Read files from a directory
+### File Organizer
+- Analyze files in a directory
 - Categorize files by extension
-- Analyze files without modifying them
-- Supports:
-  - Images
-  - Documents
-  - Videos
-  - Audio
-  - Archives
-  - Others
+- Detect required categories
+- Create category folders automatically
+- Uses `pathlib` for file operations
 
 ---
 
@@ -102,7 +96,7 @@ python main.py --version
 
 Current Version:
 
-**v0.2.0**
+**v0.2.1**
 
 ---
 
