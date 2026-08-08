@@ -6,6 +6,28 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.8.0] - 2026-08-08
+
+### Added
+
+- Centralized configuration module
+- Moved file category definitions into `toolkit/config.py`
+- Automated test for configuration categories
+
+### Improved
+
+- Separated configuration from file-organizing logic
+- Improved project modularity and maintainability
+
+### Tested
+
+- File category configuration
+- File categorization
+- Existing organizer functionality
+- Automated tests with pytest
+
+---
+
 ## [v0.7.0] - 2026-08-08
 
 ### Added

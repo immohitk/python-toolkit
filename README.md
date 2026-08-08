@@ -42,6 +42,7 @@ python-toolkit/
 ├── toolkit/
 │   ├── __init__.py
 │   ├── cli.py
+│   ├── config.py
 │   └── organizer.py
 │
 ├── tests/
@@ -110,6 +111,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Modular project architecture
 - CLI error handling for invalid directories
 - Dry-run file organization
+- Centralized configuration module
 
 ### In Progress
 
@@ -118,7 +120,6 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 ### Planned
 
-- Configuration module
 - Logging
 - GitHub Actions CI/CD
 
@@ -128,7 +129,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.7.0**
+**v0.8.0**
 
 ---
 

@@ -2,6 +2,8 @@ import sys
 import pytest
 from pathlib import Path
 
+from toolkit.config import FILE_CATEGORIES
+
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from toolkit.organizer import (
@@ -57,3 +59,10 @@ def test_move_files_dry_run(tmp_path, capsys):
     assert "Images" in output
     assert "No files were moved." in output
     assert file.exists()
+
+def test_file_categories_configuration():
+    assert ".jpg" in FILE_CATEGORIES["Images"]
+    assert ".pdf" in FILE_CATEGORIES["Documents"]
+    assert ".mp4" in FILE_CATEGORIES["Videos"]
+    assert ".mp3" in FILE_CATEGORIES["Audio"]
+    assert ".zip" in FILE_CATEGORIES["Archives"]

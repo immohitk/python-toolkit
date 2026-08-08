@@ -8,6 +8,8 @@ and organizing files.
 from pathlib import Path
 import shutil
 
+from toolkit.config import FILE_CATEGORIES
+
 
 
 # ============================

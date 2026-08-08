@@ -14,7 +14,7 @@ from toolkit.organizer import (
 )
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.7.0"
+APP_VERSION = "0.8.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
