@@ -1,11 +1,13 @@
 import sys
+import pytest
 from pathlib import Path
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
 from toolkit.organizer import (
     analyze_files, 
-    get_file_category
+    get_file_category,
+    get_files,
 )
 
 def test_get_file_category_pdf():
@@ -36,3 +38,8 @@ def test_analyze_files(tmp_path, capsys):
     assert "Images" in output
     assert "report.pdf" in output
     assert "Documents" in output
+    
+    
+def test_get_files_invalid_directory():
+    with pytest.raises(FileNotFoundError):
+        get_files("C:/does/not/exist")

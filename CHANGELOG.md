@@ -6,6 +6,20 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.6.0] - 2026-08-08
+
+### Added
+
+- CLI error handling for invalid directories
+- Automated test for invalid directory handling
+
+### Improved
+
+- Replaced the full Python traceback with a user-friendly error message
+- Improved CLI behavior for invalid directory paths
+
+---
+
 ## [v0.5.0] - 2026-08-08
 
 ### Added

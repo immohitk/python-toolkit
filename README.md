@@ -28,6 +28,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Type hints
 - Function docstrings
 - Automated unit tests with pytest
+- User-friendly CLI error handling
 
 ---
 
@@ -80,6 +81,11 @@ Organize a directory
 python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 ```
 
+Analyze a directory
+
+```bash
+python main.py analyze "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
+
 ---
 
 ## Current Development Status
@@ -94,11 +100,12 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - Duplicate protection
 - Automated unit testing
 - Modular project architecture
+- CLI error handling for invalid directories
 
 ### In Progress
 
 - Additional CLI commands
-- Better error handling
+- More comprehensive error handling
 
 ### Planned
 
@@ -113,7 +120,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.5.0**
+**v0.6.0**
 
 ---
 

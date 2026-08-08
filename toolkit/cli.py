@@ -72,9 +72,13 @@ def run():
         parser.print_help()
         return
 
-    if args.command == "organize":
-        create_category_folders(args.directory)
-        move_files(args.directory)
-        
-    if args.command == "analyze":
-        analyze_files(args.directory)
+    try:
+        if args.command == "organize":
+            create_category_folders(args.directory)
+            move_files(args.directory)
+
+        if args.command == "analyze":
+            analyze_files(args.directory)
+
+    except FileNotFoundError as error:
+        print(f"Error: {error}")
