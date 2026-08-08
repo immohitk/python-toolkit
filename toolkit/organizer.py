@@ -172,14 +172,18 @@ def create_category_folders(directory):
 
 # Move files safely
 
-def move_files(directory):
+def move_files(directory, dry_run=False):
     """Move files into their category folders safely."""
-    
+
     folder = Path(directory)
     files = get_files(directory)
 
     moved = 0
     skipped = 0
+
+    if dry_run:
+        print("Dry Run - No files will be moved")
+        print("-" * 35)
 
     for file in files:
         category = get_file_category(file.suffix)
@@ -190,10 +194,17 @@ def move_files(directory):
             skipped += 1
             continue
 
+        if dry_run:
+            print(f"{file.name:<30} -> {category}")
+            continue
+
         shutil.move(file, destination)
         moved += 1
 
-    
+    if dry_run:
+        print("\nNo files were moved.")
+        return
+
     print("\nOrganization Complete")
     print("-" * 25)
     print(f"Moved   : {moved}")

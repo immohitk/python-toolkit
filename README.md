@@ -14,6 +14,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Version command
 - Organize command
 - Analyze command
+- Dry-run mode
 
 ### File Organizer
 - Analyze files in a directory
@@ -85,6 +86,13 @@ Analyze a directory
 
 ```bash
 python main.py analyze "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
+```
+
+Preview organization without moving files
+
+```bash
+python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
+```
 
 ---
 
@@ -101,6 +109,7 @@ python main.py analyze "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - Automated unit testing
 - Modular project architecture
 - CLI error handling for invalid directories
+- Dry-run file organization
 
 ### In Progress
 
@@ -109,7 +118,6 @@ python main.py analyze "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 ### Planned
 
-- Dry-run mode
 - Configuration module
 - Logging
 - GitHub Actions CI/CD
@@ -120,7 +128,7 @@ python main.py analyze "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.6.0**
+**v0.7.0**
 
 ---
 

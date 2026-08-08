@@ -14,7 +14,7 @@ from toolkit.organizer import (
 )
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.7.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -48,6 +48,12 @@ def create_parser():
         "directory",
         help="Directory to organize",
     )
+
+    organize_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview file organization without moving files",
+    )
     
     analyze_parser = subparsers.add_parser(
         "analyze",
@@ -74,8 +80,11 @@ def run():
 
     try:
         if args.command == "organize":
-            create_category_folders(args.directory)
-            move_files(args.directory)
+            if args.dry_run:
+                move_files(args.directory, dry_run=True)
+            else:
+                create_category_folders(args.directory)
+                move_files(args.directory)
 
         if args.command == "analyze":
             analyze_files(args.directory)

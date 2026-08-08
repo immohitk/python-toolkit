@@ -8,6 +8,7 @@ from toolkit.organizer import (
     analyze_files, 
     get_file_category,
     get_files,
+    move_files,
 )
 
 def test_get_file_category_pdf():
@@ -38,8 +39,21 @@ def test_analyze_files(tmp_path, capsys):
     assert "Images" in output
     assert "report.pdf" in output
     assert "Documents" in output
-    
-    
+
 def test_get_files_invalid_directory():
     with pytest.raises(FileNotFoundError):
         get_files("C:/does/not/exist")
+
+def test_move_files_dry_run(tmp_path, capsys):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    move_files(tmp_path, dry_run=True)
+
+    output = capsys.readouterr().out
+
+    assert "Dry Run - No files will be moved" in output
+    assert "photo.jpg" in output
+    assert "Images" in output
+    assert "No files were moved." in output
+    assert file.exists()

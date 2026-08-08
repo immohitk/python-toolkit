@@ -6,6 +6,20 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.7.0] - 2026-08-08
+
+### Added
+
+- `--dry-run` option for the `organize` command
+- Automated test for dry-run behavior
+
+### Improved
+
+- Added a safe preview mode that shows planned file movements
+- Dry-run mode prevents file movement and category folder creation
+
+---
+
 ## [v0.6.0] - 2026-08-08
 
 ### Added
