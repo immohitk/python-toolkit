@@ -8,6 +8,7 @@ and displaying help/version information.
 import argparse
 
 from toolkit.organizer import (
+    analyze_files,
     create_category_folders,
     move_files,
 )
@@ -47,6 +48,16 @@ def create_parser():
         "directory",
         help="Directory to organize",
     )
+    
+    analyze_parser = subparsers.add_parser(
+        "analyze",
+        help="Analyze files in a directory",
+    )
+
+    analyze_parser.add_argument(
+        "directory",
+        help="Directory to analyze",
+    )
 
     return parser
 
@@ -64,3 +75,6 @@ def run():
     if args.command == "organize":
         create_category_folders(args.directory)
         move_files(args.directory)
+        
+    if args.command == "analyze":
+        analyze_files(args.directory)

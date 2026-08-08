@@ -6,6 +6,21 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.5.0] - 2026-08-08
+
+### Added
+
+- `analyze` CLI command
+- File analysis summary
+- Automated test for file analysis
+
+### Improved
+
+- Extended CLI with directory analysis
+- Reused existing file categorization logic
+
+---
+
 ## [v0.4.0] - 2026-08-06
 
 ### Added

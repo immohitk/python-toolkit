@@ -115,15 +115,24 @@ def get_files(directory):
 # Analyze files in a directory
 
 def analyze_files(directory):
+    """
+    Display files and category summary for a directory.
+    """
     files = get_files(directory)
+    category_counts = {}
 
     for file in files:
-        extension = file.suffix
-        category = get_file_category(extension)
+        category = get_file_category(file.suffix)
 
         print(f"{file.name:<30} -> {category}")
-        
-        """Display file names and their categories."""
+
+        category_counts[category] = category_counts.get(category, 0) + 1
+
+    print("\nAnalysis Complete")
+    print("-" * 17)
+
+    for category, count in category_counts.items():
+        print(f"{category:<10}: {count}")
 
 # ============================
 # Folder Management

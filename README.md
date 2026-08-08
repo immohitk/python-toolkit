@@ -13,6 +13,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Help command
 - Version command
 - Organize command
+- Analyze command
 
 ### File Organizer
 - Analyze files in a directory
@@ -101,7 +102,6 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 ### Planned
 
-- Analyze command
 - Dry-run mode
 - Configuration module
 - Logging
@@ -113,7 +113,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.4.0**
+**v0.5.0**
 
 ---
 
