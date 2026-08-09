@@ -30,6 +30,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Function docstrings
 - Automated unit tests with pytest
 - User-friendly CLI error handling
+- Application logging
 
 ---
 
@@ -43,6 +44,7 @@ python-toolkit/
 │   ├── __init__.py
 │   ├── cli.py
 │   ├── config.py
+│   ├── logger.py
 │   └── organizer.py
 │
 ├── tests/
@@ -112,6 +114,8 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - CLI error handling for invalid directories
 - Dry-run file organization
 - Centralized configuration module
+- Application logging
+- CLI error logging
 
 ### In Progress
 
@@ -120,7 +124,6 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 ### Planned
 
-- Logging
 - GitHub Actions CI/CD
 
 ---
@@ -129,7 +132,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.8.0**
+**v0.9.0**
 
 ---
 

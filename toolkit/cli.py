@@ -13,8 +13,12 @@ from toolkit.organizer import (
     move_files,
 )
 
+from toolkit.logger import get_logger
+
+logger = get_logger()
+
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.8.0"
+APP_VERSION = "0.9.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -90,4 +94,5 @@ def run():
             analyze_files(args.directory)
 
     except FileNotFoundError as error:
+        logger.error("%s", error)
         print(f"Error: {error}")

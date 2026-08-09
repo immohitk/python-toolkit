@@ -9,66 +9,9 @@ from pathlib import Path
 import shutil
 
 from toolkit.config import FILE_CATEGORIES
+from toolkit.logger import get_logger
 
-
-
-# ============================
-# File Categories
-# ============================
-
-FILE_CATEGORIES = {
-    "Images": {
-        ".jpg",
-        ".jpeg",
-        ".png",
-        ".gif",
-        ".bmp",
-        ".svg",
-        ".webp",
-        ".tiff",
-        ".ico",
-    },
-    "Documents": {
-        ".pdf",
-        ".docx",
-        ".doc",
-        ".txt",
-        ".xlsx",
-        ".xls",
-        ".pptx",
-        ".ppt",
-        ".csv",
-        ".odt",
-        ".rtf",
-    },
-    "Videos": {
-        ".mp4",
-        ".mkv",
-        ".avi",
-        ".mov",
-        ".wmv",
-        ".flv",
-        ".webm",
-        ".m4v",
-    },
-    "Audio": {
-        ".mp3",
-        ".wav",
-        ".aac",
-        ".flac",
-        ".ogg",
-        ".m4a",
-        ".wma",
-    },
-    "Archives": {
-        ".zip",
-        ".rar",
-        ".7z",
-        ".tar",
-        ".gz",
-        ".bz2",
-    },
-}
+logger = get_logger()
 
 
 # ============================
@@ -123,6 +66,11 @@ def analyze_files(directory):
     files = get_files(directory)
     category_counts = {}
 
+    logger.info(
+        "Analyzing directory '%s'",
+        directory,
+    )
+
     for file in files:
         category = get_file_category(file.suffix)
 
@@ -135,6 +83,11 @@ def analyze_files(directory):
 
     for category, count in category_counts.items():
         print(f"{category:<10}: {count}")
+
+    logger.info(
+        "Analysis completed for '%s'",
+        directory,
+    )
 
 # ============================
 # Folder Management
@@ -194,6 +147,12 @@ def move_files(directory, dry_run=False):
         if destination.exists():
             print(f"Skipped: {file.name} (already exists)")
             skipped += 1
+
+            logger.info(
+                "Skipped '%s' because destination already exists",
+                file.name,
+            )
+
             continue
 
         if dry_run:
@@ -202,6 +161,12 @@ def move_files(directory, dry_run=False):
 
         shutil.move(file, destination)
         moved += 1
+
+        logger.info(
+            "Moved '%s' to '%s'",
+            file.name,
+            category,
+        )
 
     if dry_run:
         print("\nNo files were moved.")

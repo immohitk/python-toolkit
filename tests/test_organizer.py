@@ -1,11 +1,12 @@
 import sys
-import pytest
 from pathlib import Path
 
-from toolkit.config import FILE_CATEGORIES
+import pytest
 
 sys.path.append(str(Path(__file__).resolve().parents[1]))
 
+from toolkit.config import FILE_CATEGORIES
+from toolkit.cli import run
 from toolkit.organizer import (
     analyze_files, 
     get_file_category,
@@ -66,3 +67,56 @@ def test_file_categories_configuration():
     assert ".mp4" in FILE_CATEGORIES["Videos"]
     assert ".mp3" in FILE_CATEGORIES["Audio"]
     assert ".zip" in FILE_CATEGORIES["Archives"]
+
+def test_move_files_logs_moved_file(tmp_path, caplog):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    (tmp_path / "Images").mkdir()
+
+    with caplog.at_level("INFO"):
+        move_files(tmp_path)
+
+    assert "Moved 'photo.jpg' to 'Images'" in caplog.text
+
+def test_move_files_logs_skipped_file(tmp_path, caplog):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    images_folder = tmp_path / "Images"
+    images_folder.mkdir()
+
+    existing_file = images_folder / "photo.jpg"
+    existing_file.touch()
+
+    with caplog.at_level("INFO"):
+        move_files(tmp_path)
+
+    assert "Skipped 'photo.jpg' because destination already exists" in caplog.text
+
+
+def test_analyze_files_logs_activity(tmp_path, caplog):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    with caplog.at_level("INFO"):
+        analyze_files(tmp_path)
+
+    assert f"Analyzing directory '{tmp_path}'" in caplog.text
+    assert f"Analysis completed for '{tmp_path}'" in caplog.text
+
+def test_cli_logs_invalid_directory(monkeypatch, caplog, capsys):
+    directory = "C:/does/not/exist"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        ["main.py", "analyze", directory],
+    )
+
+    with caplog.at_level("ERROR"):
+        run()
+
+    output = capsys.readouterr().out
+
+    assert f"Error: Directory '{directory}' does not exist." in output
+    assert f"Directory '{directory}' does not exist." in caplog.text

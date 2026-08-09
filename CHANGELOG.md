@@ -6,6 +6,33 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.9.0] - 2026-08-09
+
+### Added
+
+- Application logging module
+- Logging for file movements
+- Logging for skipped duplicate files
+- Logging for directory analysis
+- CLI error logging
+- Automated tests for logging behavior
+
+### Improved
+
+- Added structured logging for important application events
+- Improved CLI error diagnostics
+- Kept generated log files out of version control
+
+### Tested
+
+- Successful file movement logging
+- Skipped-file logging
+- Analysis logging
+- Invalid-directory CLI logging
+- Existing organizer functionality
+
+---
+
 ## [v0.8.0] - 2026-08-08
 
 ### Added
