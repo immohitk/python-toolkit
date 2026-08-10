@@ -10,6 +10,7 @@ import argparse
 from toolkit.organizer import (
     analyze_files,
     create_category_folders,
+    get_directory_info,
     move_files,
 )
 
@@ -18,7 +19,7 @@ from toolkit.logger import get_logger
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.10.0"
+APP_VERSION = "0.11.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -64,6 +65,16 @@ def create_parser():
         help="Analyze files in a directory",
     )
 
+    info_parser = subparsers.add_parser(
+        "info",
+        help="Show directory information",
+    )
+
+    info_parser.add_argument(
+        "directory",
+        help="Directory to inspect",
+    )
+
     analyze_parser.add_argument(
         "directory",
         help="Directory to analyze",
@@ -92,6 +103,9 @@ def run():
 
         if args.command == "analyze":
             analyze_files(args.directory)
+
+        if args.command == "info":
+            get_directory_info(args.directory)
 
     except FileNotFoundError as error:
         logger.error("%s", error)

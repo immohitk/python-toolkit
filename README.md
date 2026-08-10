@@ -14,6 +14,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Version command
 - Organize command
 - Analyze command
+- Info command
 - Dry-run mode
 
 ### File Organizer
@@ -92,6 +93,12 @@ Analyze a directory
 python main.py analyze "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 ```
 
+Get directory information
+
+```bash
+python main.py info "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
+```
+
 Preview organization without moving files
 
 ```bash
@@ -107,6 +114,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - CLI integration
 - File categorization
 - Directory analysis
+- Directory information command
 - Category folder creation
 - Safe file movement
 - Duplicate protection
@@ -130,7 +138,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.10.0**
+**v0.11.0**
 
 ---
 

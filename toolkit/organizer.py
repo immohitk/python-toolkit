@@ -89,6 +89,24 @@ def analyze_files(directory):
         directory,
     )
 
+# Get directory information
+
+def get_directory_info(directory):
+    """Display a quick summary of files in a directory."""
+    files = get_files(directory)
+    category_counts = {}
+
+    for file in files:
+        category = get_file_category(file.suffix)
+        category_counts[category] = category_counts.get(category, 0) + 1
+
+    print(f"Directory: {directory}")
+    print()
+    print(f"Total files: {len(files)}")
+
+    for category, count in category_counts.items():
+        print(f"{category:<10}: {count}")
+
 # ============================
 # Folder Management
 # ============================

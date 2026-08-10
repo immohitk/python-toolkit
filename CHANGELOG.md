@@ -6,6 +6,27 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.11.0] - 2026-08-10
+
+### Added
+
+- New `info` CLI command
+- Directory information summary
+- Total file count and category counts
+
+### Tested
+
+- `info` command with valid directories
+- CLI integration for the `info` command
+- Full test suite: 14 tests passed
+
+### Next
+
+- Additional CLI commands
+- More comprehensive error handling
+
+---
+
 ## [v0.10.0] - 2026-08-10
 
 ### Added
