@@ -6,6 +6,32 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.10.0] - 2026-08-10
+
+### Added
+
+- GitHub Actions CI/CD workflow
+- Automated test execution on pushes to `main`
+- Automated test execution for pull requests targeting `main`
+
+### Improved
+
+- Added continuous integration to automatically verify the test suite
+- Added automated Python environment setup for CI
+
+### Tested
+
+- GitHub Actions workflow
+- Automated execution of the pytest test suite
+- Existing organizer and CLI functionality
+
+### Next
+
+- Additional CLI commands
+- More comprehensive error handling
+
+---
+
 ## [v0.9.0] - 2026-08-09
 
 ### Added

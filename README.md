@@ -31,6 +31,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Automated unit tests with pytest
 - User-friendly CLI error handling
 - Application logging
+- GitHub Actions CI/CD
 
 ---
 
@@ -116,15 +117,12 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Centralized configuration module
 - Application logging
 - CLI error logging
+- GitHub Actions CI/CD
 
 ### In Progress
 
 - Additional CLI commands
 - More comprehensive error handling
-
-### Planned
-
-- GitHub Actions CI/CD
 
 ---
 
@@ -132,7 +130,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.9.0**
+**v0.10.0**
 
 ---
 
