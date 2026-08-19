@@ -63,6 +63,13 @@ def test_get_files_invalid_directory():
     with pytest.raises(FileNotFoundError):
         get_files("C:/does/not/exist")
 
+def test_get_files_file_path(tmp_path):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    with pytest.raises(NotADirectoryError):
+        get_files(file)
+
 def test_move_files_dry_run(tmp_path, capsys):
     file = tmp_path / "photo.jpg"
     file.touch()
@@ -136,6 +143,23 @@ def test_cli_logs_invalid_directory(monkeypatch, caplog, capsys):
 
     assert f"Error: Directory '{directory}' does not exist." in output
     assert f"Directory '{directory}' does not exist." in caplog.text
+
+def test_cli_logs_file_path(monkeypatch, tmp_path, caplog, capsys):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    monkeypatch.setattr(
+        "sys.argv",
+        ["main.py", "info", str(file)],
+    )
+
+    with caplog.at_level("ERROR"):
+        run()
+
+    output = capsys.readouterr().out
+
+    assert f"Error: Path '{file}' is not a directory." in output
+    assert f"Path '{file}' is not a directory." in caplog.text
 
 def test_cli_info(monkeypatch, tmp_path, capsys):
     (tmp_path / "photo.jpg").touch()

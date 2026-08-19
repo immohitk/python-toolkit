@@ -46,6 +46,11 @@ def get_files(directory):
             f"Directory '{directory}' does not exist."
         )
 
+    if not folder.is_dir():
+        raise NotADirectoryError(
+            f"Path '{directory}' is not a directory."
+        )
+
     files = []
 
     for item in folder.iterdir():

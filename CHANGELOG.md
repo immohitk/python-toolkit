@@ -6,6 +6,29 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.12.0] - 2026-08-19
+
+### Improved
+
+- Improved directory validation
+- Added detection for paths that exist but are not directories
+- Added user-friendly error handling for invalid directory paths
+- Added CLI logging for directory validation errors
+
+### Tested
+
+- Nonexistent directory handling
+- File path passed where a directory is expected
+- CLI error handling for invalid directory paths
+- Full test suite: 16 tests passed
+
+### Next
+
+- Additional CLI commands
+- More comprehensive error handling
+
+---
+
 ## [v0.11.0] - 2026-08-10
 
 ### Added

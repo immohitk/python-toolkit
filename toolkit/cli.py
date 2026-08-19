@@ -19,7 +19,7 @@ from toolkit.logger import get_logger
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.11.0"
+APP_VERSION = "0.12.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -108,5 +108,9 @@ def run():
             get_directory_info(args.directory)
 
     except FileNotFoundError as error:
+        logger.error("%s", error)
+        print(f"Error: {error}")
+
+    except NotADirectoryError as error:
         logger.error("%s", error)
         print(f"Error: {error}")

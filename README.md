@@ -31,6 +31,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Function docstrings
 - Automated unit tests with pytest
 - User-friendly CLI error handling
+- Improved directory validation
 - Application logging
 - GitHub Actions CI/CD
 
@@ -121,6 +122,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Automated unit testing
 - Modular project architecture
 - CLI error handling for invalid directories
+- Improved directory validation
 - Dry-run file organization
 - Centralized configuration module
 - Application logging
@@ -138,7 +140,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.11.0**
+**v0.12.0**
 
 ---
 
