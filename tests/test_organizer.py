@@ -117,6 +117,24 @@ def test_move_files_logs_skipped_file(tmp_path, caplog):
 
     assert "Skipped 'photo.jpg' because destination already exists" in caplog.text
 
+def test_move_files_shows_skipped_files(tmp_path, capsys):
+    file = tmp_path / "photo.jpg"
+    file.touch()
+
+    images_folder = tmp_path / "Images"
+    images_folder.mkdir()
+
+    existing_file = images_folder / "photo.jpg"
+    existing_file.touch()
+
+    move_files(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "Skipped Files" in output
+    assert "photo.jpg" in output
+    assert "Images (already exists)" in output
+
 
 def test_analyze_files_logs_activity(tmp_path, caplog):
     file = tmp_path / "photo.jpg"

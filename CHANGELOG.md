@@ -6,6 +6,28 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.13.0] - 2026-08-19
+
+### Improved
+
+- Improved skipped file reporting during organization
+- Added skipped file details to the organization summary
+- Displayed skipped filenames, categories, and reasons
+
+### Tested
+
+- Skipped file reporting
+- Multiple skipped files
+- CLI organization output
+- Full test suite: 17 tests passed
+
+### Next
+
+- Additional CLI commands
+- More comprehensive error handling
+
+---
+
 ## [v0.12.0] - 2026-08-19
 
 ### Improved

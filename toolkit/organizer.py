@@ -158,6 +158,7 @@ def move_files(directory, dry_run=False):
 
     moved = 0
     skipped = 0
+    skipped_files = []
 
     if dry_run:
         print("Dry Run - No files will be moved")
@@ -170,6 +171,7 @@ def move_files(directory, dry_run=False):
         if destination.exists():
             print(f"Skipped: {file.name} (already exists)")
             skipped += 1
+            skipped_files.append((file.name, category))
 
             logger.info(
                 "Skipped '%s' because destination already exists",
@@ -199,3 +201,13 @@ def move_files(directory, dry_run=False):
     print("-" * 25)
     print(f"Moved   : {moved}")
     print(f"Skipped : {skipped}")
+
+    if skipped_files:
+        print("\nSkipped Files")
+        print("-" * 25)
+
+        for filename, category in skipped_files:
+            print(
+                f"{filename:<30} -> "
+                f"{category} (already exists)"
+            )

@@ -25,6 +25,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Move files into category folders
 - Skip duplicate files safely
 - Display organization summary
+- Display skipped files with their category and reason
 
 ### Code Quality
 - Type hints
@@ -119,6 +120,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Category folder creation
 - Safe file movement
 - Duplicate protection
+- Skipped file reporting
 - Automated unit testing
 - Modular project architecture
 - CLI error handling for invalid directories
@@ -140,7 +142,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.12.0**
+**v0.13.0**
 
 ---
 
