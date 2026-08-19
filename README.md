@@ -133,10 +133,16 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - CLI error logging
 - GitHub Actions CI/CD
 
-### In Progress
+### Future Improvements
 
 - Additional CLI commands
 - More comprehensive error handling
+
+### Future Tools
+
+- Additional independent utility tools
+- Unified GUI application combining toolkit utilities
+- Desktop application packaging and installation
 
 ---
 
