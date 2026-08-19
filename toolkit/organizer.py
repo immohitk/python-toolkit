@@ -71,6 +71,10 @@ def analyze_files(directory):
     files = get_files(directory)
     category_counts = {}
 
+    if not files:
+        print("No files found.")
+        return
+
     logger.info(
         "Analyzing directory '%s'",
         directory,

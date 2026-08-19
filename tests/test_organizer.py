@@ -44,6 +44,13 @@ def test_analyze_files(tmp_path, capsys):
     assert "report.pdf" in output
     assert "Documents" in output
 
+def test_analyze_files_empty_directory(tmp_path, capsys):
+    analyze_files(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "No files found." in output
+
 def test_get_directory_info(tmp_path, capsys):
     (tmp_path / "photo.jpg").touch()
     (tmp_path / "report.pdf").touch()

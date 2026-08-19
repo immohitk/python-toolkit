@@ -19,6 +19,7 @@ A collection of practical Python utilities for file management, automation, and 
 
 ### File Organizer
 - Analyze files in a directory
+- Handle empty directories during analysis
 - Categorize files by extension
 - Detect required categories
 - Create category folders automatically
@@ -116,6 +117,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - CLI integration
 - File categorization
 - Directory analysis
+- Empty directory analysis handling
 - Directory information command
 - Category folder creation
 - Safe file movement
@@ -142,7 +144,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.13.0**
+**v0.14.0**
 
 ---
 

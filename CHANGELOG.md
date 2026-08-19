@@ -6,6 +6,28 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.14.0] - 2026-08-19
+
+### Improved
+
+- Improved empty directory analysis
+- Added a clear message when no files are found during analysis
+
+### Tested
+
+- Empty directory analysis
+- Unknown file type handling
+- Already-organized directory behavior
+- Dry-run conflict handling
+- Full test suite: 18 tests passed
+
+### Next
+
+- Additional CLI commands
+- More comprehensive error handling
+
+---
+
 ## [v0.13.0] - 2026-08-19
 
 ### Improved
