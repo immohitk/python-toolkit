@@ -28,6 +28,15 @@ A collection of practical Python utilities for file management, automation, and 
 - Display organization summary
 - Display skipped files with their category and reason
 
+### File Cleaner
+
+- Identify temporary files
+- Identify backup files
+- Identify system-generated files
+- Scan directories for cleanup candidates
+- Display cleanup candidates with their categories
+- Handle directories with no cleanup candidates
+
 ### Code Quality
 - Type hints
 - Function docstrings
@@ -47,6 +56,7 @@ python-toolkit/
 ├── main.py
 ├── toolkit/
 │   ├── __init__.py
+│   ├── cleaner.py
 │   ├── cli.py
 │   ├── config.py
 │   ├── logger.py
@@ -117,6 +127,10 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - CLI integration
 - File categorization
 - Directory analysis
+- File cleanup category detection
+- Cleanup candidate directory scanning
+- Cleanup candidate display
+- No-candidate handling
 - Empty directory analysis handling
 - Directory information command
 - Category folder creation

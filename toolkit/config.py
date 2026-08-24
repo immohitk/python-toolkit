@@ -58,3 +58,20 @@ FILE_CATEGORIES = {
         ".bz2",
     },
 }
+
+CLEANUP_EXTENSIONS = {
+    "Temporary": {
+        ".tmp",
+        ".temp",
+    },
+    "Backup": {
+        ".bak",
+    },
+}
+
+CLEANUP_FILENAMES = {
+    "System": {
+        "Thumbs.db",
+        ".DS_Store",
+    },
+}
