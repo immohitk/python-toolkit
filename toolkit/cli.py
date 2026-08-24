@@ -6,6 +6,7 @@ and displaying help/version information.
 """
 
 import argparse
+from pathlib import Path
 
 from toolkit.organizer import (
     analyze_files,
@@ -14,12 +15,17 @@ from toolkit.organizer import (
     move_files,
 )
 
+from toolkit.cleaner import (
+    clean_files,
+    preview_cleanup,
+)
+
 from toolkit.logger import get_logger
 
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.14.0"
+APP_VERSION = "0.15.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -60,6 +66,22 @@ def create_parser():
         help="Preview file organization without moving files",
     )
     
+    clean_parser = subparsers.add_parser(
+        "clean",
+        help="Clean temporary, backup, and system files in a directory",
+    )
+
+    clean_parser.add_argument(
+        "directory",
+        help="Directory to clean",
+    )
+
+    clean_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview cleanup without deleting files",
+    )
+
     analyze_parser = subparsers.add_parser(
         "analyze",
         help="Analyze files in a directory",
@@ -106,6 +128,14 @@ def run():
 
         if args.command == "info":
             get_directory_info(args.directory)
+
+        if args.command == "clean":
+            directory = Path(args.directory)
+
+            if args.dry_run:
+                preview_cleanup(directory)
+            else:
+                clean_files(directory)
 
     except FileNotFoundError as error:
         logger.error("%s", error)

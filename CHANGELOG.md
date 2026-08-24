@@ -6,6 +6,39 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.15.0] - 2026-08-24
+
+### Added
+
+- New `clean` CLI command
+- Cleanup preview support using `--dry-run`
+- Automatic deletion of temporary, backup, and system-generated files
+- Cleanup completion summary
+- Freed disk space reporting
+- Automated CLI tests for cleanup operations
+
+### Improved
+
+- Integrated the File Cleaner with the command-line interface
+- Added safe cleanup preview without modifying files
+- Improved access to cleanup functionality through the CLI
+
+### Tested
+
+- Cleanup command execution
+- Cleanup dry-run behavior
+- File deletion behavior
+- Preservation of non-cleanup files
+- CLI integration for cleanup commands
+- Full test suite: 32 tests passed
+
+### Next
+
+- Additional CLI commands
+- More comprehensive error handling
+
+---
+
 ## [v0.14.0] - 2026-08-19
 
 ### Improved

@@ -16,6 +16,8 @@ A collection of practical Python utilities for file management, automation, and 
 - Analyze command
 - Info command
 - Dry-run mode
+- Clean command
+- Cleanup dry-run mode
 
 ### File Organizer
 - Analyze files in a directory
@@ -126,6 +128,18 @@ Preview organization without moving files
 python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 ```
 
+Clean a directory
+
+```bash
+python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
+```
+
+Preview cleanup without deleting files
+
+```bash
+python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
+```
+
 ---
 
 ## Current Development Status
@@ -166,6 +180,8 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Cleanup candidate file deletion
 - Cleanup file removal summary
 - Freed disk space reporting
+- CLI cleanup command
+- Cleanup dry-run CLI support
 
 ### Future Improvements
 
@@ -184,7 +200,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 
 Current Version:
 
-**v0.14.0**
+**v0.15.0**
 
 ---
 
