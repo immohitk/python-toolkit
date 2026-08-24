@@ -2,6 +2,7 @@ from toolkit.cleaner import (
     find_cleanup_candidates,
     format_file_size,
     get_cleanup_category,
+    get_cleanup_summary,
     get_file_size,
     get_total_cleanup_size,
     show_cleanup_candidates,
@@ -45,6 +46,9 @@ def test_show_cleanup_candidates(tmp_path, capsys):
     assert "1.00 KB" in output
     assert "2.00 KB" in output
     assert "Total cleanup size: 3.00 KB" in output
+    assert "Cleanup Summary" in output
+    assert "Backup: 1 file (2.00 KB)" in output
+    assert "Temporary: 1 file (1.00 KB)" in output
 
 def test_show_cleanup_candidates_no_candidates(tmp_path, capsys):
     (tmp_path / "photo.jpg").touch()
@@ -76,3 +80,22 @@ def test_format_file_size():
     assert format_file_size(500) == "500 bytes"
     assert format_file_size(1024) == "1.00 KB"
     assert format_file_size(1048576) == "1.00 MB"
+
+def test_get_cleanup_summary(tmp_path):
+    (tmp_path / "file.tmp").write_bytes(b"a" * 1024)
+    (tmp_path / "another.tmp").write_bytes(b"b" * 2048)
+    (tmp_path / "backup.bak").write_bytes(b"c" * 512)
+    (tmp_path / "photo.jpg").write_bytes(b"d" * 100)
+
+    summary = get_cleanup_summary(tmp_path)
+
+    assert summary == {
+        "Backup": {
+            "count": 1,
+            "size": 512,
+        },
+        "Temporary": {
+            "count": 2,
+            "size": 3072,
+        },
+    }

@@ -49,6 +49,26 @@ def get_total_cleanup_size(directory):
 
     return sum(size for _, _, size in candidates)
 
+def get_cleanup_summary(directory):
+    """
+    Return a summary of cleanup candidates grouped by category.
+    """
+    summary = {}
+
+    candidates = find_cleanup_candidates(directory)
+
+    for _, category, size in candidates:
+        if category not in summary:
+            summary[category] = {
+                "count": 0,
+                "size": 0,
+            }
+
+        summary[category]["count"] += 1
+        summary[category]["size"] += size
+
+    return summary
+
 def find_cleanup_candidates(directory):
     """
     Find files in a directory that are cleanup candidates.
@@ -83,6 +103,23 @@ def show_cleanup_candidates(directory):
     for file, category, size in candidates:
         formatted_size = format_file_size(size)
         print(f"{file.name:<30} -> {category} ({formatted_size})")
+
+    summary = get_cleanup_summary(directory)
+
+    print()
+    print("Cleanup Summary")
+    print("-" * 25)
+
+    for category, details in summary.items():
+        count = details["count"]
+        size = details["size"]
+        formatted_size = format_file_size(size)
+
+        file_word = "file" if count == 1 else "files"
+
+        print(
+            f"{category}: {count} {file_word} ({formatted_size})"
+        )
 
     total_size = get_total_cleanup_size(directory)
     formatted_total_size = format_file_size(total_size)
