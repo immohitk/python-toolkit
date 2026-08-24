@@ -34,7 +34,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Identify backup files
 - Identify system-generated files
 - Scan directories for cleanup candidates
-- Display cleanup candidates with their categories
+- Calculate cleanup candidate file sizes
+- Display cleanup candidates with their categories and sizes
+- Calculate total cleanup size
+- Display total cleanup size
 - Handle directories with no cleanup candidates
 
 ### Code Quality
@@ -146,6 +149,10 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Application logging
 - CLI error logging
 - GitHub Actions CI/CD
+- Cleanup candidate file size detection
+- Cleanup candidate size display
+- Total cleanup size calculation
+- Total cleanup size display
 
 ### Future Improvements
 
