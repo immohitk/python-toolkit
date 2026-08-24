@@ -6,6 +6,7 @@ from toolkit.cleaner import (
     get_file_size,
     get_total_cleanup_size,
     preview_cleanup,
+    clean_files,
     show_cleanup_candidates,
 )
 
@@ -137,3 +138,39 @@ def test_preview_cleanup_no_candidates(tmp_path, capsys):
     output = capsys.readouterr().out
 
     assert "No cleanup candidates found." in output
+
+def test_clean_files(tmp_path, capsys):
+    temporary_file = tmp_path / "file.tmp"
+    backup_file = tmp_path / "backup.bak"
+    normal_file = tmp_path / "photo.jpg"
+
+    temporary_file.write_bytes(b"a" * 1024)
+    backup_file.write_bytes(b"b" * 2048)
+    normal_file.write_bytes(b"c" * 100)
+
+    clean_files(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "Cleanup Complete" in output
+    assert "file.tmp" in output
+    assert "backup.bak" in output
+    assert "photo.jpg" not in output
+    assert "Files removed: 2" in output
+    assert "Space freed: 3.00 KB" in output
+
+    assert not temporary_file.exists()
+    assert not backup_file.exists()
+    assert normal_file.exists()
+
+
+def test_clean_files_no_candidates(tmp_path, capsys):
+    normal_file = tmp_path / "photo.jpg"
+    normal_file.touch()
+
+    clean_files(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "No cleanup candidates found." in output
+    assert normal_file.exists()

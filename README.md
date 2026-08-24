@@ -39,6 +39,8 @@ A collection of practical Python utilities for file management, automation, and 
 - Display cleanup candidates with their categories and formatted sizes
 - Display cleanup summary grouped by category
 - Preview files that would be cleaned without modifying them
+- Delete cleanup candidate files
+- Display removed files and freed disk space
 - Calculate total cleanup size
 - Display total cleanup size in human-readable format
 - Handle directories with no cleanup candidates
@@ -161,6 +163,9 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Cleanup summary grouped by category
 - Cleanup candidate count and size summary
 - Safe cleanup preview without file modification
+- Cleanup candidate file deletion
+- Cleanup file removal summary
+- Freed disk space reporting
 
 ### Future Improvements
 

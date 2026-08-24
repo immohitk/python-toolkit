@@ -151,3 +151,32 @@ def preview_cleanup(directory):
 
     print()
     print(f"Total cleanup size: {formatted_total_size}")
+
+def clean_files(directory):
+    """
+    Delete all cleanup candidate files in a directory.
+    """
+    candidates = find_cleanup_candidates(directory)
+
+    if not candidates:
+        print("No cleanup candidates found.")
+        return
+
+    print("Cleanup Complete")
+    print("-" * 25)
+
+    total_size = 0
+
+    for file, _, size in candidates:
+        file.unlink()
+
+        formatted_size = format_file_size(size)
+        print(f"Removed: {file.name} ({formatted_size})")
+
+        total_size += size
+
+    formatted_total_size = format_file_size(total_size)
+
+    print()
+    print(f"Files removed: {len(candidates)}")
+    print(f"Space freed: {formatted_total_size}")
