@@ -5,6 +5,7 @@ from toolkit.cleaner import (
     get_cleanup_summary,
     get_file_size,
     get_total_cleanup_size,
+    preview_cleanup,
     show_cleanup_candidates,
 )
 
@@ -99,3 +100,40 @@ def test_get_cleanup_summary(tmp_path):
             "size": 3072,
         },
     }
+
+def test_preview_cleanup(tmp_path, capsys):
+    temporary_file = tmp_path / "file.tmp"
+    backup_file = tmp_path / "backup.bak"
+    normal_file = tmp_path / "photo.jpg"
+
+    temporary_file.write_bytes(b"a" * 1024)
+    backup_file.write_bytes(b"b" * 2048)
+    normal_file.write_bytes(b"c" * 100)
+
+    preview_cleanup(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "Cleanup Preview" in output
+    assert "file.tmp" in output
+    assert "backup.bak" in output
+    assert "photo.jpg" not in output
+    assert "Temporary" in output
+    assert "Backup" in output
+    assert "1.00 KB" in output
+    assert "2.00 KB" in output
+    assert "Total cleanup size: 3.00 KB" in output
+
+    assert temporary_file.exists()
+    assert backup_file.exists()
+    assert normal_file.exists()
+
+def test_preview_cleanup_no_candidates(tmp_path, capsys):
+    (tmp_path / "photo.jpg").touch()
+    (tmp_path / "document.pdf").touch()
+
+    preview_cleanup(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "No cleanup candidates found." in output

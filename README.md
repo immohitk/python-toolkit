@@ -38,6 +38,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Format file sizes into human-readable units
 - Display cleanup candidates with their categories and formatted sizes
 - Display cleanup summary grouped by category
+- Preview files that would be cleaned without modifying them
 - Calculate total cleanup size
 - Display total cleanup size in human-readable format
 - Handle directories with no cleanup candidates
@@ -159,6 +160,7 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Human-readable total cleanup size display
 - Cleanup summary grouped by category
 - Cleanup candidate count and size summary
+- Safe cleanup preview without file modification
 
 ### Future Improvements
 

@@ -126,3 +126,28 @@ def show_cleanup_candidates(directory):
 
     print()
     print(f"Total cleanup size: {formatted_total_size}")
+
+def preview_cleanup(directory):
+    """
+    Display a preview of files that would be cleaned.
+
+    This function does not modify or delete any files.
+    """
+    candidates = find_cleanup_candidates(directory)
+
+    if not candidates:
+        print("No cleanup candidates found.")
+        return
+
+    print("Cleanup Preview")
+    print("-" * 25)
+
+    for file, category, size in candidates:
+        formatted_size = format_file_size(size)
+        print(f"{file.name:<30} -> {category} ({formatted_size})")
+
+    total_size = get_total_cleanup_size(directory)
+    formatted_total_size = format_file_size(total_size)
+
+    print()
+    print(f"Total cleanup size: {formatted_total_size}")
