@@ -1,5 +1,6 @@
 from toolkit.cleaner import (
     find_cleanup_candidates,
+    format_file_size,
     get_cleanup_category,
     get_file_size,
     get_total_cleanup_size,
@@ -27,8 +28,8 @@ def test_get_cleanup_category():
     assert get_cleanup_category("photo.jpg") is None
 
 def test_show_cleanup_candidates(tmp_path, capsys):
-    (tmp_path / "file.tmp").write_bytes(b"12345")
-    (tmp_path / "backup.bak").write_bytes(b"1234567890")
+    (tmp_path / "file.tmp").write_bytes(b"a" * 1024)
+    (tmp_path / "backup.bak").write_bytes(b"b" * 2048)
     (tmp_path / "photo.jpg").touch()
 
     show_cleanup_candidates(tmp_path)
@@ -41,9 +42,9 @@ def test_show_cleanup_candidates(tmp_path, capsys):
     assert "file.tmp" in output
     assert "Temporary" in output
     assert "photo.jpg" not in output
-    assert "5 bytes" in output
-    assert "10 bytes" in output
-    assert "Total cleanup size: 15 bytes" in output
+    assert "1.00 KB" in output
+    assert "2.00 KB" in output
+    assert "Total cleanup size: 3.00 KB" in output
 
 def test_show_cleanup_candidates_no_candidates(tmp_path, capsys):
     (tmp_path / "photo.jpg").touch()
@@ -62,10 +63,16 @@ def test_get_file_size(tmp_path):
     assert get_file_size(test_file) == 10
 
 def test_get_total_cleanup_size(tmp_path):
-    (tmp_path / "file.tmp").write_bytes(b"12345")
-    (tmp_path / "backup.bak").write_bytes(b"1234567890")
+    (tmp_path / "file.tmp").write_bytes(b"a" * 1024)
+    (tmp_path / "backup.bak").write_bytes(b"b" * 2048)
     (tmp_path / "photo.jpg").write_bytes(b"12345678901234567890")
 
     total_size = get_total_cleanup_size(tmp_path)
 
-    assert total_size == 15
+    assert total_size == 3072
+
+def test_format_file_size():
+    assert format_file_size(0) == "0 bytes"
+    assert format_file_size(500) == "500 bytes"
+    assert format_file_size(1024) == "1.00 KB"
+    assert format_file_size(1048576) == "1.00 MB"

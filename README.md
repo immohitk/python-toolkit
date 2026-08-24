@@ -35,9 +35,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Identify system-generated files
 - Scan directories for cleanup candidates
 - Calculate cleanup candidate file sizes
-- Display cleanup candidates with their categories and sizes
+- Format file sizes into human-readable units
+- Display cleanup candidates with their categories and formatted sizes
 - Calculate total cleanup size
-- Display total cleanup size
+- Display total cleanup size in human-readable format
 - Handle directories with no cleanup candidates
 
 ### Code Quality
@@ -153,6 +154,8 @@ python main.py organize "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-r
 - Cleanup candidate size display
 - Total cleanup size calculation
 - Total cleanup size display
+- Human-readable file size formatting
+- Human-readable total cleanup size display
 
 ### Future Improvements
 

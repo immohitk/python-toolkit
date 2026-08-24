@@ -29,6 +29,18 @@ def get_file_size(file):
     """
     return file.stat().st_size
 
+def format_file_size(size):
+    """
+    Return a human-readable file size.
+    """
+    if size < 1024:
+        return f"{size} bytes"
+
+    if size < 1024 * 1024:
+        return f"{size / 1024:.2f} KB"
+
+    return f"{size / (1024 * 1024):.2f} MB"
+
 def get_total_cleanup_size(directory):
     """
     Return the total size of all cleanup candidates in bytes.
@@ -69,9 +81,11 @@ def show_cleanup_candidates(directory):
     print("-" * 25)
 
     for file, category, size in candidates:
-        print(f"{file.name:<30} -> {category} ({size} bytes)")
+        formatted_size = format_file_size(size)
+        print(f"{file.name:<30} -> {category} ({formatted_size})")
 
     total_size = get_total_cleanup_size(directory)
+    formatted_total_size = format_file_size(total_size)
 
     print()
-    print(f"Total cleanup size: {total_size} bytes")
+    print(f"Total cleanup size: {formatted_total_size}")
