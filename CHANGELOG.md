@@ -6,6 +6,37 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.16.0] - 2026-08-28
+
+### Added
+
+- Completed the File Cleaner basic feature phase
+- Added validated cleanup confirmation input
+- Cleanup now accepts `y` or `Y` to proceed
+- Cleanup now accepts `n` or `N` to cancel
+- Invalid confirmation input now asks the user again until a valid choice is entered
+
+### Improved
+
+- Improved overall File Cleaner reliability and safety
+- Continued cleanup when individual files cannot be deleted
+- Added clear reporting for successful and failed file removals
+- Freed disk space is calculated using only successfully deleted files
+- Defined cleanup as non-recursive to avoid modifying files inside subdirectories
+- Improved edge-case test coverage and final File Cleaner behavior review
+
+### Tested
+
+- Cleanup confirmation and cancellation behavior
+- Uppercase and lowercase confirmation input
+- Invalid input retry behavior
+- Cleanup deletion failure handling
+- Continued cleanup after individual failures
+- Non-recursive cleanup behavior
+- Full test suite: 40 tests passed
+
+---
+
 ## [v0.15.2] - 2026-08-28
 
 ### Improved

@@ -52,6 +52,9 @@ A collection of practical Python utilities for file management, automation, and 
 - Calculate freed disk space using only successfully deleted files
 - Clean files only directly inside the selected directory
 - Do not scan subdirectories during cleanup
+- Accept `y` or `Y` to confirm cleanup
+- Accept `n` or `N` to cancel cleanup
+- Reject invalid confirmation input and ask again
 
 ### Code Quality
 - Type hints
@@ -195,6 +198,11 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - Accurate freed disk space reporting after deletion failures
 - Non-recursive cleanup scope
 - Subdirectory cleanup exclusion
+- Cleanup confirmation input validation
+- Uppercase and lowercase cleanup confirmation support
+- Invalid confirmation input retry handling
+- Final File Cleaner basic-phase testing and polish
+- File Cleaner basic phase completion
 
 ### Future Improvements
 
@@ -213,7 +221,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.15.2**
+**v0.16.0**
 
 ---
 
