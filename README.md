@@ -41,6 +41,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Display cleanup candidates with their categories and formatted sizes
 - Display cleanup summary grouped by category
 - Preview files that would be cleaned without modifying them
+- Ask for confirmation before permanently deleting cleanup files
 - Delete cleanup candidate files
 - Display removed files and freed disk space
 - Calculate total cleanup size
@@ -182,6 +183,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - Freed disk space reporting
 - CLI cleanup command
 - Cleanup dry-run CLI support
+- Cleanup confirmation before permanent file deletion
 
 ### Future Improvements
 
@@ -200,7 +202,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.15.0**
+**v0.15.1**
 
 ---
 

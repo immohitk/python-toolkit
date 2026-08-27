@@ -6,6 +6,23 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.15.1] - 2026-08-28
+
+### Added
+
+- Cleanup confirmation prompt before file deletion
+
+### Improved
+
+- Added an extra safety step before cleanup operations permanently remove files
+
+### Tested
+
+- Cleanup confirmation behavior
+- Full test suite: 32 tests passed
+
+---
+
 ## [v0.15.0] - 2026-08-24
 
 ### Added
