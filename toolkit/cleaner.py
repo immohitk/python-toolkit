@@ -160,9 +160,16 @@ def confirm_cleanup():
 
     Returns True if cleanup is confirmed.
     """
-    response = input("Proceed with cleanup? [y/N]: ")
+    while True:
+        response = input("Proceed with cleanup? [y/n]: ")
 
-    return response.lower() == "y"
+        if response in ("y", "Y"):
+            return True
+
+        if response in ("n", "N"):
+            return False
+
+        print("Invalid input. Please enter 'y' or 'n'.")
 
 def clean_files(directory):
     """

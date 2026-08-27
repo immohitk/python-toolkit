@@ -8,6 +8,7 @@ from toolkit.cleaner import (
     preview_cleanup,
     clean_files,
     show_cleanup_candidates,
+    confirm_cleanup,
 )
 
 def test_find_cleanup_candidates(tmp_path):
@@ -234,3 +235,65 @@ def test_find_cleanup_candidates_ignores_subdirectories(tmp_path):
     ]
 
     assert nested_file.exists()
+
+def test_clean_files_cancelled(tmp_path, monkeypatch, capsys):
+    temporary_file = tmp_path / "file.tmp"
+    backup_file = tmp_path / "backup.bak"
+    normal_file = tmp_path / "photo.jpg"
+
+    temporary_file.touch()
+    backup_file.touch()
+    normal_file.touch()
+
+    monkeypatch.setattr("builtins.input", lambda _: "n")
+
+    clean_files(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "Cleanup cancelled." in output
+
+    assert temporary_file.exists()
+    assert backup_file.exists()
+    assert normal_file.exists()
+
+def test_confirm_cleanup_accepts_y(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "y")
+
+    assert confirm_cleanup() is True
+
+
+def test_confirm_cleanup_accepts_Y(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "Y")
+
+    assert confirm_cleanup() is True
+
+
+def test_confirm_cleanup_accepts_n(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "n")
+
+    assert confirm_cleanup() is False
+
+
+def test_confirm_cleanup_accepts_N(monkeypatch):
+    monkeypatch.setattr("builtins.input", lambda _: "N")
+
+    assert confirm_cleanup() is False
+
+def test_confirm_cleanup_retries_after_invalid_input(
+    monkeypatch,
+    capsys,
+):
+    responses = iter(["invalid", "y"])
+
+    monkeypatch.setattr(
+        "builtins.input",
+        lambda _: next(responses),
+    )
+
+    result = confirm_cleanup()
+
+    output = capsys.readouterr().out
+
+    assert "Invalid input. Please enter 'y' or 'n'." in output
+    assert result is True
