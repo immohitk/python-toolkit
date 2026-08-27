@@ -6,6 +6,24 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.16.1] - 2026-08-28
+
+### Added
+
+- Added the Duplicate File Finder module foundation
+- Added SHA-256 file hashing for duplicate detection
+- Files are read in chunks to avoid loading entire files into memory
+- Added automated unit tests for file hashing
+
+### Tested
+
+- SHA-256 hash generation for files
+- Hash comparison against expected SHA-256 values
+- Identical files producing identical hash values
+- Full test suite: 41 tests passed
+
+---
+
 ## [v0.16.0] - 2026-08-28
 
 ### Added

@@ -56,6 +56,12 @@ A collection of practical Python utilities for file management, automation, and 
 - Accept `n` or `N` to cancel cleanup
 - Reject invalid confirmation input and ask again
 
+### Duplicate File Finder
+
+- Generate SHA-256 hashes for files
+- Read files safely in chunks for efficient hashing
+- Foundation for duplicate file detection
+
 ### Code Quality
 - Type hints
 - Function docstrings
@@ -78,6 +84,7 @@ python-toolkit/
 │   ├── cleaner.py
 │   ├── cli.py
 │   ├── config.py
+│   ├── duplicate_finder.py
 │   ├── logger.py
 │   └── organizer.py
 │
@@ -203,6 +210,10 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - Invalid confirmation input retry handling
 - Final File Cleaner basic-phase testing and polish
 - File Cleaner basic phase completion
+- Duplicate File Finder module foundation
+- SHA-256 file hashing
+- Chunk-based file hashing
+- Automated testing for file hashing
 
 ### Future Improvements
 
@@ -221,7 +232,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.16.0**
+**v0.16.1**
 
 ---
 
