@@ -216,3 +216,21 @@ def test_clean_files_handles_deletion_failure(
 
     assert temporary_file.exists()
     assert not backup_file.exists()
+
+def test_find_cleanup_candidates_ignores_subdirectories(tmp_path):
+    direct_file = tmp_path / "file.tmp"
+    direct_file.touch()
+
+    subdirectory = tmp_path / "subfolder"
+    subdirectory.mkdir()
+
+    nested_file = subdirectory / "nested.tmp"
+    nested_file.touch()
+
+    candidates = find_cleanup_candidates(tmp_path)
+
+    assert candidates == [
+        (direct_file, "Temporary", 0),
+    ]
+
+    assert nested_file.exists()

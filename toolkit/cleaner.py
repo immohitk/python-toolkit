@@ -71,7 +71,9 @@ def get_cleanup_summary(directory):
 
 def find_cleanup_candidates(directory):
     """
-    Find files in a directory that are cleanup candidates.
+    Find cleanup candidate files directly inside a directory.
+
+    Subdirectories are not scanned.
     """
     candidates = []
 
