@@ -164,7 +164,10 @@ def confirm_cleanup():
 
 def clean_files(directory):
     """
-    Delete all cleanup candidate files in a directory.
+    Delete cleanup candidate files in a directory.
+
+    Files that cannot be deleted are reported, while cleanup
+    continues for the remaining candidates.
     """
     candidates = find_cleanup_candidates(directory)
 
@@ -185,17 +188,26 @@ def clean_files(directory):
     print("-" * 25)
 
     total_size = 0
+    removed_count = 0
+    failed_count = 0
 
     for file, _, size in candidates:
-        file.unlink()
+        try:
+            file.unlink()
 
-        formatted_size = format_file_size(size)
-        print(f"Removed: {file.name} ({formatted_size})")
+            formatted_size = format_file_size(size)
+            print(f"Removed: {file.name} ({formatted_size})")
 
-        total_size += size
+            total_size += size
+            removed_count += 1
+
+        except OSError as error:
+            print(f"Failed to remove: {file.name} ({error})")
+            failed_count += 1
 
     formatted_total_size = format_file_size(total_size)
 
     print()
-    print(f"Files removed: {len(candidates)}")
+    print(f"Files removed: {removed_count}")
+    print(f"Files failed: {failed_count}")
     print(f"Space freed: {formatted_total_size}")

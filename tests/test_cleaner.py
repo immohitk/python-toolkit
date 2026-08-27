@@ -176,3 +176,43 @@ def test_clean_files_no_candidates(tmp_path, capsys):
 
     assert "No cleanup candidates found." in output
     assert normal_file.exists()
+
+def test_clean_files_handles_deletion_failure(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    temporary_file = tmp_path / "file.tmp"
+    backup_file = tmp_path / "backup.bak"
+
+    temporary_file.write_bytes(b"a" * 1024)
+    backup_file.write_bytes(b"b" * 2048)
+
+    monkeypatch.setattr("builtins.input", lambda _: "y")
+
+    original_unlink = type(temporary_file).unlink
+
+    def failing_unlink(file, *args, **kwargs):
+        if file == temporary_file:
+            raise PermissionError("Access denied")
+
+        return original_unlink(file, *args, **kwargs)
+
+    monkeypatch.setattr(
+        type(temporary_file),
+        "unlink",
+        failing_unlink,
+    )
+
+    clean_files(tmp_path)
+
+    output = capsys.readouterr().out
+
+    assert "Failed to remove: file.tmp" in output
+    assert "Removed: backup.bak" in output
+    assert "Files removed: 1" in output
+    assert "Files failed: 1" in output
+    assert "Space freed: 2.00 KB" in output
+
+    assert temporary_file.exists()
+    assert not backup_file.exists()
