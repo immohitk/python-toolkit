@@ -10,6 +10,8 @@ def test_clean_dry_run(tmp_path, monkeypatch, capsys):
     backup_file.touch()
     normal_file.touch()
 
+    monkeypatch.setattr("builtins.input", lambda _: "y")
+
     monkeypatch.setattr(
         "sys.argv",
         [
@@ -42,6 +44,8 @@ def test_clean_command(tmp_path, monkeypatch, capsys):
     temporary_file.touch()
     backup_file.touch()
     normal_file.touch()
+
+    monkeypatch.setattr("builtins.input", lambda _: "y")
 
     monkeypatch.setattr(
         "sys.argv",

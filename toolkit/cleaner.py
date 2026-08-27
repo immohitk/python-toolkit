@@ -152,6 +152,16 @@ def preview_cleanup(directory):
     print()
     print(f"Total cleanup size: {formatted_total_size}")
 
+def confirm_cleanup():
+    """
+    Ask the user to confirm cleanup.
+
+    Returns True if cleanup is confirmed.
+    """
+    response = input("Proceed with cleanup? [y/N]: ")
+
+    return response.lower() == "y"
+
 def clean_files(directory):
     """
     Delete all cleanup candidate files in a directory.
@@ -162,6 +172,15 @@ def clean_files(directory):
         print("No cleanup candidates found.")
         return
 
+    preview_cleanup(directory)
+
+    print()
+
+    if not confirm_cleanup():
+        print("Cleanup cancelled.")
+        return
+
+    print()
     print("Cleanup Complete")
     print("-" * 25)
 

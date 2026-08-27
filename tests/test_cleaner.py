@@ -139,7 +139,7 @@ def test_preview_cleanup_no_candidates(tmp_path, capsys):
 
     assert "No cleanup candidates found." in output
 
-def test_clean_files(tmp_path, capsys):
+def test_clean_files(tmp_path, monkeypatch, capsys):
     temporary_file = tmp_path / "file.tmp"
     backup_file = tmp_path / "backup.bak"
     normal_file = tmp_path / "photo.jpg"
@@ -147,6 +147,8 @@ def test_clean_files(tmp_path, capsys):
     temporary_file.write_bytes(b"a" * 1024)
     backup_file.write_bytes(b"b" * 2048)
     normal_file.write_bytes(b"c" * 100)
+
+    monkeypatch.setattr("builtins.input", lambda _: "y")
 
     clean_files(tmp_path)
 
