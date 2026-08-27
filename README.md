@@ -47,6 +47,11 @@ A collection of practical Python utilities for file management, automation, and 
 - Calculate total cleanup size
 - Display total cleanup size in human-readable format
 - Handle directories with no cleanup candidates
+- Continue cleanup when an individual file cannot be deleted
+- Display failed file removal reporting
+- Calculate freed disk space using only successfully deleted files
+- Clean files only directly inside the selected directory
+- Do not scan subdirectories during cleanup
 
 ### Code Quality
 - Type hints
@@ -184,6 +189,12 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - CLI cleanup command
 - Cleanup dry-run CLI support
 - Cleanup confirmation before permanent file deletion
+- Cleanup deletion failure handling
+- Continued cleanup after individual file deletion failures
+- Failed file removal reporting
+- Accurate freed disk space reporting after deletion failures
+- Non-recursive cleanup scope
+- Subdirectory cleanup exclusion
 
 ### Future Improvements
 
@@ -202,7 +213,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.15.1**
+**v0.15.2**
 
 ---
 

@@ -6,6 +6,29 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.15.2] - 2026-08-28
+
+### Improved
+
+- Improved cleanup error handling during file deletion
+- Cleanup continues when individual files cannot be deleted
+- Added reporting for successfully removed and failed files
+- Improved freed disk space reporting to count only successfully deleted files
+- Clarified that cleanup only scans files directly inside the selected directory
+- Added explicit non-recursive cleanup behavior documentation
+
+### Tested
+
+- Successful cleanup operations
+- Cleanup deletion failure handling
+- Continued cleanup after individual file deletion failures
+- Removed and failed file reporting
+- Freed disk space reporting after deletion failures
+- Subdirectory cleanup exclusion
+- Full test suite: 34 tests passed
+
+---
+
 ## [v0.15.1] - 2026-08-28
 
 ### Added
