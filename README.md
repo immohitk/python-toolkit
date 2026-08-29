@@ -60,7 +60,12 @@ A collection of practical Python utilities for file management, automation, and 
 
 - Generate SHA-256 hashes for files
 - Read files safely in chunks for efficient hashing
-- Foundation for duplicate file detection
+- Scan files directly inside a selected directory
+- Ignore subdirectories during duplicate scanning
+- Compare file hashes to identify identical content
+- Group files with identical content
+- Exclude unique files from duplicate results
+- Return duplicate file groups
 
 ### Code Quality
 - Type hints
@@ -214,6 +219,14 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - SHA-256 file hashing
 - Chunk-based file hashing
 - Automated testing for file hashing
+- Duplicate file detection
+- Direct directory file scanning for duplicate detection
+- SHA-256 hash comparison for duplicate detection
+- Duplicate file grouping
+- Unique file exclusion from duplicate results
+- Non-recursive duplicate scanning
+- Subdirectory exclusion during duplicate detection
+- Automated duplicate detection testing
 
 ### Future Improvements
 
@@ -232,7 +245,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.16.1**
+**v0.16.2**
 
 ---
 

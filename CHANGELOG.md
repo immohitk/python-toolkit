@@ -6,6 +6,31 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.16.2] - 2026-08-29
+
+### Added
+
+- Added duplicate file detection using SHA-256 file hashes
+- Added scanning for files directly inside the selected directory
+- Added grouping of files with identical content
+- Added automated tests for duplicate file detection
+
+### Improved
+
+- Unique files are excluded from duplicate detection results
+- Subdirectories are ignored during duplicate file scanning
+- Reused the existing chunk-based file hashing functionality
+
+### Tested
+
+- Duplicate file grouping
+- Unique file exclusion
+- Subdirectory exclusion
+- Practical duplicate detection with files containing identical content
+- Full test suite: 44 tests passed
+
+---
+
 ## [v0.16.1] - 2026-08-28
 
 ### Added

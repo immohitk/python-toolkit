@@ -25,7 +25,7 @@ from toolkit.logger import get_logger
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.16.1"
+APP_VERSION = "0.16.2"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
