@@ -6,6 +6,30 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.16.5] - 2026-08-29
+
+### Added
+
+- Added the `duplicates` command for finding duplicate files from the command line
+- Added CLI integration for duplicate file detection and report display
+- Added automated tests for the Duplicate File Finder CLI command
+
+### Improved
+
+- Duplicate file analysis can now be accessed directly through the command line
+- Duplicate detection remains report-only and does not delete or modify files
+- Directories with no duplicate files display a clear user-friendly message
+
+### Tested
+
+- Duplicate file detection through the CLI
+- Duplicate report display through the CLI
+- Directories with no duplicate files
+- Report-only behavior with files remaining unchanged
+- Full test suite: **51 tests passed**
+
+---
+
 ## [v0.16.4] - 2026-08-29
 
 ### Added

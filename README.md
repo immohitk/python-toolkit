@@ -76,6 +76,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Show the total number of duplicate groups found
 - Display potentially recoverable disk space
 - Handle directories with no duplicate files
+- Access duplicate file detection through the `duplicates` CLI command
+- Display duplicate file reports directly from the command line
+- Keep duplicate file analysis report-only
+- Do not delete or modify files during duplicate scanning
 
 ### Code Quality
 - Type hints
@@ -250,6 +254,11 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - Potential duplicate space savings display
 - No-duplicate report handling
 - Automated duplicate report testing
+- Duplicate File Finder CLI command
+- CLI integration for duplicate file detection
+- Duplicate report display through the command line
+- Report-only duplicate file analysis
+- Duplicate CLI testing
 
 ### Future Improvements
 
@@ -268,7 +277,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.16.4**
+**v0.16.5**
 
 ---
 
