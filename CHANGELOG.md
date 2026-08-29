@@ -6,6 +6,37 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.16.4] - 2026-08-29
+
+### Added
+
+- Added a readable duplicate file report
+- Added duplicate group display with clear group numbering
+- Added duplicate file name and path display
+- Added individual duplicate file size display
+- Added duplicate group count reporting
+- Added potential disk space savings reporting
+- Added handling for directories with no duplicate files
+- Added automated tests for duplicate report display
+
+### Improved
+
+- Duplicate detection results can now be reviewed in a clear, structured format
+- Potentially recoverable space is displayed as part of the final report
+- Empty duplicate results provide a simple user-friendly message
+
+### Tested
+
+- Duplicate report formatting
+- Duplicate group numbering
+- File name and path display
+- Duplicate file size display
+- Potential space savings reporting
+- No-duplicate report handling
+- Full test suite: 49 tests passed
+
+---
+
 ## [v0.16.3] - 2026-08-29
 
 ### Added

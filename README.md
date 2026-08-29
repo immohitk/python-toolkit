@@ -70,6 +70,12 @@ A collection of practical Python utilities for file management, automation, and 
 - Keep one file from each duplicate group when calculating recoverable space
 - Calculate recoverable space across multiple duplicate groups
 - Handle duplicate groups with different file sizes
+- Display duplicate groups in a readable report
+- Show duplicate file names and full paths
+- Display individual duplicate file sizes
+- Show the total number of duplicate groups found
+- Display potentially recoverable disk space
+- Handle directories with no duplicate files
 
 ### Code Quality
 - Type hints
@@ -236,6 +242,14 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - Recoverable space calculation across multiple duplicate groups
 - Duplicate groups with different file sizes handling
 - Automated duplicate size analysis testing
+- Duplicate file report display
+- Duplicate group report formatting
+- Duplicate file name and path display
+- Duplicate file size display
+- Duplicate group count display
+- Potential duplicate space savings display
+- No-duplicate report handling
+- Automated duplicate report testing
 
 ### Future Improvements
 
@@ -254,7 +268,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.16.3**
+**v0.16.4**
 
 ---
 
