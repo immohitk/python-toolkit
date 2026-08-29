@@ -66,6 +66,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Group files with identical content
 - Exclude unique files from duplicate results
 - Return duplicate file groups
+- Calculate potentially recoverable disk space from duplicate files
+- Keep one file from each duplicate group when calculating recoverable space
+- Calculate recoverable space across multiple duplicate groups
+- Handle duplicate groups with different file sizes
 
 ### Code Quality
 - Type hints
@@ -227,6 +231,11 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 - Non-recursive duplicate scanning
 - Subdirectory exclusion during duplicate detection
 - Automated duplicate detection testing
+- Duplicate file size analysis
+- Potentially recoverable duplicate space calculation
+- Recoverable space calculation across multiple duplicate groups
+- Duplicate groups with different file sizes handling
+- Automated duplicate size analysis testing
 
 ### Future Improvements
 
@@ -245,7 +254,7 @@ python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 
 Current Version:
 
-**v0.16.2**
+**v0.16.3**
 
 ---
 

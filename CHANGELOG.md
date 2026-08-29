@@ -6,6 +6,30 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.16.3] - 2026-08-29
+
+### Added
+
+- Added duplicate file size analysis
+- Added calculation of potentially recoverable disk space
+- Added support for calculating recoverable space across multiple duplicate groups
+- Added automated tests for duplicate size analysis
+
+### Improved
+
+- Duplicate space calculation keeps one file from each duplicate group
+- Only additional duplicate copies are counted as recoverable space
+- Duplicate groups with different file sizes are handled correctly
+
+### Tested
+
+- Recoverable space calculation for a duplicate group
+- Recoverable space calculation for multiple duplicate groups
+- Duplicate groups containing different file sizes
+- Full test suite: 46 tests passed
+
+---
+
 ## [v0.16.2] - 2026-08-29
 
 ### Added
