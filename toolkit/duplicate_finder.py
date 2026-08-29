@@ -63,3 +63,34 @@ def get_duplicate_space(duplicate_groups):
         recoverable_space += (len(group) - 1) * file_size
 
     return recoverable_space
+
+
+def display_duplicate_report(duplicate_groups):
+    """
+    Display a readable report of duplicate files.
+
+    The report shows duplicate groups, file names, paths,
+    file sizes, and potentially recoverable disk space.
+    """
+    if not duplicate_groups:
+        print("No duplicate files found.")
+        return
+
+    print("Duplicate File Report")
+    print("-" * 40)
+
+    for group_number, group in enumerate(duplicate_groups, start=1):
+        print(f"\nDuplicate Group {group_number}:")
+
+        for file_path in group:
+            file_size = file_path.stat().st_size
+
+            print(f"Name: {file_path.name}")
+            print(f"Path: {file_path}")
+            print(f"Size: {file_size} bytes")
+
+    recoverable_space = get_duplicate_space(duplicate_groups)
+
+    print("\n" + "-" * 40)
+    print(f"Duplicate groups found: {len(duplicate_groups)}")
+    print(f"Potential space savings: {recoverable_space} bytes")

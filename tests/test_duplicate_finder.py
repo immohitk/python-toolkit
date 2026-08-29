@@ -1,6 +1,7 @@
 from hashlib import sha256
 
 from toolkit.duplicate_finder import (
+    display_duplicate_report,
     find_duplicate_files,
     get_duplicate_space,
     get_file_hash,
@@ -112,3 +113,56 @@ def test_get_duplicate_space_with_multiple_groups(tmp_path):
     )
 
     assert get_duplicate_space(duplicate_groups) == expected_space
+
+
+def test_display_duplicate_report(tmp_path, capsys):
+    first_file = tmp_path / "first.txt"
+    second_file = tmp_path / "second.txt"
+
+    first_file.write_text("Same content")
+    second_file.write_text("Same content")
+
+    duplicate_groups = [
+        [first_file, second_file],
+    ]
+
+    display_duplicate_report(duplicate_groups)
+
+    output = capsys.readouterr().out
+
+    assert "Duplicate File Report" in output
+    assert "Duplicate Group 1" in output
+    assert first_file.name in output
+    assert second_file.name in output
+    assert str(first_file) in output
+    assert str(second_file) in output
+    assert f"{first_file.stat().st_size} bytes" in output
+    assert "Duplicate groups found: 1" in output
+
+
+def test_display_duplicate_report_shows_space_savings(tmp_path, capsys):
+    first_file = tmp_path / "first.txt"
+    second_file = tmp_path / "second.txt"
+
+    first_file.write_text("Same content")
+    second_file.write_text("Same content")
+
+    duplicate_groups = [
+        [first_file, second_file],
+    ]
+
+    expected_space = first_file.stat().st_size
+
+    display_duplicate_report(duplicate_groups)
+
+    output = capsys.readouterr().out
+
+    assert f"Potential space savings: {expected_space} bytes" in output
+
+
+def test_display_duplicate_report_handles_no_duplicates(capsys):
+    display_duplicate_report([])
+
+    output = capsys.readouterr().out
+
+    assert output == "No duplicate files found.\n"
