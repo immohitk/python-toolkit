@@ -20,6 +20,11 @@ from toolkit.cleaner import (
     preview_cleanup,
 )
 
+from toolkit.duplicate_finder import (
+    display_duplicate_report,
+    find_duplicate_files,
+)
+
 from toolkit.logger import get_logger
 
 logger = get_logger()
@@ -82,6 +87,16 @@ def create_parser():
         help="Preview cleanup without deleting files",
     )
 
+    duplicates_parser = subparsers.add_parser(
+        "duplicates",
+        help="Find duplicate files in a directory",
+    )
+
+    duplicates_parser.add_argument(
+        "directory",
+        help="Directory to scan for duplicate files",
+    )
+
     analyze_parser = subparsers.add_parser(
         "analyze",
         help="Analyze files in a directory",
@@ -136,6 +151,13 @@ def run():
                 preview_cleanup(directory)
             else:
                 clean_files(directory)
+
+        if args.command == "duplicates":
+            directory = Path(args.directory)
+
+            duplicate_groups = find_duplicate_files(directory)
+
+            display_duplicate_report(duplicate_groups)
 
     except FileNotFoundError as error:
         logger.error("%s", error)

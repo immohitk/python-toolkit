@@ -68,3 +68,66 @@ def test_clean_command(tmp_path, monkeypatch, capsys):
     assert not temporary_file.exists()
     assert not backup_file.exists()
     assert normal_file.exists()
+
+
+def test_duplicates_command(tmp_path, monkeypatch, capsys):
+    first_file = tmp_path / "first.txt"
+    second_file = tmp_path / "second.txt"
+    unique_file = tmp_path / "unique.txt"
+
+    first_file.write_text("Same content")
+    second_file.write_text("Same content")
+    unique_file.write_text("Different content")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "duplicates",
+            str(tmp_path),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Duplicate File Report" in output
+    assert "Duplicate Group 1" in output
+    assert first_file.name in output
+    assert second_file.name in output
+    assert unique_file.name not in output
+
+    assert first_file.exists()
+    assert second_file.exists()
+    assert unique_file.exists()
+
+
+def test_duplicates_command_handles_no_duplicates(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_file = tmp_path / "first.txt"
+    second_file = tmp_path / "second.txt"
+
+    first_file.write_text("First content")
+    second_file.write_text("Second content")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "duplicates",
+            str(tmp_path),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert output == "No duplicate files found.\n"
+
+    assert first_file.exists()
+    assert second_file.exists()
