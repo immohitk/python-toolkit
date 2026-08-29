@@ -44,3 +44,22 @@ def find_duplicate_files(directory):
         for files in file_hashes.values()
         if len(files) > 1
     ]
+
+
+def get_duplicate_space(duplicate_groups):
+    """
+    Calculate the potentially recoverable space from duplicate files.
+
+    One file from each duplicate group is kept, so only the
+    remaining duplicate copies are counted as recoverable space.
+    """
+    recoverable_space = 0
+
+    for group in duplicate_groups:
+        if len(group) < 2:
+            continue
+
+        file_size = group[0].stat().st_size
+        recoverable_space += (len(group) - 1) * file_size
+
+    return recoverable_space
