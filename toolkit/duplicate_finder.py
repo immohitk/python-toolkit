@@ -28,7 +28,7 @@ def find_duplicate_files(directory):
     directory = Path(directory)
     file_hashes = {}
 
-    for file_path in directory.iterdir():
+    for file_path in sorted(directory.iterdir()):
         if not file_path.is_file():
             continue
 
