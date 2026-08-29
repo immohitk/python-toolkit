@@ -18,6 +18,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Dry-run mode
 - Clean command
 - Cleanup dry-run mode
+- Duplicate file finder command
 
 ### File Organizer
 - Analyze files in a directory
@@ -174,6 +175,14 @@ Preview cleanup without deleting files
 ```bash
 python main.py clean "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
 ```
+
+Find duplicate files in a directory
+
+```bash
+python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
+```
+
+
 
 ---
 
