@@ -82,7 +82,15 @@ A collection of practical Python utilities for file management, automation, and 
 - Keep duplicate file analysis report-only
 - Do not delete or modify files during duplicate scanning
 
+### PDF Merger
+
+- PDF merging module foundation
+- Merge multiple PDF files into a single PDF file
+- Preserve pages from input PDF files
+- Automated testing for PDF merging
+
 ### Code Quality
+
 - Type hints
 - Function docstrings
 - Automated unit tests with pytest
@@ -106,7 +114,8 @@ python-toolkit/
 │   ├── config.py
 │   ├── duplicate_finder.py
 │   ├── logger.py
-│   └── organizer.py
+│   ├── organizer.py
+│   └── pdf_merger.py
 │
 ├── tests/
 ├── docs/
@@ -122,7 +131,7 @@ python-toolkit/
 ## Requirements
 
 - Python 3.10+
-- No external dependencies
+- pypdf 6.16.2
 
 ---
 
@@ -275,6 +284,11 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - Non-recursive duplicate scanning verification
 - Practical Duplicate File Finder CLI testing
 - Duplicate File Finder basic phase completion
+- PDF Merger module foundation
+- PDF merging function structure
+- PDF page merging using pypdf
+- Automated PDF merging test
+- Initial external dependency management with requirements.txt
 
 ### Future Improvements
 
@@ -293,7 +307,7 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.17.0**
+**v0.17.1**
 
 ---
 

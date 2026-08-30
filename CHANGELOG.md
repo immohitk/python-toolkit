@@ -6,6 +6,25 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.17.1] - 2026-08-30
+
+### Added
+
+- Added the PDF Merger module foundation
+- Added the `merge_pdf_files()` function
+- Added support for merging multiple PDF files into a single output PDF
+- Added the `pypdf` dependency
+- Added an initial automated test for PDF merging
+
+### Tested
+
+- Merging multiple PDF files
+- Preserving pages from all input PDF files
+- Creating the merged output PDF
+- Full test suite: **54 tests passed**
+
+---
+
 ## [v0.17.0] - 2026-08-29
 
 ### Completed
