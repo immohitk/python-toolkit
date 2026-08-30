@@ -6,6 +6,32 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.17.0] - 2026-08-29
+
+### Completed
+
+- Completed the basic development phase of the Duplicate File Finder
+- Reviewed meaningful duplicate detection edge cases
+- Added missing empty directory coverage
+- Verified directories with no duplicate files
+- Verified duplicate file group detection
+- Verified non-recursive duplicate scanning behavior
+- Performed practical testing through the `duplicates` CLI command
+- Confirmed duplicate analysis remains report-only and does not modify files
+
+### Tested
+
+- Empty directory handling
+- Directories with no duplicate files
+- Duplicate group detection
+- Duplicate report generation
+- Non-recursive directory scanning
+- Duplicate File Finder CLI behavior
+- Practical CLI testing
+- Full test suite: **53 tests passed**
+
+---
+
 ## [v0.16.5] - 2026-08-29
 
 ### Added

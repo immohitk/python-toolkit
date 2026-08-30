@@ -268,6 +268,13 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - Duplicate report display through the command line
 - Report-only duplicate file analysis
 - Duplicate CLI testing
+- Final Duplicate File Finder edge-case testing
+- Empty directory handling verification
+- Directories with no duplicate files verification
+- Duplicate group detection verification
+- Non-recursive duplicate scanning verification
+- Practical Duplicate File Finder CLI testing
+- Duplicate File Finder basic phase completion
 
 ### Future Improvements
 
@@ -286,7 +293,7 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.16.5**
+**v0.17.0**
 
 ---
 

@@ -131,3 +131,24 @@ def test_duplicates_command_handles_no_duplicates(
 
     assert first_file.exists()
     assert second_file.exists()
+
+
+def test_duplicates_command_handles_empty_directory(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "duplicates",
+            str(tmp_path),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert output == "No duplicate files found.\n"

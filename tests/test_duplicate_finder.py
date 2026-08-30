@@ -47,6 +47,12 @@ def test_find_duplicate_files_ignores_unique_files(tmp_path):
     assert duplicates == []
 
 
+def test_find_duplicate_files_handles_empty_directory(tmp_path):
+    duplicates = find_duplicate_files(tmp_path)
+
+    assert duplicates == []
+
+
 def test_find_duplicate_files_ignores_subdirectories(tmp_path):
     first_file = tmp_path / "first.txt"
     second_file = tmp_path / "second.txt"
