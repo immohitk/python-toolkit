@@ -6,6 +6,26 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.17.3] - 2026-08-30
+
+### Added
+
+- Added PDF merger input file validation
+- Added validation for missing input file paths
+- Added validation to reject directory inputs
+- Added validation to reject non-PDF files
+- Added clear error handling for invalid PDF merger inputs
+
+### Tested
+
+- Missing input file handling
+- Directory input rejection
+- Non-PDF file rejection
+- Valid PDF merging after input validation
+- Full test suite: **58 tests passed**
+
+---
+
 ## [v0.17.2] - 2026-08-30
 
 ### Added
