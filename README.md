@@ -88,6 +88,9 @@ A collection of practical Python utilities for file management, automation, and 
 - Merge multiple PDF files into a single PDF file
 - Preserve pages from input PDF files
 - Automated testing for PDF merging
+- Accept multiple PDF input files
+- Preserve the exact input file order during merging
+- Automated testing for multiple PDF input order
 
 ### Code Quality
 
@@ -289,6 +292,9 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - PDF page merging using pypdf
 - Automated PDF merging test
 - Initial external dependency management with requirements.txt
+- Multiple PDF input support
+- PDF input order preservation
+- Automated multiple PDF input testing
 
 ### Future Improvements
 
@@ -307,7 +313,7 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.17.1**
+**v0.17.2**
 
 ---
 

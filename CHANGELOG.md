@@ -6,6 +6,23 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.17.2] - 2026-08-30
+
+### Added
+
+- Added automated verification for merging multiple PDF input files
+- Added input order preservation testing
+- Verified that PDF files are processed in the exact order provided
+
+### Tested
+
+- Merging multiple PDF files
+- Preserving the exact input file order
+- Creating merged PDFs from multiple input files
+- Full test suite: **55 tests passed**
+
+---
+
 ## [v0.17.1] - 2026-08-30
 
 ### Added
