@@ -6,6 +6,25 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.18.1] - 2026-09-01
+
+### Added
+
+- Added Duplicate Finder CLI dry-run support
+- Added explicit dry-run confirmation that no files are modified
+- Added automated testing for Duplicate Finder dry-run behavior
+- Completed practical Duplicate Finder dry-run verification
+
+### Tested
+
+- Duplicate Finder dry-run CLI behavior
+- Duplicate report generation during dry-run
+- Dry-run file preservation
+- Invalid directory handling
+- Full test suite: **65 tests passed**
+
+---
+
 ## [v0.18.0] - 2026-09-01
 
 ### Completed

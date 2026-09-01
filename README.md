@@ -81,6 +81,9 @@ A collection of practical Python utilities for file management, automation, and 
 - Display duplicate file reports directly from the command line
 - Keep duplicate file analysis report-only
 - Do not delete or modify files during duplicate scanning
+- Duplicate Finder dry-run support
+- Preview duplicate analysis without modifying files
+- Explicit confirmation that no files are modified during dry-run
 
 ### PDF Merger
 
@@ -215,6 +218,12 @@ Find duplicate files in a directory
 python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 ```
 
+Preview duplicate file analysis without modifying files
+
+```bash
+python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder" --dry-run
+```
+
 Merge PDF files
 
 ```bash
@@ -318,6 +327,9 @@ python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" 
 - Non-recursive duplicate scanning verification
 - Practical Duplicate File Finder CLI testing
 - Duplicate File Finder basic phase completion
+- Duplicate Finder dry-run support
+- Duplicate Finder CLI dry-run testing
+- Practical Duplicate Finder dry-run verification
 - PDF Merger module foundation
 - PDF merging function structure
 - PDF page merging using pypdf
@@ -362,7 +374,7 @@ python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" 
 
 Current Version:
 
-**v0.18.0**
+**v0.18.1**
 
 ---
 
