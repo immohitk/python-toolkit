@@ -25,6 +25,8 @@ from toolkit.duplicate_finder import (
     find_duplicate_files,
 )
 
+from toolkit.pdf_merger import merge_pdf_files
+
 from toolkit.logger import get_logger
 
 logger = get_logger()
@@ -117,6 +119,24 @@ def create_parser():
         help="Directory to analyze",
     )
 
+    merge_parser = subparsers.add_parser(
+        "merge",
+        help="Merge multiple PDF files into a single PDF",
+    )
+
+    merge_parser.add_argument(
+        "input_files",
+        nargs="+",
+        help="PDF files to merge",
+    )
+
+    merge_parser.add_argument(
+        "-o",
+        "--output",
+        required=True,
+        help="Output PDF file",
+    )
+
     return parser
 
 def run():
@@ -158,6 +178,15 @@ def run():
             duplicate_groups = find_duplicate_files(directory)
 
             display_duplicate_report(duplicate_groups)
+
+        if args.command == "merge":
+            input_files = [Path(file) for file in args.input_files]
+            output_file = Path(args.output)
+
+            merge_pdf_files(
+                input_files,
+                output_file,
+            )
 
     except FileNotFoundError as error:
         logger.error("%s", error)
