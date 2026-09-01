@@ -39,6 +39,30 @@ def test_merge_pdf_files(tmp_path):
     assert len(reader.pages) == 5
 
 
+def test_merge_pdf_files_preserves_source_files(tmp_path):
+    first_file = tmp_path / "first.pdf"
+    second_file = tmp_path / "second.pdf"
+    output_file = tmp_path / "merged.pdf"
+
+    create_pdf(first_file, 2, 100, 100)
+    create_pdf(second_file, 3, 200, 200)
+
+    first_size_before = first_file.stat().st_size
+    second_size_before = second_file.stat().st_size
+
+    merge_pdf_files(
+        [first_file, second_file],
+        output_file,
+    )
+
+    assert output_file.exists()
+    assert first_file.exists()
+    assert second_file.exists()
+
+    assert first_file.stat().st_size == first_size_before
+    assert second_file.stat().st_size == second_size_before
+
+
 def test_merge_pdf_files_preserves_input_order(tmp_path):
     first_file = tmp_path / "first.pdf"
     second_file = tmp_path / "second.pdf"
@@ -66,6 +90,7 @@ def test_merge_pdf_files_preserves_input_order(tmp_path):
     assert reader.pages[1].mediabox.width == 200
     assert reader.pages[2].mediabox.width == 300
 
+
 def test_merge_pdf_files_preserves_page_order(tmp_path):
     first_file = tmp_path / "first.pdf"
     second_file = tmp_path / "second.pdf"
@@ -88,6 +113,7 @@ def test_merge_pdf_files_preserves_page_order(tmp_path):
     assert reader.pages[2].mediabox.width == 200
     assert reader.pages[3].mediabox.width == 200
     assert reader.pages[4].mediabox.width == 200
+
 
 def test_merge_pdf_files_rejects_missing_file(tmp_path):
     missing_file = tmp_path / "missing.pdf"
