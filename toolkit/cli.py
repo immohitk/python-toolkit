@@ -25,7 +25,10 @@ from toolkit.duplicate_finder import (
     find_duplicate_files,
 )
 
-from toolkit.pdf_merger import merge_pdf_files
+from toolkit.pdf_merger import (
+    merge_pdf_files,
+    validate_pdf_files,
+)
 
 from toolkit.logger import get_logger
 
@@ -137,6 +140,12 @@ def create_parser():
         help="Output PDF file",
     )
 
+    merge_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview PDF merge without creating the output file",
+    )
+
     return parser
 
 def run():
@@ -183,15 +192,34 @@ def run():
             input_files = [Path(file) for file in args.input_files]
             output_file = Path(args.output)
 
-            merge_pdf_files(
-                input_files,
-                output_file,
-            )
+            if args.dry_run:
+                validate_pdf_files(input_files)
+
+                print("PDF Merge Preview")
+                print()
+                print("Input files:")
+
+                for index, input_file in enumerate(input_files, start=1):
+                    print(f"{index}. {input_file}")
+
+                print()
+                print(f"Output: {output_file}")
+                print()
+                print("No files were modified.")
+            else:
+                merge_pdf_files(
+                    input_files,
+                    output_file,
+                )
 
     except FileNotFoundError as error:
         logger.error("%s", error)
         print(f"Error: {error}")
 
     except NotADirectoryError as error:
+        logger.error("%s", error)
+        print(f"Error: {error}")
+
+    except ValueError as error:
         logger.error("%s", error)
         print(f"Error: {error}")
