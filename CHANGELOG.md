@@ -6,6 +6,38 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.18.0] - 2026-09-01
+
+### Completed
+
+- Completed the PDF Merger basic phase
+- Added PDF merger CLI command
+- Added PDF merger CLI dry-run support
+- Added CLI validation error handling
+- Verified multiple PDF input handling
+- Verified selected input order preservation
+- Verified page order preservation
+- Verified merged output creation
+- Verified original input PDF preservation
+- Completed practical CLI verification
+
+### Tested
+
+- PDF merger unit tests
+- PDF merger CLI tests
+- Multiple PDF merging
+- Input validation
+- Selected input ordering
+- Page ordering
+- Output creation
+- Source file preservation
+- CLI dry-run behavior
+- CLI validation error handling
+- Practical merging using real PDF files
+- Full test suite: **64 tests passed**
+
+---
+
 ## [v0.17.5] - 2026-08-30
 
 ### Added

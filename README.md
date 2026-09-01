@@ -104,6 +104,14 @@ A collection of practical Python utilities for file management, automation, and 
 - Preserve original input PDF files
 - Verify successful merged output creation
 - Automated testing for output creation and source preservation
+- PDF merger CLI command
+- Merge multiple PDFs through the command line
+- Specify the output PDF through the CLI
+- PDF merger dry-run support
+- Preview PDF merging without creating output
+- CLI handling for invalid PDF inputs
+- Practical CLI verification
+- PDF Merger basic phase completed
 
 ### Code Quality
 
@@ -207,7 +215,17 @@ Find duplicate files in a directory
 python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 ```
 
+Merge PDF files
 
+```bash
+python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\second.pdf" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\merged.pdf"
+```
+
+Preview PDF merging without creating the output
+
+```bash
+python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\second.pdf" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\merged.pdf" --dry-run
+```
 
 ---
 
@@ -319,6 +337,13 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - Merged PDF output creation
 - Source PDF preservation during merging
 - Automated PDF output creation testing
+- PDF merger CLI command
+- PDF merger CLI integration
+- PDF merger dry-run support
+- PDF merger CLI testing
+- PDF merger CLI validation error handling
+- Practical PDF merger CLI verification
+- PDF Merger basic phase completion
 
 ### Future Improvements
 
@@ -337,7 +362,7 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.17.5**
+**v0.18.0**
 
 ---
 
