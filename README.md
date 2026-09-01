@@ -100,6 +100,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Preserve page order within each input PDF
 - Preserve combined page order in the merged PDF
 - Automated testing for merged page ordering
+- Create and save the merged PDF output
+- Preserve original input PDF files
+- Verify successful merged output creation
+- Automated testing for output creation and source preservation
 
 ### Code Quality
 
@@ -312,6 +316,9 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - PDF merging in selected input order
 - PDF page order preservation
 - Automated merged page ordering testing
+- Merged PDF output creation
+- Source PDF preservation during merging
+- Automated PDF output creation testing
 
 ### Future Improvements
 
@@ -330,7 +337,7 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.17.4**
+**v0.17.5**
 
 ---
 

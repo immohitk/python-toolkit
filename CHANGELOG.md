@@ -6,6 +6,23 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.17.5] - 2026-08-30
+
+### Added
+
+- Added verification for merged PDF output creation
+- Verified that merged results are saved to the requested output path
+- Verified that original input PDFs remain unchanged
+
+### Tested
+
+- Merged PDF output creation
+- Output file existence verification
+- Source PDF preservation
+- Full test suite: **60 tests passed**
+
+---
+
 ## [v0.17.4] - 2026-08-30
 
 ### Completed
