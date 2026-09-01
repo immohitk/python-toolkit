@@ -96,6 +96,10 @@ A collection of practical Python utilities for file management, automation, and 
 - Validate PDF file extensions
 - Clear handling for invalid merger inputs
 - Automated testing for PDF input validation
+- Merge PDFs in the selected input order
+- Preserve page order within each input PDF
+- Preserve combined page order in the merged PDF
+- Automated testing for merged page ordering
 
 ### Code Quality
 
@@ -305,6 +309,9 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 - Directory input rejection for PDF merging
 - Non-PDF input rejection
 - Automated PDF merger input validation testing
+- PDF merging in selected input order
+- PDF page order preservation
+- Automated merged page ordering testing
 
 ### Future Improvements
 
@@ -323,7 +330,7 @@ python main.py duplicates "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder"
 
 Current Version:
 
-**v0.17.3**
+**v0.17.4**
 
 ---
 

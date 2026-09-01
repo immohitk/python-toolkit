@@ -6,6 +6,25 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.17.4] - 2026-08-30
+
+### Completed
+
+- Implemented PDF merging in the selected input order
+- Preserved page order within each input PDF
+- Verified merged PDF page ordering
+- Verified multiple PDF input ordering
+
+### Tested
+
+- PDF merging with multiple input files
+- Selected input order preservation
+- Page order preservation within individual PDFs
+- Combined merged page ordering
+- Full test suite: **59 tests passed**
+
+---
+
 ## [v0.17.3] - 2026-08-30
 
 ### Added
