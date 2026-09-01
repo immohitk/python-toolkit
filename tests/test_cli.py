@@ -1,5 +1,22 @@
 from toolkit.cli import run
 
+from pypdf import PdfReader, PdfWriter
+
+
+def create_pdf(file_path, page_count, width, height):
+    """Create a PDF with blank pages of the requested size."""
+
+    writer = PdfWriter()
+
+    for _ in range(page_count):
+        writer.add_blank_page(
+            width=width,
+            height=height,
+        )
+
+    with file_path.open("wb") as file:
+        writer.write(file)
+
 
 def test_clean_dry_run(tmp_path, monkeypatch, capsys):
     temporary_file = tmp_path / "file.tmp"
@@ -152,3 +169,121 @@ def test_duplicates_command_handles_empty_directory(
     output = capsys.readouterr().out
 
     assert output == "No duplicate files found.\n"
+
+def test_merge_command(tmp_path, monkeypatch):
+    first_file = tmp_path / "first.pdf"
+    second_file = tmp_path / "second.pdf"
+    output_file = tmp_path / "merged.pdf"
+
+    create_pdf(first_file, 2, 100, 100)
+    create_pdf(second_file, 3, 200, 200)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "merge",
+            str(first_file),
+            str(second_file),
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    reader = PdfReader(output_file)
+
+    assert output_file.exists()
+    assert len(reader.pages) == 5
+
+def test_merge_command_dry_run(tmp_path, monkeypatch, capsys):
+    first_file = tmp_path / "first.pdf"
+    second_file = tmp_path / "second.pdf"
+    output_file = tmp_path / "merged.pdf"
+
+    create_pdf(first_file, 2, 100, 100)
+    create_pdf(second_file, 3, 200, 200)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "merge",
+            str(first_file),
+            str(second_file),
+            "-o",
+            str(output_file),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Merge Preview" in output
+    assert str(first_file) in output
+    assert str(second_file) in output
+    assert str(output_file) in output
+    assert "No files were modified." in output
+
+    assert not output_file.exists()
+    assert first_file.exists()
+    assert second_file.exists()
+
+def test_merge_command_handles_missing_file(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    missing_file = tmp_path / "missing.pdf"
+    output_file = tmp_path / "merged.pdf"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "merge",
+            str(missing_file),
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Input file does not exist:" in output
+    assert str(missing_file) in output
+    assert not output_file.exists()
+
+def test_merge_command_rejects_non_pdf_file(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "document.txt"
+    output_file = tmp_path / "merged.pdf"
+
+    input_file.write_text("Not a PDF file")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "merge",
+            str(input_file),
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Input file is not a PDF:" in output
+    assert str(input_file) in output
+    assert not output_file.exists()
