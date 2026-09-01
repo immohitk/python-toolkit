@@ -170,6 +170,39 @@ def test_duplicates_command_handles_empty_directory(
 
     assert output == "No duplicate files found.\n"
 
+def test_duplicates_command_dry_run(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_file = tmp_path / "first.txt"
+    second_file = tmp_path / "second.txt"
+
+    first_file.write_text("Same content")
+    second_file.write_text("Same content")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "duplicates",
+            str(tmp_path),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Duplicate File Report" in output
+    assert first_file.name in output
+    assert second_file.name in output
+    assert "No files were modified." in output
+
+    assert first_file.exists()
+    assert second_file.exists()
+
 def test_merge_command(tmp_path, monkeypatch):
     first_file = tmp_path / "first.pdf"
     second_file = tmp_path / "second.pdf"

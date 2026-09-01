@@ -102,6 +102,12 @@ def create_parser():
         help="Directory to scan for duplicate files",
     )
 
+    duplicates_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview duplicate file analysis without modifying files",
+    )
+
     analyze_parser = subparsers.add_parser(
         "analyze",
         help="Analyze files in a directory",
@@ -187,6 +193,9 @@ def run():
             duplicate_groups = find_duplicate_files(directory)
 
             display_duplicate_report(duplicate_groups)
+
+            if args.dry_run:
+                print("\nNo files were modified.")
 
         if args.command == "merge":
             input_files = [Path(file) for file in args.input_files]
