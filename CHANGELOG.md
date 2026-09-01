@@ -6,6 +6,27 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.18.2] - 2026-09-01
+
+### Added
+
+- Added the PDF Splitter module foundation
+- Added PDF splitting into individual page files
+- Added predictable output file generation
+- Added preservation of the original PDF file
+- Added automated tests for PDF splitting
+
+### Tested
+
+- Individual PDF page splitting
+- Multiple-page PDF splitting
+- Generated PDF output validation
+- Original PDF preservation
+- Generated output path handling
+- Full test suite: **69 tests passed**
+
+---
+
 ## [v0.18.1] - 2026-09-01
 
 ### Added

@@ -116,6 +116,15 @@ A collection of practical Python utilities for file management, automation, and 
 - Practical CLI verification
 - PDF Merger basic phase completed
 
+### PDF Splitter
+
+- PDF Splitter module foundation
+- Split PDF files into individual pages
+- Generate separate PDF files for each page
+- Preserve original PDF files
+- Predictable output file naming
+- Automated testing for PDF splitting
+
 ### Code Quality
 
 - Type hints
@@ -142,7 +151,8 @@ python-toolkit/
 │   ├── duplicate_finder.py
 │   ├── logger.py
 │   ├── organizer.py
-│   └── pdf_merger.py
+│   ├── pdf_merger.py
+│   └── pdf_splitter.py
 │
 ├── tests/
 ├── docs/
@@ -356,6 +366,12 @@ python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" 
 - PDF merger CLI validation error handling
 - Practical PDF merger CLI verification
 - PDF Merger basic phase completion
+- PDF Splitter module foundation
+- PDF splitting into individual pages
+- PDF Splitter output generation
+- PDF Splitter source PDF preservation
+- Automated PDF Splitter testing
+- PDF Splitter core phase completion
 
 ### Future Improvements
 
@@ -374,7 +390,7 @@ python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" 
 
 Current Version:
 
-**v0.18.1**
+**v0.18.2**
 
 ---
 
