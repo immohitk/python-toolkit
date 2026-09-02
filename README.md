@@ -124,6 +124,16 @@ A collection of practical Python utilities for file management, automation, and 
 - Preserve original PDF files
 - Predictable output file naming
 - Automated testing for PDF splitting
+- Select a single page to split
+- Select a page range to split
+- Validate page selections against the PDF page count
+- PDF Splitter CLI command
+- Specify a custom output directory
+- Report generated output files
+- PDF Splitter dry-run support
+- Preview selected pages without creating output files
+- Display files that would be generated during dry-run
+- Explicit confirmation that no files are modified during dry-run
 
 ### Code Quality
 
@@ -244,6 +254,36 @@ Preview PDF merging without creating the output
 
 ```bash
 python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\second.pdf" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\merged.pdf" --dry-run
+```
+
+Split a PDF
+
+```bash
+python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf"
+```
+
+Split selected pages
+
+```bash
+python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2-4"
+```
+
+Split a single page
+
+```bash
+python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2"
+```
+
+Specify a custom output directory
+
+```bash
+python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\split"
+```
+
+Preview a PDF split without creating output files
+
+```bash
+python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2-4" --dry-run
 ```
 
 ---
@@ -372,6 +412,17 @@ python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" 
 - PDF Splitter source PDF preservation
 - Automated PDF Splitter testing
 - PDF Splitter core phase completion
+- PDF Splitter page selection
+- PDF Splitter page selection validation
+- PDF Splitter CLI command
+- PDF Splitter custom output directory support
+- PDF Splitter generated-file reporting
+- PDF Splitter dry-run support
+- PDF Splitter CLI testing
+- PDF Splitter practical CLI verification
+- PDF Splitter invalid page selection verification
+- PDF Splitter dry-run source preservation verification
+- PDF Splitter basic phase completion
 
 ### Future Improvements
 
@@ -390,7 +441,7 @@ python main.py merge "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.pdf" 
 
 Current Version:
 
-**v0.18.2**
+**v0.18.4**
 
 ---
 
