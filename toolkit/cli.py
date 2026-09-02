@@ -8,6 +8,8 @@ and displaying help/version information.
 import argparse
 from pathlib import Path
 
+from pypdf import PdfReader
+
 from toolkit.organizer import (
     analyze_files,
     create_category_folders,
@@ -30,12 +32,17 @@ from toolkit.pdf_merger import (
     validate_pdf_files,
 )
 
+from toolkit.pdf_splitter import (
+    get_page_numbers,
+    split_pdf,
+)
+
 from toolkit.logger import get_logger
 
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.18.2"
+APP_VERSION = "0.18.4"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -152,6 +159,34 @@ def create_parser():
         help="Preview PDF merge without creating the output file",
     )
 
+    split_parser = subparsers.add_parser(
+        "split",
+        help="Split a PDF into individual pages",
+    )
+
+    split_parser.add_argument(
+        "input_file",
+        help="PDF file to split",
+    )
+
+    split_parser.add_argument(
+        "-o",
+        "--output",
+        default="split",
+        help="Output directory for split PDF files",
+    )
+
+    split_parser.add_argument(
+        "--pages",
+        help="Pages to split, such as 2 or 2-4",
+    )
+
+    split_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview PDF split without creating output files",
+    )
+
     return parser
 
 def run():
@@ -220,6 +255,59 @@ def run():
                     input_files,
                     output_file,
                 )
+
+        if args.command == "split":
+            input_file = Path(args.input_file)
+            output_directory = Path(args.output)
+
+            if args.dry_run:
+                reader = PdfReader(input_file)
+
+                if args.pages is None:
+                    page_numbers = list(range(len(reader.pages)))
+                else:
+                    page_numbers = get_page_numbers(
+                        args.pages,
+                        len(reader.pages),
+                    )
+
+                print("PDF Split Preview")
+                print()
+                print(f"Input: {input_file}")
+                print()
+
+                print("Selected pages:")
+
+                for page_number in page_numbers:
+                    print(f"- {page_number + 1}")
+
+                print()
+                print("Files that would be generated:")
+
+                for page_number in page_numbers:
+                    output_file = (
+                        output_directory
+                        / f"{input_file.stem}_page_{page_number + 1}.pdf"
+                    )
+                    print(f"- {output_file}")
+
+                print()
+                print("No files were modified.")
+
+            else:
+                generated_files = split_pdf(
+                    input_file,
+                    output_directory,
+                    args.pages,
+                )
+
+                print("PDF Split Complete")
+                print()
+
+                print("Generated files:")
+
+                for generated_file in generated_files:
+                    print(f"- {generated_file}")
 
     except FileNotFoundError as error:
         logger.error("%s", error)
