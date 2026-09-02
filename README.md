@@ -441,7 +441,7 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 
 Current Version:
 
-**v0.18.4**
+**v0.19.0**
 
 ---
 

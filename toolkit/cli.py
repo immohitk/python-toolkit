@@ -42,7 +42,7 @@ from toolkit.logger import get_logger
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.18.4"
+APP_VERSION = "0.19.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."

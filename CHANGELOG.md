@@ -6,6 +6,55 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.19.0] - 2026-09-02
+
+### Completed
+
+- Completed the PDF Splitter basic development phase
+- Completed individual PDF page splitting
+- Completed single-page selection
+- Completed page-range splitting
+- Preserved selected page order
+- Preserved original PDF files
+- Completed PDF input validation
+- Completed page selection validation
+- Rejected invalid and reversed page ranges
+- Prevented unwanted output from invalid operations
+- Completed PDF Splitter CLI integration
+- Completed PDF Splitter dry-run support
+- Completed generated-file reporting
+- Completed practical PDF testing
+- Completed PDF Splitter CLI testing
+- Completed edge-case and regression testing
+
+### Tested
+
+- Individual page splitting
+- Single-page selection
+- Page-range splitting
+- Selected page order preservation
+- Original PDF preservation
+- Invalid page selection handling
+- Reversed page range handling
+- Missing PDF input handling
+- Invalid operation output safety
+- Dry-run output safety
+- Dry-run source preservation
+- PDF Splitter CLI behavior
+- PDF Splitter CLI help
+- Generated-file reporting
+- Practical testing with real PDF files
+- Full regression test suite: **86 tests passed**
+- `git diff --check`
+
+### Release
+
+- Updated application version to **v0.19.0**
+- Final PDF Splitter basic-phase review completed
+- PDF Splitter basic phase officially marked complete
+
+---
+
 ## [v0.18.4] - 2026-09-02
 
 ### Added
