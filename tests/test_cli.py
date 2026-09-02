@@ -320,3 +320,177 @@ def test_merge_command_rejects_non_pdf_file(
     assert "Error: Input file is not a PDF:" in output
     assert str(input_file) in output
     assert not output_file.exists()
+
+
+def test_split_command(tmp_path, monkeypatch, capsys):
+    input_file = tmp_path / "sample.pdf"
+    output_directory = tmp_path / "split"
+
+    create_pdf(input_file, 3, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "split",
+            str(input_file),
+            "-o",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Split Complete" in output
+    assert "sample_page_1.pdf" in output
+    assert "sample_page_2.pdf" in output
+    assert "sample_page_3.pdf" in output
+
+    assert (output_directory / "sample_page_1.pdf").exists()
+    assert (output_directory / "sample_page_2.pdf").exists()
+    assert (output_directory / "sample_page_3.pdf").exists()
+
+
+def test_split_command_with_page_range(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_directory = tmp_path / "split"
+
+    create_pdf(input_file, 5, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "split",
+            str(input_file),
+            "-o",
+            str(output_directory),
+            "--pages",
+            "2-4",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Split Complete" in output
+    assert "sample_page_2.pdf" in output
+    assert "sample_page_3.pdf" in output
+    assert "sample_page_4.pdf" in output
+
+    assert not (output_directory / "sample_page_1.pdf").exists()
+    assert not (output_directory / "sample_page_5.pdf").exists()
+
+
+def test_split_command_handles_missing_file(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    missing_file = tmp_path / "missing.pdf"
+    output_directory = tmp_path / "split"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "split",
+            str(missing_file),
+            "-o",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error:" in output
+    assert "No such file or directory" in output
+    assert "missing.pdf" in output
+    assert not output_directory.exists()
+
+
+def test_split_command_rejects_invalid_page_selection(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_directory = tmp_path / "split"
+
+    create_pdf(input_file, 3, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "split",
+            str(input_file),
+            "-o",
+            str(output_directory),
+            "--pages",
+            "2-10",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Page number exceeds PDF page count: 3" in output
+    assert not output_directory.exists()
+
+
+def test_split_command_dry_run(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_directory = tmp_path / "split"
+
+    create_pdf(input_file, 4, 100, 100)
+
+    original_size = input_file.stat().st_size
+    original_mtime = input_file.stat().st_mtime
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "split",
+            str(input_file),
+            "-o",
+            str(output_directory),
+            "--pages",
+            "2-3",
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Split Preview" in output
+    assert str(input_file) in output
+    assert "Selected pages:" in output
+    assert "- 2" in output
+    assert "- 3" in output
+    assert "Files that would be generated:" in output
+    assert "sample_page_2.pdf" in output
+    assert "sample_page_3.pdf" in output
+    assert "No files were modified." in output
+
+    assert not output_directory.exists()
+    assert input_file.exists()
+    assert input_file.stat().st_size == original_size
+    assert input_file.stat().st_mtime == original_mtime
