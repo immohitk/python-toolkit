@@ -6,6 +6,68 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.18.4] - 2026-09-02
+
+### Added
+
+- Added PDF Splitter CLI command
+- Added custom output directory support
+- Added generated-file reporting
+- Added PDF Splitter dry-run support
+- Added PDF Splitter CLI testing
+
+### Improved
+
+- Improved PDF Splitter usability through the command line
+- Added safe dry-run previews without creating output files
+- Added explicit confirmation that no files are modified during dry-run
+- Added clear CLI error handling for invalid PDF input and page selection
+
+### Tested
+
+- Basic PDF splitting through the CLI
+- Single-page selection through the CLI
+- Page-range selection through the CLI
+- Invalid page selection handling
+- Missing input file handling
+- Custom output directory handling
+- Generated output file reporting
+- PDF Splitter dry-run behavior
+- Source PDF preservation during dry-run
+- Practical PDF Splitter CLI verification
+- Full test suite: **86 tests passed**
+
+---
+
+## [v0.18.3] - 2026-09-01
+
+### Added
+
+- Added PDF page selection support
+- Added support for selecting a single page
+- Added support for selecting a page range
+- Added page selection parsing and validation
+- Added automated tests for page selection and validation
+
+### Improved
+
+- Added validation for page numbers outside the PDF page range
+- Added validation for invalid page selection formats
+- Preserved one-based page numbering for user input
+- Converted selected pages to zero-based indexes for internal PDF processing
+
+### Tested
+
+- Single-page selection
+- Page-range selection
+- Invalid page selection handling
+- Page number validation
+- Page range validation
+- PDF page selection integration
+- Full test suite: **81 tests passed**
+
+---
+
 ## [v0.18.2] - 2026-09-01
 
 ### Added
