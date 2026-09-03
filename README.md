@@ -135,6 +135,14 @@ A collection of practical Python utilities for file management, automation, and 
 - Display files that would be generated during dry-run
 - Explicit confirmation that no files are modified during dry-run
 
+### PDF Page Extractor
+
+- PDF Page Extractor module foundation
+- Extract selected PDF pages into a new PDF file
+- Preserve the original source PDF
+- Preserve the selected page order
+- Automated testing for PDF page extraction
+
 ### Code Quality
 
 - Type hints
@@ -162,7 +170,8 @@ python-toolkit/
 │   ├── logger.py
 │   ├── organizer.py
 │   ├── pdf_merger.py
-│   └── pdf_splitter.py
+│   ├── pdf_splitter.py
+│   └── pdf_extractor.py
 │
 ├── tests/
 ├── docs/
@@ -423,6 +432,11 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 - PDF Splitter invalid page selection verification
 - PDF Splitter dry-run source preservation verification
 - PDF Splitter basic phase completion
+- PDF Page Extractor module foundation
+- PDF page extraction into a new PDF
+- PDF Page Extractor source PDF preservation
+- PDF Page Extractor selected page order preservation
+- Automated PDF Page Extractor testing
 
 ### Future Improvements
 
@@ -441,7 +455,7 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 
 Current Version:
 
-**v0.19.0**
+**v0.19.1**
 
 ---
 

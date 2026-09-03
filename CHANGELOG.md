@@ -6,6 +6,32 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.19.1] - 2026-09-03
+
+### Added
+
+- Added the PDF Page Extractor module foundation
+- Added core PDF page extraction into a new PDF file
+- Added support for extracting selected page indexes
+- Preserved the original source PDF
+- Preserved the order of selected pages
+
+### Tested
+
+- PDF page extraction
+- New PDF output creation
+- Original PDF preservation
+- Selected page extraction
+- Selected page ordering
+- Full regression test suite: **89 tests passed**
+
+### Release
+
+- Updated application version to **v0.19.1**
+- Completed the PDF Page Extractor Core milestone
+
+---
+
 ## [v0.19.0] - 2026-09-02
 
 ### Completed
