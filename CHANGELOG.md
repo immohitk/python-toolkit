@@ -6,6 +6,45 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.20.0] - 2026-09-04
+
+### 🔧 Improved
+
+- Centralized PDF Page Extractor page selection validation
+- Improved PDF Page Extractor order testing
+- Strengthened verification of selected page order
+- Verified PDF Page Extractor CLI integration with the toolkit
+- Verified extractor behavior with a real multi-page PDF
+- Confirmed source PDF preservation during extraction
+- Confirmed invalid page selections do not create output files
+- Confirmed dry-run validation and no-file-modification behavior
+
+### 🧪 Tested
+
+- Complete PDF Page Extractor test suite
+- Single-page extraction with a real PDF
+- Page-range extraction with a real PDF
+- Selected page order preservation
+- Invalid page selection handling
+- Source PDF preservation
+- Dry-run behavior
+- Output-file safety for invalid selections
+- Real-world PDF extraction verification
+- Full regression test suite: **110 tests passed**
+
+### 📖 Documentation
+
+- Updated README current version to **v0.20.0**
+- Finalized PDF Page Extractor documentation for the release
+
+### 🚀 Release
+
+- Updated application version to **v0.20.0**
+- Completed the PDF Page Extractor Basic Phase
+- Prepared the final v0.20.0 release
+
+---
+
 ## [v0.19.3] - 2026-09-04
 
 ### Added

@@ -510,7 +510,7 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 
 Current Version:
 
-**v0.19.3**
+**v0.20.0**
 
 ---
 
