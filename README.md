@@ -9,6 +9,7 @@ A collection of practical Python utilities for file management, automation, and 
 ## Current Features
 
 ### CLI
+
 - Command-line interface
 - Help command
 - Version command
@@ -21,6 +22,7 @@ A collection of practical Python utilities for file management, automation, and 
 - Duplicate file finder command
 
 ### File Organizer
+
 - Analyze files in a directory
 - Handle empty directories during analysis
 - Categorize files by extension
@@ -139,9 +141,19 @@ A collection of practical Python utilities for file management, automation, and 
 
 - PDF Page Extractor module foundation
 - Extract selected PDF pages into a new PDF file
+- Support single-page selection
+- Support page-range selection
+- Convert one-based user page numbers into internal indexes
 - Preserve the original source PDF
 - Preserve the selected page order
-- Automated testing for PDF page extraction
+- Validate page selections against the PDF page count
+- Reject empty and malformed selections
+- Reject non-numeric page selections
+- Reject page numbers below one
+- Reject out-of-range page selections
+- Reject reversed page ranges
+- Prevent output creation for invalid page selections
+- Automated testing for PDF page selection and validation
 
 ### Code Quality
 
@@ -437,6 +449,16 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 - PDF Page Extractor source PDF preservation
 - PDF Page Extractor selected page order preservation
 - Automated PDF Page Extractor testing
+- PDF Page Extractor single-page selection
+- PDF Page Extractor page-range selection
+- PDF Page Extractor one-based page number conversion
+- PDF Page Extractor page selection validation
+- PDF Page Extractor malformed selection rejection
+- PDF Page Extractor out-of-range selection rejection
+- PDF Page Extractor reversed range rejection
+- PDF Page Extractor invalid extraction output protection
+- Automated PDF Page Extractor selection and validation testing
+- Full PDF Page Extractor regression testing
 
 ### Future Improvements
 
@@ -455,7 +477,7 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 
 Current Version:
 
-**v0.19.1**
+**v0.19.2**
 
 ---
 

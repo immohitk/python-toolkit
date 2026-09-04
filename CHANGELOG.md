@@ -6,6 +6,47 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.19.2] - 2026-09-04
+
+### Added
+
+- Added single-page selection for the PDF Page Extractor
+- Added page-range selection for the PDF Page Extractor
+- Added conversion from one-based user page numbers to zero-based indexes
+- Added page selection validation against the PDF page count
+- Added validation for empty and malformed page selections
+- Added validation for non-numeric page selections
+- Added validation for page numbers below one
+- Added validation for out-of-range page selections
+- Added validation for reversed page ranges
+
+### Improved
+
+- Improved PDF Page Extractor input validation
+- Prevented output file creation when page selection is invalid
+- Preserved the requested page order during extraction
+
+### Tested
+
+- Single-page selection
+- Page-range selection
+- One-based page number conversion
+- Empty page selection handling
+- Malformed page selection handling
+- Non-numeric page selection handling
+- Reversed page range handling
+- Out-of-range page selection handling
+- Invalid extraction output safety
+- PDF Page Extractor selection and validation
+- Full regression test suite: **101 tests passed**
+
+### Release
+
+- Updated application version to **v0.19.2**
+- Completed the PDF Page Extractor Page Selection + Validation milestone
+
+---
+
 ## [v0.19.1] - 2026-09-03
 
 ### Added
