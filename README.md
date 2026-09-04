@@ -154,6 +154,15 @@ A collection of practical Python utilities for file management, automation, and 
 - Reject reversed page ranges
 - Prevent output creation for invalid page selections
 - Automated testing for PDF page selection and validation
+- PDF Page Extractor CLI command
+- Extract selected pages through the command line
+- Specify the output PDF through the CLI
+- Report input, selected pages, and output file after extraction
+- PDF Page Extractor dry-run support
+- Preview PDF extraction without creating the output file
+- Validate page selection during dry-run
+- Explicit confirmation that no files are modified during dry-run
+- Automated PDF Page Extractor CLI testing
 
 ### Code Quality
 
@@ -305,6 +314,24 @@ Preview a PDF split without creating output files
 
 ```bash
 python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2-4" --dry-run
+```
+
+Extract a single PDF page
+
+```bash
+python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\extracted.pdf"
+```
+
+Extract a range of PDF pages
+
+```bash
+python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2-4" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\extracted.pdf"
+```
+
+Preview PDF extraction without creating the output file
+
+```bash
+python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2-4" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\extracted.pdf" --dry-run
 ```
 
 ---
@@ -459,6 +486,12 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 - PDF Page Extractor invalid extraction output protection
 - Automated PDF Page Extractor selection and validation testing
 - Full PDF Page Extractor regression testing
+- PDF Page Extractor CLI command
+- PDF Page Extractor CLI output reporting
+- PDF Page Extractor dry-run support
+- PDF Page Extractor dry-run validation
+- PDF Page Extractor CLI edge-case testing
+- PDF Page Extractor CLI help testing
 
 ### Future Improvements
 
@@ -477,7 +510,7 @@ python main.py split "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pd
 
 Current Version:
 
-**v0.19.2**
+**v0.19.3**
 
 ---
 

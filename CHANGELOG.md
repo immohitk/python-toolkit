@@ -6,6 +6,43 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.19.3] - 2026-09-04
+
+### Added
+
+- Added PDF Page Extractor CLI command
+- Added command-line page selection for PDF extraction
+- Added custom output PDF path support for the extractor
+- Added PDF extraction dry-run support
+
+### Improved
+
+- Improved PDF Page Extractor CLI output reporting
+- Added clear input, selected pages, and output file reporting
+- Added page selection validation during dry-run
+- Confirmed that dry-run does not create or modify files
+
+### Tested
+
+- PDF Page Extractor CLI extraction
+- Single-page extraction through the CLI
+- Page-range extraction through the CLI
+- Missing input file handling
+- Invalid page selection handling
+- Required CLI argument validation
+- Source PDF preservation
+- Extractor dry-run behavior
+- Invalid selection during dry-run
+- Extractor CLI help output
+- Full regression test suite: **110 tests passed**
+
+### Release
+
+- Updated application version to **v0.19.3**
+- Completed the PDF Page Extractor CLI + Dry-Run milestone
+
+---
+
 ## [v0.19.2] - 2026-09-04
 
 ### Added
