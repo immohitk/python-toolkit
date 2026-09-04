@@ -12,8 +12,9 @@ from toolkit.pdf_extractor import (
 def create_test_pdf(path, page_count):
     writer = PdfWriter()
 
-    for _ in range(page_count):
-        writer.add_blank_page(width=200, height=200)
+    for page_number in range(page_count):
+        size = 200 + page_number * 10
+        writer.add_blank_page(width=size, height=size)
 
     with path.open("wb") as file:
         writer.write(file)
@@ -71,6 +72,10 @@ def test_extract_pdf_pages_preserves_selected_order(tmp_path):
     reader = PdfReader(output_file)
 
     assert len(reader.pages) == 3
+
+    assert reader.pages[0].mediabox.width == 230
+    assert reader.pages[1].mediabox.width == 210
+    assert reader.pages[2].mediabox.width == 240
 
 
 def test_parse_page_selection_single_page():
