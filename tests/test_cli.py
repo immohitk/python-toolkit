@@ -520,6 +520,9 @@ def test_extract_command(tmp_path, monkeypatch, capsys):
     output = capsys.readouterr().out
 
     assert "PDF Extract Complete" in output
+    assert "Input:" in output
+    assert "Pages: 2" in output
+    assert "Output:" in output
     assert str(output_file) in output
 
     assert output_file.exists()
@@ -558,6 +561,9 @@ def test_extract_command_with_page_range(
     output = capsys.readouterr().out
 
     assert "PDF Extract Complete" in output
+    assert "Input:" in output
+    assert "Pages: 2-4" in output
+    assert "Output:" in output
     assert str(output_file) in output
 
     assert output_file.exists()

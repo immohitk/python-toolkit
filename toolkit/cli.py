@@ -351,6 +351,8 @@ def run():
 
             print("PDF Extract Complete")
             print()
+            print(f"Input: {input_file}")
+            print(f"Pages: {args.pages}")
             print(f"Output: {output_file}")
 
     except FileNotFoundError as error:
