@@ -1,6 +1,12 @@
 from pypdf import PdfReader, PdfWriter
 
-from toolkit.pdf_extractor import extract_pdf_pages, parse_page_selection
+import pytest
+
+from toolkit.pdf_extractor import (
+    extract_pdf_pages,
+    parse_page_selection,
+    validate_page_selection,
+)
 
 
 def create_test_pdf(path, page_count):
@@ -77,3 +83,58 @@ def test_parse_page_selection_page_range():
 
 def test_parse_page_selection_converts_single_page_to_zero_based():
     assert parse_page_selection("4") == [3]
+
+
+def test_parse_page_selection_rejects_empty_selection():
+    with pytest.raises(ValueError):
+        parse_page_selection("")
+
+
+def test_parse_page_selection_rejects_non_numeric_selection():
+    with pytest.raises(ValueError):
+        parse_page_selection("abc")
+
+
+def test_parse_page_selection_rejects_malformed_range():
+    with pytest.raises(ValueError):
+        parse_page_selection("2-x")
+
+
+def test_parse_page_selection_rejects_zero():
+    with pytest.raises(ValueError):
+        parse_page_selection("0")
+
+
+def test_parse_page_selection_rejects_reversed_range():
+    with pytest.raises(ValueError):
+        parse_page_selection("4-2")
+
+
+def test_validate_page_selection_accepts_valid_pages():
+    validate_page_selection([0, 1, 2], 5)
+
+
+def test_validate_page_selection_rejects_negative_page():
+    with pytest.raises(ValueError):
+        validate_page_selection([-1], 5)
+
+
+def test_validate_page_selection_rejects_out_of_range_page():
+    with pytest.raises(ValueError):
+        validate_page_selection([5], 5)
+
+
+def test_extract_pdf_pages_invalid_selection_creates_no_output(tmp_path):
+    input_file = tmp_path / "input.pdf"
+    output_file = tmp_path / "output.pdf"
+
+    create_test_pdf(input_file, 5)
+
+    with pytest.raises(ValueError):
+        extract_pdf_pages(
+            input_file,
+            output_file,
+            [5],
+        )
+
+    assert not output_file.exists()
