@@ -699,3 +699,79 @@ def test_extract_command_preserves_source_pdf(
     reader = PdfReader(output_file)
 
     assert len(reader.pages) == 2
+
+
+def test_extract_command_dry_run(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    create_pdf(input_file, 4, 100, 100)
+
+    original_size = input_file.stat().st_size
+    original_mtime = input_file.stat().st_mtime
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(input_file),
+            "--pages",
+            "2-3",
+            "-o",
+            str(output_file),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Extract Preview" in output
+    assert str(input_file) in output
+    assert "Pages: 2-3" in output
+    assert str(output_file) in output
+    assert "No files were modified." in output
+
+    assert not output_file.exists()
+    assert input_file.exists()
+    assert input_file.stat().st_size == original_size
+    assert input_file.stat().st_mtime == original_mtime
+
+
+def test_extract_command_dry_run_rejects_invalid_page_selection(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    create_pdf(input_file, 3, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(input_file),
+            "--pages",
+            "2-10",
+            "-o",
+            str(output_file),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Page selection is out of range." in output
+    assert not output_file.exists()
+    assert input_file.exists()

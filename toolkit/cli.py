@@ -215,6 +215,12 @@ def create_parser():
         help="Output PDF file",
     )
 
+    extract_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview extraction without creating the output file",
+    )
+
     return parser
 
 def run():
@@ -343,17 +349,33 @@ def run():
 
             page_numbers = parse_page_selection(args.pages)
 
-            extract_pdf_pages(
-                input_file,
-                output_file,
-                page_numbers,
-            )
+            if args.dry_run:
+                reader = PdfReader(input_file)
 
-            print("PDF Extract Complete")
-            print()
-            print(f"Input: {input_file}")
-            print(f"Pages: {args.pages}")
-            print(f"Output: {output_file}")
+                for page_number in page_numbers:
+                    if page_number >= len(reader.pages):
+                        raise ValueError("Page selection is out of range.")
+
+                print("PDF Extract Preview")
+                print()
+                print(f"Input: {input_file}")
+                print(f"Pages: {args.pages}")
+                print(f"Output: {output_file}")
+                print()
+                print("No files were modified.")
+
+            else:
+                extract_pdf_pages(
+                    input_file,
+                    output_file,
+                    page_numbers,
+                )
+
+                print("PDF Extract Complete")
+                print()
+                print(f"Input: {input_file}")
+                print(f"Pages: {args.pages}")
+                print(f"Output: {output_file}")
 
     except FileNotFoundError as error:
         logger.error("%s", error)
