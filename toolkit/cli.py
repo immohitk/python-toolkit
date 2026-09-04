@@ -40,6 +40,7 @@ from toolkit.pdf_splitter import (
 from toolkit.pdf_extractor import (
     extract_pdf_pages,
     parse_page_selection,
+    validate_page_selection,
 )
 
 from toolkit.logger import get_logger
@@ -352,9 +353,10 @@ def run():
             if args.dry_run:
                 reader = PdfReader(input_file)
 
-                for page_number in page_numbers:
-                    if page_number >= len(reader.pages):
-                        raise ValueError("Page selection is out of range.")
+                validate_page_selection(
+                    page_numbers,
+                    len(reader.pages),
+                )
 
                 print("PDF Extract Preview")
                 print()
