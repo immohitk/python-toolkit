@@ -775,3 +775,26 @@ def test_extract_command_dry_run_rejects_invalid_page_selection(
     assert "Error: Page selection is out of range." in output
     assert not output_file.exists()
     assert input_file.exists()
+
+
+def test_extract_command_help(monkeypatch, capsys):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            "--help",
+        ],
+    )
+
+    try:
+        run()
+    except SystemExit as error:
+        assert error.code == 0
+
+    output = capsys.readouterr().out
+
+    assert "input_file" in output
+    assert "--pages PAGES" in output
+    assert "-o OUTPUT" in output
+    assert "--dry-run" in output
