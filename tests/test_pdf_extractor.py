@@ -1,6 +1,6 @@
 from pypdf import PdfReader, PdfWriter
 
-from toolkit.pdf_extractor import extract_pdf_pages
+from toolkit.pdf_extractor import extract_pdf_pages, parse_page_selection
 
 
 def create_test_pdf(path, page_count):
@@ -65,3 +65,15 @@ def test_extract_pdf_pages_preserves_selected_order(tmp_path):
     reader = PdfReader(output_file)
 
     assert len(reader.pages) == 3
+
+
+def test_parse_page_selection_single_page():
+    assert parse_page_selection("2") == [1]
+
+
+def test_parse_page_selection_page_range():
+    assert parse_page_selection("2-4") == [1, 2, 3]
+
+
+def test_parse_page_selection_converts_single_page_to_zero_based():
+    assert parse_page_selection("4") == [3]
