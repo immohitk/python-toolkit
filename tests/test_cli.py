@@ -494,3 +494,202 @@ def test_split_command_dry_run(
     assert input_file.exists()
     assert input_file.stat().st_size == original_size
     assert input_file.stat().st_mtime == original_mtime
+
+
+def test_extract_command(tmp_path, monkeypatch, capsys):
+    input_file = tmp_path / "sample.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    create_pdf(input_file, 3, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(input_file),
+            "--pages",
+            "2",
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Extract Complete" in output
+    assert str(output_file) in output
+
+    assert output_file.exists()
+    assert input_file.exists()
+
+    reader = PdfReader(output_file)
+
+    assert len(reader.pages) == 1
+
+
+def test_extract_command_with_page_range(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    create_pdf(input_file, 5, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(input_file),
+            "--pages",
+            "2-4",
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "PDF Extract Complete" in output
+    assert str(output_file) in output
+
+    assert output_file.exists()
+    assert input_file.exists()
+
+    reader = PdfReader(output_file)
+
+    assert len(reader.pages) == 3
+
+
+def test_extract_command_handles_missing_file(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    missing_file = tmp_path / "missing.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(missing_file),
+            "--pages",
+            "2",
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error:" in output
+    assert "No such file or directory" in output
+    assert "missing.pdf" in output
+    assert not output_file.exists()
+
+
+def test_extract_command_rejects_invalid_page_selection(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    create_pdf(input_file, 3, 100, 100)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(input_file),
+            "--pages",
+            "2-10",
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Page selection is out of range." in output
+    assert not output_file.exists()
+
+def test_extract_command_requires_pages_and_output(
+    monkeypatch,
+    capsys,
+):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            "sample.pdf",
+        ],
+    )
+
+    try:
+        run()
+    except SystemExit as error:
+        assert error.code == 2
+
+    output = capsys.readouterr().err
+
+    assert "the following arguments are required:" in output
+    assert "--pages" in output
+    assert "-o/--output" in output
+
+
+def test_extract_command_preserves_source_pdf(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.pdf"
+    output_file = tmp_path / "extracted.pdf"
+
+    create_pdf(input_file, 4, 100, 100)
+
+    original_size = input_file.stat().st_size
+    original_mtime = input_file.stat().st_mtime
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "extract",
+            str(input_file),
+            "--pages",
+            "2-3",
+            "-o",
+            str(output_file),
+        ],
+    )
+
+    run()
+
+    capsys.readouterr()
+
+    assert output_file.exists()
+    assert input_file.exists()
+
+    assert input_file.stat().st_size == original_size
+    assert input_file.stat().st_mtime == original_mtime
+
+    reader = PdfReader(output_file)
+
+    assert len(reader.pages) == 2

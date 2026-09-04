@@ -37,6 +37,11 @@ from toolkit.pdf_splitter import (
     split_pdf,
 )
 
+from toolkit.pdf_extractor import (
+    extract_pdf_pages,
+    parse_page_selection,
+)
+
 from toolkit.logger import get_logger
 
 logger = get_logger()
@@ -187,6 +192,29 @@ def create_parser():
         help="Preview PDF split without creating output files",
     )
 
+    extract_parser = subparsers.add_parser(
+        "extract",
+        help="Extract selected pages from a PDF",
+    )
+
+    extract_parser.add_argument(
+        "input_file",
+        help="PDF file to extract pages from",
+    )
+
+    extract_parser.add_argument(
+        "--pages",
+        required=True,
+        help="Pages to extract, such as 2 or 2-4",
+    )
+
+    extract_parser.add_argument(
+        "-o",
+        "--output",
+        required=True,
+        help="Output PDF file",
+    )
+
     return parser
 
 def run():
@@ -308,6 +336,22 @@ def run():
 
                 for generated_file in generated_files:
                     print(f"- {generated_file}")
+
+        if args.command == "extract":
+            input_file = Path(args.input_file)
+            output_file = Path(args.output)
+
+            page_numbers = parse_page_selection(args.pages)
+
+            extract_pdf_pages(
+                input_file,
+                output_file,
+                page_numbers,
+            )
+
+            print("PDF Extract Complete")
+            print()
+            print(f"Output: {output_file}")
 
     except FileNotFoundError as error:
         logger.error("%s", error)
