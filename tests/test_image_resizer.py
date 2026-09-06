@@ -136,3 +136,51 @@ def test_resize_image_rejects_invalid_dimensions(
         )
 
     assert not output_file.exists()
+
+
+def test_resize_image_width_only_rounds_calculated_height(tmp_path):
+    input_file = tmp_path / "input.png"
+    output_file = tmp_path / "output.png"
+
+    Image.new("RGB", (1000, 667), "blue").save(input_file)
+
+    resize_image(input_file, output_file, width=500)
+
+    with Image.open(output_file) as resized_image:
+        assert resized_image.size == (500, 334)
+
+
+def test_resize_image_height_only_rounds_calculated_width(tmp_path):
+    input_file = tmp_path / "input.png"
+    output_file = tmp_path / "output.png"
+
+    Image.new("RGB", (667, 1000), "blue").save(input_file)
+
+    resize_image(input_file, output_file, height=500)
+
+    with Image.open(output_file) as resized_image:
+        assert resized_image.size == (334, 500)
+
+
+def test_resize_image_width_only_preserves_source_orientation(tmp_path):
+    input_file = tmp_path / "input.png"
+    output_file = tmp_path / "output.png"
+
+    Image.new("RGB", (1200, 800), "blue").save(input_file)
+
+    resize_image(input_file, output_file, width=300)
+
+    with Image.open(output_file) as resized_image:
+        assert resized_image.width > resized_image.height
+
+
+def test_resize_image_height_only_preserves_source_orientation(tmp_path):
+    input_file = tmp_path / "input.png"
+    output_file = tmp_path / "output.png"
+
+    Image.new("RGB", (800, 1200), "blue").save(input_file)
+
+    resize_image(input_file, output_file, height=300)
+
+    with Image.open(output_file) as resized_image:
+        assert resized_image.height > resized_image.width
