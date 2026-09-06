@@ -6,6 +6,46 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.20.3] - 2026-09-06
+
+### Added
+
+- Added support for resizing multiple independent images in a single operation
+- Added batch input validation for Image Resizer
+- Added predictable resized output filenames
+- Added automatic output filename collision handling
+- Added clear batch failure reporting
+- Added preservation of successful results when other batch inputs fail
+
+### Improved
+
+- Image Resizer now creates a dedicated output directory for batch results
+- Image Resizer prevents overwriting existing output files
+- Image Resizer handles batches containing different image dimensions
+
+### Tested
+
+- Single-image processing through the batch resizing path
+- Multiple-image batch processing
+- Different source image dimensions
+- Original image preservation
+- Invalid image handling during batch processing
+- Missing input file handling
+- Empty batch input handling
+- Invalid dimension handling during batch processing
+- Predictable output naming
+- Single output-name collision handling
+- Multiple output-name collision handling
+- Multiple batch failure reporting
+- Full regression test suite: **146 tests passed**
+
+### Release
+
+- Updated application version to **v0.20.3**
+- Completed the Image Resizer Multiple Image Resizing milestone
+
+---
+
 ## [0.20.2] - 2026-09-06
 
 ### Added

@@ -169,12 +169,22 @@ A collection of practical Python utilities for file management, automation, and 
 - Resize an image to specified width and height
 - Resize using width only while preserving aspect ratio
 - Resize using height only while preserving aspect ratio
+- Resize multiple independent images in a single operation
 - Validate dimensions as positive integers
 - Prevent invalid calculated dimensions
-- Save resized images to a separate output file
-- Preserve the original image
+- Save resized images to a separate output directory
+- Generate predictable resized output filenames
+- Prevent overwriting existing resized output files
+- Automatically create unique output names when collisions occur
+- Preserve every original image
+- Continue processing valid images when other batch inputs fail
+- Report failed batch inputs clearly
 - Support landscape, portrait, and square images
-- Automated testing for image resizing
+- Handle batches containing different image dimensions
+- Automated testing for single-image resizing
+- Automated testing for multiple-image resizing
+- Automated testing for batch validation and failure handling
+- Automated testing for output naming and collision handling
 - Automated testing for dimension and aspect-ratio handling
 
 ### Code Quality
@@ -513,6 +523,13 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 - Image Resizer landscape, portrait, and square image testing
 - Image Resizer aspect-ratio edge-case testing
 - Image Resizer calculated dimension safety handling
+- Image Resizer multiple-image processing
+- Image Resizer batch input validation
+- Image Resizer predictable output naming
+- Image Resizer output collision handling
+- Image Resizer batch failure reporting
+- Image Resizer original image preservation during batch processing
+- Image Resizer multiple-image and batch edge-case testing
 
 ### Future Improvements
 
@@ -531,7 +548,7 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 
 Current Version:
 
-**v0.20.2**
+**v0.20.3**
 
 ---
 
