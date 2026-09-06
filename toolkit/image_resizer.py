@@ -3,13 +3,55 @@ from pathlib import Path
 from PIL import Image
 
 
-def resize_image(input_file, output_file, width, height):
+def _validate_dimension(value, name):
     """
-    Resize an image and save the result to a new output file.
+    Validate an optional image dimension.
+    """
+    if value is not None and value <= 0:
+        raise ValueError(f"{name} must be greater than zero.")
+
+
+def _calculate_dimensions(original_width, original_height, width, height):
+    """
+    Calculate target dimensions while preserving aspect ratio when needed.
+    """
+    _validate_dimension(width, "Width")
+    _validate_dimension(height, "Height")
+
+    if width is None and height is None:
+        raise ValueError("Width or height must be provided.")
+
+    if width is not None and height is not None:
+        return width, height
+
+    if width is not None:
+        calculated_height = round(
+            original_height * width / original_width
+        )
+        return width, calculated_height
+
+    calculated_width = round(
+        original_width * height / original_height
+    )
+    return calculated_width, height
+
+
+def resize_image(input_file, output_file, width=None, height=None):
+    """
+    Resize an image while preserving aspect ratio when one dimension is omitted.
     """
     input_file = Path(input_file)
     output_file = Path(output_file)
 
     with Image.open(input_file) as image:
-        resized_image = image.resize((width, height))
+        target_width, target_height = _calculate_dimensions(
+            image.width,
+            image.height,
+            width,
+            height,
+        )
+
+        resized_image = image.resize(
+            (target_width, target_height)
+        )
         resized_image.save(output_file)
