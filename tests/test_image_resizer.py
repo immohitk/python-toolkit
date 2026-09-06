@@ -184,3 +184,15 @@ def test_resize_image_height_only_preserves_source_orientation(tmp_path):
 
     with Image.open(output_file) as resized_image:
         assert resized_image.height > resized_image.width
+
+
+def test_resize_image_width_only_never_creates_zero_height(tmp_path):
+    input_file = tmp_path / "input.png"
+    output_file = tmp_path / "output.png"
+
+    Image.new("RGB", (1000, 1), "blue").save(input_file)
+
+    resize_image(input_file, output_file, width=1)
+
+    with Image.open(output_file) as resized_image:
+        assert resized_image.size == (1, 1)

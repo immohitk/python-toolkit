@@ -31,13 +31,15 @@ def _calculate_dimensions(original_width, original_height, width, height):
         return width, height
 
     if width is not None:
-        calculated_height = round(
-            original_height * width / original_width
+        calculated_height = max(
+            1,
+            round(original_height * width / original_width),
         )
         return width, calculated_height
 
-    calculated_width = round(
-        original_width * height / original_height
+    calculated_width = max(
+        1,
+        round(original_width * height / original_height),
     )
     return calculated_width, height
 
