@@ -6,6 +6,37 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.20.2] - 2026-09-06
+
+### Added
+
+- Added width-only Image Resizer support with aspect-ratio preservation
+- Added height-only Image Resizer support with aspect-ratio preservation
+- Added validation for positive integer dimensions
+- Added protection against invalid calculated dimensions
+- Added Image Resizer testing for landscape, portrait, and square images
+- Added Image Resizer aspect-ratio edge-case testing
+- Added Image Resizer dimension validation testing
+
+### Fixed
+
+- Prevented calculated image dimensions from reaching zero pixels during aspect-ratio resizing
+
+### Tested
+
+- Explicit width and height resizing
+- Width-only aspect-ratio resizing
+- Height-only aspect-ratio resizing
+- Landscape, portrait, and square images
+- Different source and target dimensions
+- Invalid, zero, negative, decimal, string, and boolean dimensions
+- Aspect-ratio rounding behavior
+- Extreme aspect-ratio edge cases
+- Original image preservation
+- Full regression test suite: **133 tests passed**
+
+---
+
 ## [v0.20.1] - 2026-09-06
 
 ### Added

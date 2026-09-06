@@ -167,9 +167,15 @@ A collection of practical Python utilities for file management, automation, and 
 ### Image Resizer
 
 - Resize an image to specified width and height
+- Resize using width only while preserving aspect ratio
+- Resize using height only while preserving aspect ratio
+- Validate dimensions as positive integers
+- Prevent invalid calculated dimensions
 - Save resized images to a separate output file
 - Preserve the original image
+- Support landscape, portrait, and square images
 - Automated testing for image resizing
+- Automated testing for dimension and aspect-ratio handling
 
 ### Code Quality
 
@@ -501,6 +507,12 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 - PDF Page Extractor dry-run validation
 - PDF Page Extractor CLI edge-case testing
 - PDF Page Extractor CLI help testing
+- Image Resizer dimension validation
+- Image Resizer width-only aspect-ratio resizing
+- Image Resizer height-only aspect-ratio resizing
+- Image Resizer landscape, portrait, and square image testing
+- Image Resizer aspect-ratio edge-case testing
+- Image Resizer calculated dimension safety handling
 
 ### Future Improvements
 
@@ -519,7 +531,7 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 
 Current Version:
 
-**v0.20.1**
+**v0.20.2**
 
 ---
 
