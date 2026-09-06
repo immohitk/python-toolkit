@@ -6,6 +6,31 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [v0.20.1] - 2026-09-06
+
+### Added
+
+- Added the Image Resizer module foundation
+- Added image resizing to specified width and height
+- Added Pillow as the image-processing dependency
+- Added separate output file support for resized images
+- Preserved original image files during resizing
+- Added automated Image Resizer tests
+
+### Tested
+
+- Image resizing to explicit dimensions
+- Resized output creation
+- Original image preservation
+- Full regression test suite: **112 tests passed**
+
+### Release
+
+- Updated application version to **v0.20.1**
+- Completed the Image Resizer Core Foundation milestone
+
+---
+
 ## [v0.20.0] - 2026-09-04
 
 ### 🔧 Improved

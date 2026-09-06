@@ -164,6 +164,13 @@ A collection of practical Python utilities for file management, automation, and 
 - Explicit confirmation that no files are modified during dry-run
 - Automated PDF Page Extractor CLI testing
 
+### Image Resizer
+
+- Resize an image to specified width and height
+- Save resized images to a separate output file
+- Preserve the original image
+- Automated testing for image resizing
+
 ### Code Quality
 
 - Type hints
@@ -192,7 +199,8 @@ python-toolkit/
 │   ├── organizer.py
 │   ├── pdf_merger.py
 │   ├── pdf_splitter.py
-│   └── pdf_extractor.py
+│   ├── pdf_extractor.py
+│   └── image_resizer.py
 │
 ├── tests/
 ├── docs/
@@ -209,6 +217,7 @@ python-toolkit/
 
 - Python 3.10+
 - pypdf 6.16.2
+- Pillow 12.3.0
 
 ---
 
@@ -510,7 +519,7 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 
 Current Version:
 
-**v0.20.0**
+**v0.20.1**
 
 ---
 
