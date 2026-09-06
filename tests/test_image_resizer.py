@@ -1,7 +1,7 @@
 from PIL import Image
 import pytest
 
-from toolkit.image_resizer import resize_image
+from toolkit.image_resizer import resize_image, resize_images
 
 
 def test_resize_image_creates_resized_output(tmp_path):
@@ -196,3 +196,129 @@ def test_resize_image_width_only_never_creates_zero_height(tmp_path):
 
     with Image.open(output_file) as resized_image:
         assert resized_image.size == (1, 1)
+
+
+def test_resize_images_processes_single_image(tmp_path):
+    input_file = tmp_path / "photo.jpg"
+    output_directory = tmp_path / "resized"
+
+    image = Image.new("RGB", (800, 600), "blue")
+    image.save(input_file)
+
+    results = resize_images(
+        [input_file],
+        output_directory,
+        width=400,
+    )
+
+    output_file = output_directory / "photo_resized.jpg"
+
+    assert results == [output_file]
+    assert output_file.exists()
+
+    with Image.open(output_file) as resized_image:
+        assert resized_image.size == (400, 300)
+
+
+def test_resize_images_processes_multiple_images(tmp_path):
+    input_files = [
+        tmp_path / "photo1.jpg",
+        tmp_path / "photo2.png",
+        tmp_path / "photo3.jpeg",
+    ]
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_files[0])
+    Image.new("RGB", (600, 900), "red").save(input_files[1])
+    Image.new("RGB", (700, 700), "green").save(input_files[2])
+
+    results = resize_images(
+        input_files,
+        output_directory,
+        width=400,
+    )
+
+    assert len(results) == 3
+
+    expected_outputs = [
+        output_directory / "photo1_resized.jpg",
+        output_directory / "photo2_resized.png",
+        output_directory / "photo3_resized.jpeg",
+    ]
+
+    assert results == expected_outputs
+
+    for output_file in expected_outputs:
+        assert output_file.exists()
+
+
+def test_resize_images_handles_different_image_dimensions(tmp_path):
+    input_files = [
+        tmp_path / "landscape.jpg",
+        tmp_path / "portrait.jpg",
+        tmp_path / "square.jpg",
+    ]
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_files[0])
+    Image.new("RGB", (600, 900), "red").save(input_files[1])
+    Image.new("RGB", (700, 700), "green").save(input_files[2])
+
+    resize_images(
+        input_files,
+        output_directory,
+        width=400,
+    )
+
+    with Image.open(output_directory / "landscape_resized.jpg") as image:
+        assert image.size == (400, 300)
+
+    with Image.open(output_directory / "portrait_resized.jpg") as image:
+        assert image.size == (400, 600)
+
+    with Image.open(output_directory / "square_resized.jpg") as image:
+        assert image.size == (400, 400)
+
+
+def test_resize_images_preserves_originals(tmp_path):
+    input_files = [
+        tmp_path / "photo1.jpg",
+        tmp_path / "photo2.jpg",
+    ]
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_files[0])
+    Image.new("RGB", (600, 900), "red").save(input_files[1])
+
+    resize_images(
+        input_files,
+        output_directory,
+        width=400,
+    )
+
+    with Image.open(input_files[0]) as image:
+        assert image.size == (800, 600)
+
+    with Image.open(input_files[1]) as image:
+        assert image.size == (600, 900)
+
+
+def test_resize_images_reports_invalid_image_without_losing_valid_results(tmp_path):
+    valid_file_1 = tmp_path / "photo1.jpg"
+    invalid_file = tmp_path / "broken.jpg"
+    valid_file_2 = tmp_path / "photo2.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(valid_file_1)
+    invalid_file.write_text("not a valid image")
+    Image.new("RGB", (600, 900), "red").save(valid_file_2)
+
+    with pytest.raises(RuntimeError, match="broken.jpg"):
+        resize_images(
+            [valid_file_1, invalid_file, valid_file_2],
+            output_directory,
+            width=400,
+        )
+
+    assert (output_directory / "photo1_resized.jpg").exists()
+    assert (output_directory / "photo2_resized.jpg").exists()

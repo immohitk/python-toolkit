@@ -63,3 +63,44 @@ def resize_image(input_file, output_file, width=None, height=None):
             (target_width, target_height)
         )
         resized_image.save(output_file)
+
+
+def resize_images(input_files, output_directory, width=None, height=None):
+    """
+    Resize multiple images independently and save them to an output directory.
+    """
+    input_files = [Path(input_file) for input_file in input_files]
+    output_directory = Path(output_directory)
+
+    output_directory.mkdir(parents=True, exist_ok=True)
+
+    results = []
+    failures = []
+
+    for input_file in input_files:
+        output_file = (
+            output_directory
+            / f"{input_file.stem}_resized{input_file.suffix}"
+        )
+
+        try:
+            resize_image(
+                input_file,
+                output_file,
+                width=width,
+                height=height,
+            )
+            results.append(output_file)
+        except Exception as error:
+            failures.append((input_file, str(error)))
+
+    if failures:
+        failure_details = "; ".join(
+            f"{input_file}: {error}"
+            for input_file, error in failures
+        )
+        raise RuntimeError(
+            f"Failed to resize {len(failures)} image(s): {failure_details}"
+        )
+
+    return results
