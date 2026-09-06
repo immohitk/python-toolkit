@@ -438,3 +438,78 @@ def test_resize_images_handles_multiple_output_collisions(tmp_path):
 
     with Image.open(output_directory / "photo_resized_2.jpg") as image:
         assert image.size == (400, 300)
+
+
+def _get_output_path(output_directory, input_file):
+    """
+    Generate a unique output path without overwriting existing files.
+    """
+    output_file = (
+        output_directory
+        / f"{input_file.stem}_resized{input_file.suffix}"
+    )
+
+    counter = 1
+
+    while output_file.exists():
+        output_file = (
+            output_directory
+            / f"{input_file.stem}_resized_{counter}{input_file.suffix}"
+        )
+        counter += 1
+
+    return output_file
+
+
+def test_resize_images_returns_all_successful_results(tmp_path):
+    first_input = tmp_path / "first.jpg"
+    second_input = tmp_path / "second.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(first_input)
+    Image.new("RGB", (1200, 800), "green").save(second_input)
+
+    results = resize_images(
+        [first_input, second_input],
+        output_directory,
+        width=400,
+    )
+
+    assert results == [
+        output_directory / "first_resized.jpg",
+        output_directory / "second_resized.jpg",
+    ]
+
+    with Image.open(output_directory / "first_resized.jpg") as image:
+        assert image.size == (400, 300)
+
+    with Image.open(output_directory / "second_resized.jpg") as image:
+        assert image.size == (400, 267)
+
+
+def test_resize_images_reports_multiple_failures_clearly(tmp_path):
+    valid_input = tmp_path / "valid.jpg"
+    missing_input = tmp_path / "missing.jpg"
+    invalid_input = tmp_path / "invalid.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(valid_input)
+    invalid_input.write_text("not an image")
+
+    with pytest.raises(RuntimeError) as exc_info:
+        resize_images(
+            [valid_input, missing_input, invalid_input],
+            output_directory,
+            width=400,
+        )
+
+    error_message = str(exc_info.value)
+
+    assert "2 image(s)" in error_message
+    assert str(missing_input) in error_message
+    assert str(invalid_input) in error_message
+
+    assert (output_directory / "valid_resized.jpg").exists()
+
+    with Image.open(output_directory / "valid_resized.jpg") as image:
+        assert image.size == (400, 300)
