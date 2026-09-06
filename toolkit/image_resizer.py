@@ -70,6 +70,10 @@ def resize_images(input_files, output_directory, width=None, height=None):
     Resize multiple images independently and save them to an output directory.
     """
     input_files = [Path(input_file) for input_file in input_files]
+
+    if not input_files:
+        raise ValueError("Input files must contain at least one image.")
+
     output_directory = Path(output_directory)
 
     output_directory.mkdir(parents=True, exist_ok=True)

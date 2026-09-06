@@ -322,3 +322,47 @@ def test_resize_images_reports_invalid_image_without_losing_valid_results(tmp_pa
 
     assert (output_directory / "photo1_resized.jpg").exists()
     assert (output_directory / "photo2_resized.jpg").exists()
+
+
+def test_resize_images_rejects_empty_input(tmp_path):
+    output_directory = tmp_path / "resized"
+
+    with pytest.raises(
+        ValueError,
+        match="Input files must contain at least one image",
+    ):
+        resize_images(
+            [],
+            output_directory,
+            width=400,
+        )
+
+
+def test_resize_images_reports_missing_input_file(tmp_path):
+    missing_file = tmp_path / "missing.jpg"
+    output_directory = tmp_path / "resized"
+
+    with pytest.raises(RuntimeError, match="missing.jpg"):
+        resize_images(
+            [missing_file],
+            output_directory,
+            width=400,
+        )
+
+    assert not (output_directory / "missing_resized.jpg").exists()
+
+
+def test_resize_images_reports_invalid_dimensions(tmp_path):
+    input_file = tmp_path / "photo.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_file)
+
+    with pytest.raises(RuntimeError, match="Width must be greater than zero"):
+        resize_images(
+            [input_file],
+            output_directory,
+            width=0,
+        )
+
+    assert not (output_directory / "photo_resized.jpg").exists()
