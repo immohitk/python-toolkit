@@ -7,7 +7,13 @@ def _validate_dimension(value, name):
     """
     Validate an optional image dimension.
     """
-    if value is not None and value <= 0:
+    if value is None:
+        return
+
+    if not isinstance(value, int) or isinstance(value, bool):
+        raise ValueError(f"{name} must be a positive integer.")
+
+    if value <= 0:
         raise ValueError(f"{name} must be greater than zero.")
 
 

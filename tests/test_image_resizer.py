@@ -110,6 +110,11 @@ def test_resize_image_supports_different_target_dimensions(tmp_path):
         (400, 0),
         (400, -100),
         (None, None),
+        (400.5, 300),
+        (400, 300.5),
+        ("400", 300),
+        (400, "300"),
+        (True, 300),
     ],
 )
 def test_resize_image_rejects_invalid_dimensions(
