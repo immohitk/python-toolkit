@@ -82,9 +82,9 @@ def resize_images(input_files, output_directory, width=None, height=None):
     failures = []
 
     for input_file in input_files:
-        output_file = (
-            output_directory
-            / f"{input_file.stem}_resized{input_file.suffix}"
+        output_file = _get_output_path(
+            output_directory,
+            input_file,
         )
 
         try:
@@ -108,3 +108,24 @@ def resize_images(input_files, output_directory, width=None, height=None):
         )
 
     return results
+
+
+def _get_output_path(output_directory, input_file):
+    """
+    Generate a unique output path without overwriting existing files.
+    """
+    output_file = (
+        output_directory
+        / f"{input_file.stem}_resized{input_file.suffix}"
+    )
+
+    counter = 1
+
+    while output_file.exists():
+        output_file = (
+            output_directory
+            / f"{input_file.stem}_resized_{counter}{input_file.suffix}"
+        )
+        counter += 1
+
+    return output_file

@@ -366,3 +366,75 @@ def test_resize_images_reports_invalid_dimensions(tmp_path):
         )
 
     assert not (output_directory / "photo_resized.jpg").exists()
+
+
+def test_resize_images_uses_predictable_output_names(tmp_path):
+    input_file = tmp_path / "photo.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_file)
+
+    results = resize_images(
+        [input_file],
+        output_directory,
+        width=400,
+    )
+
+    assert results == [
+        output_directory / "photo_resized.jpg"
+    ]
+
+
+def test_resize_images_avoids_output_name_collision(tmp_path):
+    input_file = tmp_path / "photo.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_file)
+
+    output_directory.mkdir()
+    existing_output = output_directory / "photo_resized.jpg"
+    existing_output.write_text("existing result")
+
+    results = resize_images(
+        [input_file],
+        output_directory,
+        width=400,
+    )
+
+    assert results == [
+        output_directory / "photo_resized_1.jpg"
+    ]
+
+    assert existing_output.read_text() == "existing result"
+
+    with Image.open(output_directory / "photo_resized_1.jpg") as image:
+        assert image.size == (400, 300)
+
+
+def test_resize_images_handles_multiple_output_collisions(tmp_path):
+    input_file = tmp_path / "photo.jpg"
+    output_directory = tmp_path / "resized"
+
+    Image.new("RGB", (800, 600), "blue").save(input_file)
+
+    output_directory.mkdir()
+    (output_directory / "photo_resized.jpg").write_text("existing")
+    (output_directory / "photo_resized_1.jpg").write_text("existing")
+
+    results = resize_images(
+        [input_file],
+        output_directory,
+        width=400,
+    )
+
+    assert results == [
+        output_directory / "photo_resized_2.jpg"
+    ]
+
+    assert (output_directory / "photo_resized.jpg").read_text() == "existing"
+    assert (
+        output_directory / "photo_resized_1.jpg"
+    ).read_text() == "existing"
+
+    with Image.open(output_directory / "photo_resized_2.jpg") as image:
+        assert image.size == (400, 300)
