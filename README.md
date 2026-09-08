@@ -186,6 +186,20 @@ A collection of practical Python utilities for file management, automation, and 
 - Automated testing for batch validation and failure handling
 - Automated testing for output naming and collision handling
 - Automated testing for dimension and aspect-ratio handling
+- Image Resizer CLI command
+- Resize images through the command line
+- Specify target width and height through the CLI
+- Preserve aspect ratio when one dimension is omitted
+- Support multiple input images through the CLI
+- Specify a custom output directory
+- Report generated output files
+- Image Resizer dry-run support
+- Preview image resizing without creating output files
+- Display resize settings and intended output files during dry-run
+- Handle output filename collisions during dry-run
+- Explicit confirmation that no files are created during dry-run
+- Automated Image Resizer CLI testing
+- Automated Image Resizer dry-run testing
 
 ### Code Quality
 
@@ -359,6 +373,30 @@ Preview PDF extraction without creating the output file
 python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.pdf" --pages "2-4" -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\extracted.pdf" --dry-run
 ```
 
+Resize a single image
+
+```bash
+python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --width 800 -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\resized"
+```
+
+Resize using height while preserving aspect ratio
+
+```bash
+python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --height 600 -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\resized"
+```
+
+Resize multiple images
+
+```bash
+python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\first.jpg" "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\second.jpg" --width 800 -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\resized"
+```
+
+Preview image resizing without creating output files
+
+```bash
+python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --width 800 -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\resized" --dry-run
+```
+
 ---
 
 ## Current Development Status
@@ -530,6 +568,16 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 - Image Resizer batch failure reporting
 - Image Resizer original image preservation during batch processing
 - Image Resizer multiple-image and batch edge-case testing
+- Image Resizer CLI command
+- Image Resizer CLI validation
+- Image Resizer CLI multiple-image support
+- Image Resizer CLI output directory support
+- Image Resizer CLI collision handling
+- Image Resizer CLI dry-run support
+- Image Resizer CLI dry-run validation
+- Image Resizer CLI dry-run output preview
+- Automated Image Resizer CLI testing
+- Practical Image Resizer CLI verification
 
 ### Future Improvements
 
@@ -548,7 +596,7 @@ python main.py extract "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\document.
 
 Current Version:
 
-**v0.20.3**
+**v0.20.4**
 
 ---
 

@@ -6,6 +6,54 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.20.4] - 2026-09-08
+
+### Added
+
+- Added Image Resizer CLI command
+- Added width and height options through the CLI
+- Added multiple image resizing through the CLI
+- Added custom output directory support
+- Added generated-file reporting
+- Added Image Resizer dry-run support
+- Added dry-run resize preview without creating files
+- Added dry-run output path and dimension preview
+- Added output collision handling during dry-run
+- Added automated Image Resizer CLI testing
+- Added automated Image Resizer dry-run testing
+
+### Improved
+
+- Improved Image Resizer CLI validation
+- Improved Image Resizer aspect-ratio handling through the CLI
+- Improved Image Resizer output handling
+
+### Tested
+
+- Single-image resizing through the CLI
+- Multiple-image resizing through the CLI
+- Width-only resizing through the CLI
+- Height-only resizing through the CLI
+- CLI dimension validation
+- Missing input file handling
+- Output directory handling
+- Output filename collision handling
+- Single-image dry-run behavior
+- Multiple-image dry-run behavior
+- Dry-run collision handling
+- Invalid dimensions during dry-run
+- Required CLI arguments
+- Image Resizer CLI help output
+- Full regression test suite: **167 tests passed**
+- `git diff --check`
+
+### Release
+
+- Updated application version to **v0.20.4**
+- Completed the Image Resizer CLI + Dry-Run milestone
+
+---
+
 ## [0.20.3] - 2026-09-06
 
 ### Added
