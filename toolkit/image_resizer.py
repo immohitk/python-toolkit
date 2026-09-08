@@ -44,6 +44,38 @@ def _calculate_dimensions(original_width, original_height, width, height):
     return calculated_width, height
 
 
+def calculate_resize_dimensions(
+    input_file,
+    width=None,
+    height=None,
+):
+    """
+    Calculate target dimensions for an image without modifying it.
+    """
+    input_file = Path(input_file)
+
+    with Image.open(input_file) as image:
+        return _calculate_dimensions(
+            image.width,
+            image.height,
+            width,
+            height,
+        )
+
+
+def get_output_path(output_directory, input_file):
+    """
+    Generate a unique output path without creating or modifying files.
+    """
+    output_directory = Path(output_directory)
+    input_file = Path(input_file)
+
+    return _get_output_path(
+        output_directory,
+        input_file,
+    )
+
+
 def resize_image(input_file, output_file, width=None, height=None):
     """
     Resize an image while preserving aspect ratio when one dimension is omitted.

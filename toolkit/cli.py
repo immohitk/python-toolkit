@@ -43,7 +43,11 @@ from toolkit.pdf_extractor import (
     validate_page_selection,
 )
 
-from toolkit.image_resizer import resize_images
+from toolkit.image_resizer import (
+    calculate_resize_dimensions,
+    get_output_path,
+    resize_images,
+)
 
 from toolkit.logger import get_logger
 
@@ -255,6 +259,12 @@ def create_parser():
         help="Output directory for resized images",
     )
 
+    image_resizer_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview the resize operation without creating files",
+    )
+
     return parser
 
 def run():
@@ -436,6 +446,59 @@ def run():
                     raise FileNotFoundError(
                         f"Input file does not exist: {input_file}"
                     )
+
+            if args.dry_run:
+                print("Image Resize Dry Run")
+                print()
+
+                print("Input images:")
+
+                for input_file in input_files:
+                    print(f"- {input_file}")
+
+                print()
+
+                print("Resize settings:")
+
+                if args.width is not None:
+                    print(f"Width: {args.width}")
+                else:
+                    print("Width: Preserve aspect ratio")
+
+                if args.height is not None:
+                    print(f"Height: {args.height}")
+                else:
+                    print("Height: Preserve aspect ratio")
+
+                print()
+
+                print(f"Output directory: {output_directory}")
+                print()
+
+                print("Files that would be generated:")
+
+                for input_file in input_files:
+                    target_width, target_height = (
+                        calculate_resize_dimensions(
+                            input_file,
+                            width=args.width,
+                            height=args.height,
+                        )
+                    )
+
+                    output_file = get_output_path(
+                        output_directory,
+                        input_file,
+                    )
+
+                    print(
+                        f"- {output_file} "
+                        f"({target_width}x{target_height})"
+                    )
+
+                print()
+                print("No files were created.")
+                return
 
             generated_files = resize_images(
                 input_files,

@@ -1363,3 +1363,186 @@ def test_image_resizer_command_handles_multiple_output_collisions(
 
     with Image.open(generated_file) as image:
         assert image.size == (600, 400)
+
+
+def test_image_resizer_command_dry_run_does_not_create_files(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "600",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Dry Run" in output
+    assert str(input_file) in output
+    assert str(output_directory) in output
+    assert "sample_resized.jpg" in output
+    assert "(600x400)" in output
+    assert "No files were created." in output
+
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_multiple_images_dry_run(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_image = tmp_path / "first.jpg"
+    second_image = tmp_path / "second.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(first_image, 1200, 800)
+    create_image(second_image, 800, 600)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(first_image),
+            str(second_image),
+            "--width",
+            "600",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Dry Run" in output
+    assert str(first_image) in output
+    assert str(second_image) in output
+    assert "first_resized.jpg" in output
+    assert "second_resized.jpg" in output
+    assert "(600x400)" in output
+    assert "(600x450)" in output
+    assert "No files were created." in output
+
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_dry_run_handles_output_collision(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+    output_directory.mkdir()
+
+    existing_file = output_directory / "sample_resized.jpg"
+    existing_file.write_text("existing file")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "600",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Dry Run" in output
+    assert "sample_resized_1.jpg" in output
+    assert "(600x400)" in output
+    assert "No files were created." in output
+
+    assert existing_file.read_text() == "existing file"
+
+    generated_file = output_directory / "sample_resized_1.jpg"
+
+    assert not generated_file.exists()
+
+
+def test_image_resizer_command_dry_run_requires_dimensions(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--output-dir",
+            str(tmp_path / "resized"),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Width or height must be provided." in output
+
+
+def test_image_resizer_command_dry_run_rejects_invalid_dimensions(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "0",
+            "--output-dir",
+            str(tmp_path / "resized"),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Width must be greater than zero." in output
