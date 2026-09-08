@@ -526,3 +526,7 @@ def run():
     except ValueError as error:
         logger.error("%s", error)
         print(f"Error: {error}")
+
+    except RuntimeError as error:
+        logger.error("%s", error)
+        print(f"Error: {error}")

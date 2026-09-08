@@ -4,6 +4,8 @@ from pypdf import PdfReader, PdfWriter
 
 from PIL import Image
 
+from unittest.mock import patch
+
 
 def create_pdf(file_path, page_count, width, height):
     """Create a PDF with blank pages of the requested size."""
@@ -1546,3 +1548,31 @@ def test_image_resizer_command_dry_run_rejects_invalid_dimensions(
     output = capsys.readouterr().out
 
     assert "Error: Width must be greater than zero." in output
+
+
+def test_image_resizer_command_handles_invalid_image(tmp_path, capsys):
+    input_file = tmp_path / "invalid.jpg"
+    output_directory = tmp_path / "output"
+
+    input_file.write_text("not a real image")
+
+    with patch(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "-o",
+            str(output_directory),
+            "--width",
+            "800",
+        ],
+    ):
+        run()
+
+    captured = capsys.readouterr()
+
+    assert "Error: Failed to resize 1 image(s)" in captured.out
+    assert "cannot identify image file" in captured.out
+    assert "Traceback" not in captured.out
+    assert not list(output_directory.glob("*"))
