@@ -1221,3 +1221,145 @@ def test_image_resizer_command_handles_missing_file(
     assert "Error:" in output
     assert str(missing_file) in output
     assert not output_directory.exists()
+
+
+def test_image_resizer_command_multiple_images_with_different_dimensions(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_file = tmp_path / "first.jpg"
+    second_file = tmp_path / "second.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(first_file, 1200, 800)
+    create_image(second_file, 1600, 900)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(first_file),
+            str(second_file),
+            "--width",
+            "800",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Complete" in output
+    assert "first_resized.jpg" in output
+    assert "second_resized.jpg" in output
+
+    first_output = output_directory / "first_resized.jpg"
+    second_output = output_directory / "second_resized.jpg"
+
+    assert first_output.exists()
+    assert second_output.exists()
+
+    with Image.open(first_output) as image:
+        assert image.size == (800, 533)
+
+    with Image.open(second_output) as image:
+        assert image.size == (800, 450)
+
+    assert first_file.exists()
+    assert second_file.exists()
+
+
+def test_image_resizer_command_handles_output_collision(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+    output_directory.mkdir()
+
+    existing_output = output_directory / "sample_resized.jpg"
+    existing_output.write_text("existing file")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "600",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Complete" in output
+    assert "sample_resized_1.jpg" in output
+
+    assert existing_output.read_text() == "existing file"
+
+    generated_file = output_directory / "sample_resized_1.jpg"
+
+    assert generated_file.exists()
+
+    with Image.open(generated_file) as image:
+        assert image.size == (600, 400)
+
+
+def test_image_resizer_command_handles_multiple_output_collisions(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+    output_directory.mkdir()
+
+    first_existing = output_directory / "sample_resized.jpg"
+    second_existing = output_directory / "sample_resized_1.jpg"
+
+    first_existing.write_text("first existing file")
+    second_existing.write_text("second existing file")
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "600",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Complete" in output
+    assert "sample_resized_2.jpg" in output
+
+    assert first_existing.read_text() == "first existing file"
+    assert second_existing.read_text() == "second existing file"
+
+    generated_file = output_directory / "sample_resized_2.jpg"
+
+    assert generated_file.exists()
+
+    with Image.open(generated_file) as image:
+        assert image.size == (600, 400)
