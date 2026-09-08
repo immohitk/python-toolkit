@@ -37,6 +37,7 @@ This project follows semantic versioning for incremental development.
 - Practical resizing using real images
 - Generated JPEG output validity
 - Full Image Resizer regression verification
+- Full regression test suite: **168 tests passed**
 
 ### Documentation
 
