@@ -2,6 +2,8 @@ from toolkit.cli import run
 
 from pypdf import PdfReader, PdfWriter
 
+from PIL import Image
+
 
 def create_pdf(file_path, page_count, width, height):
     """Create a PDF with blank pages of the requested size."""
@@ -798,3 +800,187 @@ def test_extract_command_help(monkeypatch, capsys):
     assert "--pages PAGES" in output
     assert "-o OUTPUT" in output
     assert "--dry-run" in output
+
+
+def create_image(file_path, width, height):
+    """Create a simple test image."""
+    image = Image.new("RGB", (width, height))
+    image.save(file_path)
+
+
+def test_image_resizer_command(tmp_path, monkeypatch, capsys):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "600",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Complete" in output
+    assert "Generated files:" in output
+    assert "sample_resized.jpg" in output
+
+    output_file = output_directory / "sample_resized.jpg"
+
+    assert output_file.exists()
+    assert input_file.exists()
+
+    with Image.open(output_file) as image:
+        assert image.size == (600, 400)
+
+
+def test_image_resizer_command_multiple_images(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_file = tmp_path / "first.jpg"
+    second_file = tmp_path / "second.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(first_file, 1200, 800)
+    create_image(second_file, 1600, 900)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(first_file),
+            str(second_file),
+            "--width",
+            "800",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Image Resize Complete" in output
+    assert "first_resized.jpg" in output
+    assert "second_resized.jpg" in output
+
+    first_output = output_directory / "first_resized.jpg"
+    second_output = output_directory / "second_resized.jpg"
+
+    assert first_output.exists()
+    assert second_output.exists()
+
+    with Image.open(first_output) as image:
+        assert image.size == (800, 533)
+
+    with Image.open(second_output) as image:
+        assert image.size == (800, 450)
+
+
+def test_image_resizer_command_with_height(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--height",
+            "400",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    capsys.readouterr()
+
+    output_file = output_directory / "sample_resized.jpg"
+
+    assert output_file.exists()
+
+    with Image.open(output_file) as image:
+        assert image.size == (600, 400)
+
+
+def test_image_resizer_command_with_width_and_height(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "800",
+            "--height",
+            "600",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    capsys.readouterr()
+
+    output_file = output_directory / "sample_resized.jpg"
+
+    assert output_file.exists()
+
+    with Image.open(output_file) as image:
+        assert image.size == (800, 600)
+
+
+def test_image_resizer_command_help(monkeypatch, capsys):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            "--help",
+        ],
+    )
+
+    try:
+        run()
+    except SystemExit as error:
+        assert error.code == 0
+
+    output = capsys.readouterr().out
+
+    assert "input_files" in output
+    assert "--width WIDTH" in output
+    assert "--height HEIGHT" in output
+    assert "-o OUTPUT_DIR" in output

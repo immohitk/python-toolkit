@@ -43,6 +43,8 @@ from toolkit.pdf_extractor import (
     validate_page_selection,
 )
 
+from toolkit.image_resizer import resize_images
+
 from toolkit.logger import get_logger
 
 logger = get_logger()
@@ -222,6 +224,37 @@ def create_parser():
         help="Preview extraction without creating the output file",
     )
 
+
+    image_resizer_parser = subparsers.add_parser(
+        "image-resizer",
+        help="Resize one or more images",
+    )
+
+    image_resizer_parser.add_argument(
+        "input_files",
+        nargs="+",
+        help="Image files to resize",
+    )
+
+    image_resizer_parser.add_argument(
+        "--width",
+        type=int,
+        help="Target image width",
+    )
+
+    image_resizer_parser.add_argument(
+        "--height",
+        type=int,
+        help="Target image height",
+    )
+
+    image_resizer_parser.add_argument(
+        "-o",
+        "--output-dir",
+        required=True,
+        help="Output directory for resized images",
+    )
+
     return parser
 
 def run():
@@ -378,6 +411,25 @@ def run():
                 print(f"Input: {input_file}")
                 print(f"Pages: {args.pages}")
                 print(f"Output: {output_file}")
+
+        if args.command == "image-resizer":
+            input_files = [Path(file) for file in args.input_files]
+            output_directory = Path(args.output_dir)
+
+            generated_files = resize_images(
+                input_files,
+                output_directory,
+                width=args.width,
+                height=args.height,
+            )
+
+            print("Image Resize Complete")
+            print()
+
+            print("Generated files:")
+
+            for generated_file in generated_files:
+                print(f"- {generated_file}")
 
     except FileNotFoundError as error:
         logger.error("%s", error)
