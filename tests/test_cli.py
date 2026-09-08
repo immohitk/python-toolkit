@@ -984,3 +984,240 @@ def test_image_resizer_command_help(monkeypatch, capsys):
     assert "--width WIDTH" in output
     assert "--height HEIGHT" in output
     assert "-o OUTPUT_DIR" in output
+
+
+def test_image_resizer_command_requires_width_or_height(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Width or height must be provided." in output
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_rejects_invalid_width(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "0",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Width must be greater than zero." in output
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_rejects_invalid_height(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--height",
+            "0",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Height must be greater than zero." in output
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_rejects_negative_width(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--width",
+            "-100",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Width must be greater than zero." in output
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_rejects_negative_height(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "resized"
+
+    create_image(input_file, 1200, 800)
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(input_file),
+            "--height",
+            "-100",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error: Height must be greater than zero." in output
+    assert not output_directory.exists()
+
+
+def test_image_resizer_command_rejects_non_integer_width(
+    monkeypatch,
+    capsys,
+):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            "sample.jpg",
+            "--width",
+            "abc",
+            "--output-dir",
+            "resized",
+        ],
+    )
+
+    try:
+        run()
+    except SystemExit as error:
+        assert error.code == 2
+
+    output = capsys.readouterr().err
+
+    assert "invalid int value" in output
+
+
+def test_image_resizer_command_rejects_non_integer_height(
+    monkeypatch,
+    capsys,
+):
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            "sample.jpg",
+            "--height",
+            "abc",
+            "--output-dir",
+            "resized",
+        ],
+    )
+
+    try:
+        run()
+    except SystemExit as error:
+        assert error.code == 2
+
+    output = capsys.readouterr().err
+
+    assert "invalid int value" in output
+
+
+def test_image_resizer_command_handles_missing_file(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    missing_file = tmp_path / "missing.jpg"
+    output_directory = tmp_path / "resized"
+
+    monkeypatch.setattr(
+        "sys.argv",
+        [
+            "main.py",
+            "image-resizer",
+            str(missing_file),
+            "--width",
+            "800",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output = capsys.readouterr().out
+
+    assert "Error:" in output
+    assert str(missing_file) in output
+    assert not output_directory.exists()

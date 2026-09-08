@@ -416,6 +416,27 @@ def run():
             input_files = [Path(file) for file in args.input_files]
             output_directory = Path(args.output_dir)
 
+            if args.width is None and args.height is None:
+                raise ValueError(
+                    "Width or height must be provided."
+                )
+
+            if args.width is not None and args.width <= 0:
+                raise ValueError(
+                    "Width must be greater than zero."
+                )
+
+            if args.height is not None and args.height <= 0:
+                raise ValueError(
+                    "Height must be greater than zero."
+                )
+
+            for input_file in input_files:
+                if not input_file.is_file():
+                    raise FileNotFoundError(
+                        f"Input file does not exist: {input_file}"
+                    )
+
             generated_files = resize_images(
                 input_files,
                 output_directory,
