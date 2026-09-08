@@ -6,6 +6,50 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.21.0] - 2026-09-08
+
+### Added
+
+- Added automated Image Resizer invalid-input regression testing
+- Added final Image Resizer practical verification coverage
+- Added verification of generated image output validity
+
+### Improved
+
+- Improved Image Resizer CLI handling for invalid and unsupported image inputs
+- Improved user-friendly reporting of Image Resizer runtime failures
+- Completed final Image Resizer engineering review
+
+### Tested
+
+- Focused Image Resizer unit test suite
+- Image Resizer CLI test suite
+- Invalid and unsupported image input handling
+- Width-only resizing with aspect-ratio preservation
+- Height-only resizing with aspect-ratio preservation
+- Explicit width and height resizing
+- Multiple-image batch resizing
+- Batch processing with different source image dimensions
+- Output filename collision handling
+- Original image preservation
+- Dry-run behavior without creating the output directory
+- Dry-run output path and dimension reporting
+- Practical resizing using real images
+- Generated JPEG output validity
+- Full Image Resizer regression verification
+
+### Documentation
+
+- Finalized Image Resizer documentation
+- Updated project version to **v0.21.0**
+
+### Release
+
+- Completed the Image Resizer Basic Phase
+- Prepared the final v0.21.0 release
+
+---
+
 ## [0.20.4] - 2026-09-08
 
 ### Added

@@ -200,6 +200,12 @@ A collection of practical Python utilities for file management, automation, and 
 - Explicit confirmation that no files are created during dry-run
 - Automated Image Resizer CLI testing
 - Automated Image Resizer dry-run testing
+- Automated Image Resizer invalid-input testing
+- Practical Image Resizer testing with real images
+- Verification of generated image output validity
+- Verification of original image preservation
+- Verification of output collision handling
+- Image Resizer basic phase completion
 
 ### Code Quality
 
@@ -596,7 +602,7 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 
 Current Version:
 
-**v0.20.4**
+**v0.21.0**
 
 ---
 
