@@ -1,5 +1,7 @@
 from pathlib import Path
 
+from PIL import Image
+
 
 SUPPORTED_FORMATS = {
     ".jpg": "JPEG",
@@ -13,7 +15,7 @@ SUPPORTED_FORMATS = {
 
 
 def convert_image(input_file, output_file):
-    """Convert an image from its source format to the target format."""
+    """Convert an image to the format specified by the output file."""
     input_file = Path(input_file)
     output_file = Path(output_file)
 
@@ -22,6 +24,11 @@ def convert_image(input_file, output_file):
 
     if not input_file.is_file():
         raise ValueError(f"Input path is not a file: {input_file}")
+
+    target_format = get_image_format(output_file)
+
+    with Image.open(input_file) as image:
+        image.save(output_file, format=target_format)
 
     return output_file
 
