@@ -59,6 +59,30 @@ def convert_image(input_file, output_file):
     return output_file
 
 
+def convert_images(input_files, output_directory, target_extension):
+    """Convert multiple images independently to the target format."""
+    output_directory = Path(output_directory)
+    input_files = [Path(input_file) for input_file in input_files]
+
+    if not input_files:
+        raise ValueError("At least one input image is required")
+
+    results = []
+
+    for input_file in input_files:
+        output_file = get_unique_output_path(
+            output_directory / f"{input_file.stem}{target_extension}"
+        )
+
+        try:
+            converted_file = convert_image(input_file, output_file)
+            results.append(converted_file)
+        except (FileNotFoundError, ValueError) as exc:
+            results.append((input_file, exc))
+
+    return results
+
+
 def get_image_format(file_path):
     """Return the normalized image format for a supported file extension."""
     file_path = Path(file_path)
@@ -71,3 +95,24 @@ def get_image_format(file_path):
         )
 
     return image_format
+
+
+def get_unique_output_path(output_file):
+    """Return a collision-safe output path."""
+    output_file = Path(output_file)
+
+    if not output_file.exists():
+        return output_file
+
+    counter = 1
+
+    while True:
+        candidate = (
+            output_file.parent
+            / f"{output_file.stem}_{counter}{output_file.suffix}"
+        )
+
+        if not candidate.exists():
+            return candidate
+
+        counter += 1

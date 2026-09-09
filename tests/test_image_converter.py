@@ -3,7 +3,7 @@ from pathlib import Path
 import pytest
 
 from toolkit.image_converter import convert_image
-
+from toolkit.image_converter import convert_images
 from toolkit.image_converter import get_image_format
 
 from PIL import Image
@@ -218,3 +218,365 @@ def test_convert_image_reports_conversion_failure(tmp_path, monkeypatch):
         convert_image(input_file, output_file)
 
     monkeypatch.setattr(Image.Image, "save", original_save)
+
+
+def test_convert_images_processes_multiple_pngs(tmp_path):
+    input_files = []
+
+    for name in ("first.png", "second.png", "third.png"):
+        image_path = tmp_path / name
+        Image.new("RGB", (100, 100), "red").save(image_path)
+        input_files.append(image_path)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        input_files,
+        output_directory,
+        ".jpg",
+    )
+
+    assert len(results) == 3
+    assert all(isinstance(result, Path) for result in results)
+
+    for result in results:
+        assert result.exists()
+
+
+def test_convert_images_processes_multiple_jpgs(tmp_path):
+    input_files = []
+
+    for name in ("first.jpg", "second.jpg"):
+        image_path = tmp_path / name
+        Image.new("RGB", (100, 100), "blue").save(image_path)
+        input_files.append(image_path)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        input_files,
+        output_directory,
+        ".png",
+    )
+
+    assert len(results) == 2
+    assert all(result.exists() for result in results)
+
+
+def test_convert_images_preserves_originals(tmp_path):
+    input_files = []
+
+    for name in ("first.png", "second.png"):
+        image_path = tmp_path / name
+        Image.new("RGB", (100, 100), "green").save(image_path)
+        input_files.append(image_path)
+
+    original_contents = {
+        path: path.read_bytes()
+        for path in input_files
+    }
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    convert_images(input_files, output_directory, ".jpg")
+
+    for path in input_files:
+        assert path.exists()
+        assert path.read_bytes() == original_contents[path]
+
+
+def test_convert_images_reports_failed_input_and_continues(tmp_path):
+    valid_file = tmp_path / "valid.png"
+    Image.new("RGB", (100, 100), "red").save(valid_file)
+
+    invalid_file = tmp_path / "missing.png"
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        [valid_file, invalid_file],
+        output_directory,
+        ".jpg",
+    )
+
+    assert len(results) == 2
+    assert isinstance(results[0], Path)
+    assert results[0].exists()
+
+    assert results[1][0] == invalid_file
+    assert isinstance(results[1][1], FileNotFoundError)
+
+
+def test_convert_images_processes_mixed_formats_to_jpg(tmp_path):
+    input_files = []
+
+    for name, image_format in (
+        ("first.png", "PNG"),
+        ("second.jpg", "JPEG"),
+        ("third.webp", "WEBP"),
+    ):
+        image_path = tmp_path / name
+        Image.new("RGB", (100, 100), "red").save(
+            image_path,
+            format=image_format,
+        )
+        input_files.append(image_path)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        input_files,
+        output_directory,
+        ".jpg",
+    )
+
+    assert len(results) == 3
+    assert all(isinstance(result, Path) for result in results)
+
+    for result in results:
+        assert result.exists()
+        with Image.open(result) as image:
+            assert image.format == "JPEG"
+
+
+def test_convert_images_processes_mixed_formats_to_png(tmp_path):
+    input_files = []
+
+    for name, image_format in (
+        ("first.png", "PNG"),
+        ("second.jpg", "JPEG"),
+        ("third.webp", "WEBP"),
+        ("fourth.bmp", "BMP"),
+    ):
+        image_path = tmp_path / name
+        Image.new("RGB", (100, 100), "blue").save(
+            image_path,
+            format=image_format,
+        )
+        input_files.append(image_path)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        input_files,
+        output_directory,
+        ".png",
+    )
+
+    assert len(results) == 4
+    assert all(isinstance(result, Path) for result in results)
+
+    for result in results:
+        assert result.exists()
+        with Image.open(result) as image:
+            assert image.format == "PNG"
+
+
+def test_convert_images_mixed_formats_preserves_originals(tmp_path):
+    input_files = []
+
+    for name, image_format in (
+        ("first.png", "PNG"),
+        ("second.jpg", "JPEG"),
+        ("third.webp", "WEBP"),
+    ):
+        image_path = tmp_path / name
+        Image.new("RGB", (100, 100), "green").save(
+            image_path,
+            format=image_format,
+        )
+        input_files.append(image_path)
+
+    original_contents = {
+        path: path.read_bytes()
+        for path in input_files
+    }
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    convert_images(input_files, output_directory, ".jpg")
+
+    for path in input_files:
+        assert path.exists()
+        assert path.read_bytes() == original_contents[path]
+
+
+def test_convert_images_avoids_output_collision(tmp_path):
+    input_file = tmp_path / "photo.png"
+    Image.new("RGB", (100, 100), "red").save(input_file)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    existing_output = output_directory / "photo.jpg"
+    existing_output.write_bytes(b"existing")
+
+    results = convert_images(
+        [input_file],
+        output_directory,
+        ".jpg",
+    )
+
+    assert results == [output_directory / "photo_1.jpg"]
+    assert existing_output.read_bytes() == b"existing"
+    assert results[0].exists()
+
+
+def test_convert_images_avoids_multiple_output_collisions(tmp_path):
+    input_file = tmp_path / "photo.png"
+    Image.new("RGB", (100, 100), "blue").save(input_file)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    (output_directory / "photo.jpg").write_bytes(b"original")
+    (output_directory / "photo_1.jpg").write_bytes(b"original")
+    (output_directory / "photo_2.jpg").write_bytes(b"original")
+
+    results = convert_images(
+        [input_file],
+        output_directory,
+        ".jpg",
+    )
+
+    assert results == [output_directory / "photo_3.jpg"]
+    assert results[0].exists()
+
+    assert (output_directory / "photo.jpg").read_bytes() == b"original"
+    assert (output_directory / "photo_1.jpg").read_bytes() == b"original"
+    assert (output_directory / "photo_2.jpg").read_bytes() == b"original"
+
+
+def test_convert_images_reports_multiple_failed_inputs(tmp_path):
+    valid_file = tmp_path / "valid.png"
+    Image.new("RGB", (100, 100), "red").save(valid_file)
+
+    missing_file = tmp_path / "missing.png"
+    corrupt_file = tmp_path / "corrupt.png"
+    corrupt_file.write_bytes(b"corrupt image data")
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        [valid_file, missing_file, corrupt_file],
+        output_directory,
+        ".jpg",
+    )
+
+    assert len(results) == 3
+
+    assert isinstance(results[0], Path)
+    assert results[0].exists()
+
+    assert results[1][0] == missing_file
+    assert isinstance(results[1][1], FileNotFoundError)
+
+    assert results[2][0] == corrupt_file
+    assert isinstance(results[2][1], ValueError)
+
+
+def test_convert_images_identifies_failed_input_among_valid_inputs(tmp_path):
+    first_valid = tmp_path / "first.png"
+    invalid_file = tmp_path / "invalid.png"
+    second_valid = tmp_path / "second.jpg"
+
+    Image.new("RGB", (100, 100), "red").save(first_valid)
+    invalid_file.write_text("not an image")
+    Image.new("RGB", (100, 100), "blue").save(second_valid)
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    results = convert_images(
+        [first_valid, invalid_file, second_valid],
+        output_directory,
+        ".png",
+    )
+
+    assert len(results) == 3
+
+    assert isinstance(results[0], Path)
+    assert results[0].exists()
+
+    assert results[1][0] == invalid_file
+    assert isinstance(results[1][1], ValueError)
+
+    assert isinstance(results[2], Path)
+    assert results[2].exists()
+
+
+def test_convert_images_preserves_existing_output_when_batch_input_fails(
+    tmp_path,
+):
+    valid_file = tmp_path / "photo.png"
+    invalid_file = tmp_path / "broken.png"
+
+    Image.new("RGB", (100, 100), "green").save(valid_file)
+    invalid_file.write_bytes(b"invalid image")
+
+    output_directory = tmp_path / "output"
+    output_directory.mkdir()
+
+    existing_output = output_directory / "photo.jpg"
+    existing_output.write_bytes(b"existing output")
+
+    results = convert_images(
+        [valid_file, invalid_file],
+        output_directory,
+        ".jpg",
+    )
+
+    assert len(results) == 2
+    assert results[0] == output_directory / "photo_1.jpg"
+
+    assert results[1][0] == invalid_file
+    assert isinstance(results[1][1], ValueError)
+
+    assert existing_output.read_bytes() == b"existing output"
+    assert results[0].exists()
+
+
+def test_convert_images_handles_same_filename_from_different_directories(
+    tmp_path,
+):
+    first_directory = tmp_path / "folder_a"
+    second_directory = tmp_path / "folder_b"
+    output_directory = tmp_path / "output"
+
+    first_directory.mkdir()
+    second_directory.mkdir()
+    output_directory.mkdir()
+
+    first_file = first_directory / "photo.png"
+    second_file = second_directory / "photo.png"
+
+    Image.new("RGB", (100, 100), "red").save(first_file, format="PNG")
+    Image.new("RGB", (100, 100), "blue").save(second_file, format="PNG")
+
+    first_original = first_file.read_bytes()
+    second_original = second_file.read_bytes()
+
+    results = convert_images(
+        [first_file, second_file],
+        output_directory,
+        ".jpg",
+    )
+
+    assert len(results) == 2
+    assert results[0] == output_directory / "photo.jpg"
+    assert results[1] == output_directory / "photo_1.jpg"
+    assert results[0] != results[1]
+
+    assert results[0].exists()
+    assert results[1].exists()
+
+    assert first_file.read_bytes() == first_original
+    assert second_file.read_bytes() == second_original

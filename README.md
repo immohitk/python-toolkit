@@ -219,7 +219,17 @@ A collection of practical Python utilities for file management, automation, and 
 - Safely convert transparent images to JPEG
 - Preserve original images during conversion
 - Provide clear conversion error handling
+- Convert multiple images in a single batch operation
+- Support mixed input image formats in a batch
+- Convert mixed-format batches to a selected target format
+- Generate predictable output filenames for batch conversion
+- Prevent accidental output file overwriting
+- Generate collision-safe output filenames with suffixes
+- Continue batch processing when individual inputs fail
+- Report failed batch inputs clearly
+- Preserve all original input images during batch conversion
 - Automated image conversion testing
+- Automated batch conversion testing
 
 ### Code Quality
 
@@ -608,6 +618,15 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 - Image Format Converter error handling
 - Image Format Converter invalid-input testing
 - Image Format Converter basic validation phase completion
+- Image Format Converter batch conversion
+- Image Format Converter mixed-format batch support
+- Image Format Converter predictable batch output naming
+- Image Format Converter collision-safe output handling
+- Image Format Converter batch failure reporting
+- Image Format Converter original file preservation during batch processing
+- Image Format Converter batch edge-case testing
+- Image Format Converter batch conversion regression testing
+- Image Format Converter Multiple Image Conversion milestone completion
 
 ### Future Improvements
 
@@ -626,7 +645,7 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 
 Current Version:
 
-**v0.21.2**
+**v0.21.3**
 
 ---
 

@@ -6,6 +6,45 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.21.3] - 2026-09-09
+
+### Added
+
+- Added batch image conversion for multiple input files
+- Added support for mixed-format image batches
+- Added predictable batch output naming
+- Added collision-safe output suffixes
+- Added batch conversion failure reporting
+
+### Improved
+
+- Improved batch conversion safety
+- Improved handling of mixed valid and invalid inputs
+- Preserved original files during batch conversion
+
+### Tested
+
+- Multiple PNG conversion
+- Multiple JPG conversion
+- Mixed supported image formats
+- Invalid inputs mixed with valid inputs
+- Output collision handling
+- Same filenames from different directories
+- Original file preservation
+- Full Image Format Converter test suite: **45 tests passed**
+- Full regression test suite: **213 tests passed**
+
+### Documentation
+
+- Updated project documentation for Image Format Converter batch conversion
+- Updated application version to **v0.21.3**
+
+### Release
+
+- Completed the Image Format Converter Multiple Image Conversion milestone
+
+---
+
 ## [0.21.2] - 2026-09-09
 
 ### Added
