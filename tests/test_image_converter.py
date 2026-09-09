@@ -1,12 +1,14 @@
+import sys
 from pathlib import Path
 
 import pytest
 
+from PIL import Image
+
+from toolkit.cli import run
 from toolkit.image_converter import convert_image
 from toolkit.image_converter import convert_images
 from toolkit.image_converter import get_image_format
-
-from PIL import Image
 
 
 def test_convert_image_accepts_valid_input(tmp_path):
@@ -177,15 +179,18 @@ def test_convert_image_rejects_same_input_and_output(tmp_path):
         convert_image(input_file, input_file)
 
 
-def test_convert_image_rejects_missing_output_directory(tmp_path):
+def test_convert_image_creates_missing_output_directory(tmp_path):
     input_file = tmp_path / "sample.png"
     output_file = tmp_path / "missing" / "output.jpg"
 
     image = Image.new("RGB", (100, 100))
     image.save(input_file, format="PNG")
 
-    with pytest.raises(FileNotFoundError, match="Output directory not found"):
-        convert_image(input_file, output_file)
+    result = convert_image(input_file, output_file)
+
+    assert result == output_file
+    assert output_file.exists()
+    assert output_file.parent.exists()
 
 
 def test_convert_image_rejects_output_directory(tmp_path):
@@ -580,3 +585,365 @@ def test_convert_images_handles_same_filename_from_different_directories(
 
     assert first_file.read_bytes() == first_original
     assert second_file.read_bytes() == second_original
+
+
+def test_image_converter_cli_converts_single_image(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "output"
+
+    Image.new("RGB", (100, 100), "red").save(
+        input_file,
+        format="JPEG",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(input_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    output_file = output_directory / "sample.png"
+
+    assert output_file.exists()
+    assert input_file.exists()
+
+    captured = capsys.readouterr()
+
+    assert "Image Conversion Complete" in captured.out
+    assert str(output_file) in captured.out
+
+
+def test_image_converter_cli_processes_batch(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_file = tmp_path / "first.jpg"
+    second_file = tmp_path / "second.jpg"
+    output_directory = tmp_path / "output"
+
+    Image.new("RGB", (100, 100), "red").save(
+        first_file,
+        format="JPEG",
+    )
+    Image.new("RGB", (100, 100), "blue").save(
+        second_file,
+        format="JPEG",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(first_file),
+            str(second_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    assert (output_directory / "first.png").exists()
+    assert (output_directory / "second.png").exists()
+
+    captured = capsys.readouterr()
+
+    assert str(output_directory / "first.png") in captured.out
+    assert str(output_directory / "second.png") in captured.out
+
+
+def test_image_converter_cli_reports_missing_input(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "missing.jpg"
+    output_directory = tmp_path / "output"
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(input_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    assert "Input file not found" in captured.out
+    assert not output_directory.exists()
+
+
+def test_image_converter_cli_rejects_unsupported_target(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "output"
+
+    Image.new("RGB", (100, 100), "red").save(
+        input_file,
+        format="JPEG",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(input_file),
+            "--format",
+            "gif",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    assert "Unsupported image format" in captured.out
+    assert not output_directory.exists()
+
+
+def test_image_converter_cli_rejects_invalid_image(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "corrupt.jpg"
+    output_directory = tmp_path / "output"
+
+    input_file.write_bytes(b"corrupt image data")
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(input_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    assert "not a valid image" in captured.out
+
+
+def test_image_converter_cli_dry_run_creates_no_files(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "sample.jpg"
+    output_directory = tmp_path / "dry-run"
+
+    Image.new("RGB", (100, 100), "red").save(
+        input_file,
+        format="JPEG",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(input_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    expected_output = output_directory / "sample.png"
+
+    assert "Image Conversion Dry Run" in captured.out
+    assert str(expected_output) in captured.out
+    assert "No files were created." in captured.out
+
+    assert not output_directory.exists()
+
+
+def test_image_converter_cli_dry_run_batch_creates_no_files(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_file = tmp_path / "first.jpg"
+    second_file = tmp_path / "second.jpg"
+    output_directory = tmp_path / "dry-run-batch"
+
+    Image.new("RGB", (100, 100), "red").save(
+        first_file,
+        format="JPEG",
+    )
+    Image.new("RGB", (100, 100), "blue").save(
+        second_file,
+        format="JPEG",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(first_file),
+            str(second_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    assert str(output_directory / "first.png") in captured.out
+    assert str(output_directory / "second.png") in captured.out
+    assert "No files were created." in captured.out
+
+    assert not output_directory.exists()
+
+
+def test_image_converter_cli_dry_run_handles_existing_output_collision(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    input_file = tmp_path / "photo.jpg"
+    output_directory = tmp_path / "output"
+
+    Image.new("RGB", (100, 100), "red").save(
+        input_file,
+        format="JPEG",
+    )
+
+    output_directory.mkdir()
+
+    existing_output = output_directory / "photo.png"
+    existing_output.write_bytes(b"existing output")
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(input_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    expected_output = output_directory / "photo_1.png"
+
+    assert str(expected_output) in captured.out
+    assert "No files were created." in captured.out
+
+    assert existing_output.read_bytes() == b"existing output"
+    assert not expected_output.exists()
+
+
+def test_image_converter_cli_dry_run_handles_batch_output_collision(
+    tmp_path,
+    monkeypatch,
+    capsys,
+):
+    first_directory = tmp_path / "folder_a"
+    second_directory = tmp_path / "folder_b"
+    output_directory = tmp_path / "output"
+
+    first_directory.mkdir()
+    second_directory.mkdir()
+    output_directory.mkdir()
+
+    first_file = first_directory / "photo.jpg"
+    second_file = second_directory / "photo.jpg"
+
+    Image.new("RGB", (100, 100), "red").save(
+        first_file,
+        format="JPEG",
+    )
+    Image.new("RGB", (100, 100), "blue").save(
+        second_file,
+        format="JPEG",
+    )
+
+    monkeypatch.setattr(
+        sys,
+        "argv",
+        [
+            "python-toolkit",
+            "image-converter",
+            str(first_file),
+            str(second_file),
+            "--format",
+            "png",
+            "--output-dir",
+            str(output_directory),
+            "--dry-run",
+        ],
+    )
+
+    run()
+
+    captured = capsys.readouterr()
+
+    assert str(output_directory / "photo.png") in captured.out
+    assert str(output_directory / "photo_1.png") in captured.out
+    assert "No files were created." in captured.out

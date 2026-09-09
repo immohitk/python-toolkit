@@ -6,6 +6,38 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## v0.21.4 — CLI Integration and Dry-Run
+
+### Added
+
+- Image Format Converter CLI command
+- Support for single-image and batch conversion through the CLI
+- Target format selection through the CLI
+- Custom output directory support
+- Image conversion dry-run mode
+- Dry-run preview of input images, target format, and generated output paths
+- Collision-safe output planning during dry-run
+- Clear CLI reporting for successful and failed conversions
+- Automated Image Format Converter CLI tests
+- Automated Image Format Converter dry-run tests
+- Automated CLI validation tests for missing and invalid image inputs
+
+### Improved
+
+- Image Format Converter now integrates with the central Python Toolkit CLI
+- Batch conversion errors are reported without stopping successful conversions
+- Dry-run mode avoids creating or modifying files
+- Dry-run batch planning handles output filename collisions consistently with normal conversion
+- Missing output directories are created automatically during normal conversion
+
+### Testing
+
+- Image Format Converter test suite: 54 passed
+- Full project regression suite: 222 passed
+- `git diff --check` completed successfully
+
+---
+
 ## [0.21.3] - 2026-09-09
 
 ### Added

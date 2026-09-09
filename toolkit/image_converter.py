@@ -34,10 +34,7 @@ def convert_image(input_file, output_file):
     if output_file.exists() and not output_file.is_file():
         raise ValueError(f"Output path is not a file: {output_file}")
 
-    if not output_file.parent.exists():
-        raise FileNotFoundError(
-            f"Output directory not found: {output_file.parent}"
-        )
+    output_file.parent.mkdir(parents=True, exist_ok=True)
 
     try:
         image = Image.open(input_file)

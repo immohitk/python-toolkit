@@ -230,6 +230,25 @@ A collection of practical Python utilities for file management, automation, and 
 - Preserve all original input images during batch conversion
 - Automated image conversion testing
 - Automated batch conversion testing
+- Image Format Converter CLI command
+- Convert images through the command line
+- Support multiple input images through the CLI
+- Specify the target image format through the CLI
+- Specify a custom output directory
+- Report successfully generated output files
+- Report failed batch inputs clearly
+- Image Format Converter dry-run support
+- Preview image conversion without creating files
+- Display input images and target format during dry-run
+- Display intended output files during dry-run
+- Handle existing output filename collisions during dry-run
+- Handle batch output filename collisions during dry-run
+- Explicit confirmation that no files are created during dry-run
+- Automated Image Format Converter CLI testing
+- Automated Image Format Converter dry-run testing
+- Automated Image Format Converter validation testing
+- Practical Image Format Converter CLI verification
+- Image Format Converter CLI and dry-run phase completion
 
 ### Code Quality
 
@@ -426,6 +445,36 @@ Preview image resizing without creating output files
 
 ```bash
 python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --width 800 -o "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\resized" --dry-run
+```
+
+Preview image resizing without creating output files
+
+```bash
+python main.py image-resizer "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --width 800 -o "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\resized" --dry-run
+```
+
+Convert a single image
+
+```bash
+python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --format png
+```
+
+Convert multiple images
+
+```bash
+python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample2.jpg" --format png -o "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\converted"
+```
+
+Preview image conversion without creating files
+
+```bash
+python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --format png -o "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\converted" --dry-run
+```
+
+Preview multiple image conversions without creating files
+
+```bash
+python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample2.jpg" --format png -o "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\converted" --dry-run
 ```
 
 ---
@@ -627,6 +676,17 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 - Image Format Converter batch edge-case testing
 - Image Format Converter batch conversion regression testing
 - Image Format Converter Multiple Image Conversion milestone completion
+- Image Format Converter CLI command
+- Image Format Converter CLI validation
+- Image Format Converter batch CLI support
+- Image Format Converter CLI success and failure reporting
+- Image Format Converter dry-run support
+- Image Format Converter dry-run output preview
+- Image Format Converter dry-run collision handling
+- Image Format Converter dry-run no-file modification verification
+- Automated Image Format Converter CLI testing
+- Automated Image Format Converter dry-run testing
+- Image Format Converter v0.21.4 completion
 
 ### Future Improvements
 
@@ -645,7 +705,7 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 
 Current Version:
 
-**v0.21.3**
+**v0.21.4**
 
 ---
 

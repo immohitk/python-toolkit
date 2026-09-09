@@ -51,10 +51,16 @@ from toolkit.image_resizer import (
 
 from toolkit.logger import get_logger
 
+from toolkit.image_converter import (
+    convert_images,
+    get_image_format,
+    get_unique_output_path,
+)
+
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.21.3"
+APP_VERSION = "0.21.4"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."
@@ -263,6 +269,36 @@ def create_parser():
         "--dry-run",
         action="store_true",
         help="Preview the resize operation without creating files",
+    )
+
+    image_converter_parser = subparsers.add_parser(
+        "image-converter",
+        help="Convert one or more images to another format",
+    )
+
+    image_converter_parser.add_argument(
+        "input_files",
+        nargs="+",
+        help="Image files to convert",
+    )
+
+    image_converter_parser.add_argument(
+        "--format",
+        required=True,
+        help="Target image format, such as jpg, png, webp, bmp, or tiff",
+    )
+
+    image_converter_parser.add_argument(
+        "-o",
+        "--output-dir",
+        required=True,
+        help="Output directory for converted images",
+    )
+
+    image_converter_parser.add_argument(
+        "--dry-run",
+        action="store_true",
+        help="Preview image conversion without creating files",
     )
 
     return parser
@@ -514,6 +550,96 @@ def run():
 
             for generated_file in generated_files:
                 print(f"- {generated_file}")
+
+        if args.command == "image-converter":
+            input_files = [Path(file) for file in args.input_files]
+            output_directory = Path(args.output_dir)
+
+            target_extension = f".{args.format.lower().lstrip('.')}"
+
+            # Validate target format before processing.
+            get_image_format(Path(f"output{target_extension}"))
+
+            # Validate input paths before processing.
+            for input_file in input_files:
+                if not input_file.exists():
+                    raise FileNotFoundError(
+                        f"Input file not found: {input_file}"
+                    )
+
+                if not input_file.is_file():
+                    raise ValueError(
+                        f"Input path is not a file: {input_file}"
+                    )
+
+            if args.dry_run:
+                print("Image Conversion Dry Run")
+                print()
+
+                print("Input images:")
+                for input_file in input_files:
+                    print(f"- {input_file}")
+
+                print()
+                print(f"Target format: {target_extension.lstrip('.').upper()}")
+                print(f"Output directory: {output_directory}")
+                print()
+
+                print("Files that would be generated:")
+
+                planned_output_paths = set()
+
+                for input_file in input_files:
+                    output_file = get_unique_output_path(
+                        output_directory / f"{input_file.stem}{target_extension}"
+                    )
+
+                    counter = 1
+
+                    while output_file in planned_output_paths:
+                        output_file = (
+                            output_directory
+                            / f"{input_file.stem}_{counter}{target_extension}"
+                        )
+                        counter += 1
+
+                    planned_output_paths.add(output_file)
+
+                    print(f"- {output_file}")
+
+                print()
+                print("No files were created.")
+                return
+
+            generated_files = convert_images(
+                input_files,
+                output_directory,
+                target_extension,
+            )
+
+            successful_files = []
+            failed_files = []
+
+            for result in generated_files:
+                if isinstance(result, tuple):
+                    failed_files.append(result)
+                else:
+                    successful_files.append(result)
+
+            if failed_files:
+                for input_file, error in failed_files:
+                    print(f"Error: {input_file} - {error}")
+
+            if successful_files:
+                print("Image Conversion Complete")
+                print()
+                print("Generated files:")
+
+                for generated_file in successful_files:
+                    print(f"- {generated_file}")
+
+            if failed_files and not successful_files:
+                return
 
     except FileNotFoundError as error:
         logger.error("%s", error)
