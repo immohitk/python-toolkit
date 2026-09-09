@@ -28,6 +28,9 @@ def convert_image(input_file, output_file):
     target_format = get_image_format(output_file)
 
     with Image.open(input_file) as image:
+        if target_format == "JPEG" and image.mode in ("RGBA", "LA"):
+            image = image.convert("RGB")
+            
         image.save(output_file, format=target_format)
 
     return output_file

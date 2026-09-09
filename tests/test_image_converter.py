@@ -103,3 +103,22 @@ def test_convert_image_converts_between_formats(
 
     with Image.open(output_file) as converted_image:
         assert converted_image.format == expected_format
+
+
+def test_convert_rgba_png_to_jpeg(tmp_path):
+    input_file = tmp_path / "transparent.png"
+    output_file = tmp_path / "converted.jpg"
+
+    image = Image.new("RGBA", (100, 100), (255, 0, 0, 128))
+    image.save(input_file, format="PNG")
+
+    original_data = input_file.read_bytes()
+
+    convert_image(input_file, output_file)
+
+    assert output_file.exists()
+    assert input_file.read_bytes() == original_data
+
+    with Image.open(output_file) as converted_image:
+        assert converted_image.format == "JPEG"
+        assert converted_image.mode == "RGB"
