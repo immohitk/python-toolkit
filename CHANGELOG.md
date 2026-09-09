@@ -6,6 +6,45 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.21.1] - 2026-09-09
+
+### Added
+
+- Added the Image Format Converter module foundation
+- Added support for JPG/JPEG, PNG, WebP, BMP, and TIFF formats
+- Added generic image format conversion
+- Added image format normalization for supported extensions
+- Added RGB/RGBA image mode handling
+- Added transparent PNG to JPEG conversion support
+
+### Tested
+
+- Image Format Converter core functionality
+- Supported image format detection
+- Case-insensitive format extension handling
+- PNG to JPEG conversion
+- JPEG to PNG conversion
+- PNG to WebP conversion
+- JPEG to WebP conversion
+- WebP to PNG conversion
+- BMP to PNG conversion
+- TIFF to JPEG conversion
+- RGBA PNG to JPEG conversion
+- Original image preservation
+- Full Image Format Converter test suite: **24 tests passed**
+- Full regression test suite: **192 tests passed**
+
+### Documentation
+
+- Updated project documentation for the Image Format Converter
+- Updated application version to **v0.21.1**
+
+### Release
+
+- Completed the Image Format Converter Core milestone
+
+---
+
 ## [0.21.0] - 2026-09-08
 
 ### Added

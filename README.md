@@ -207,6 +207,15 @@ A collection of practical Python utilities for file management, automation, and 
 - Verification of output collision handling
 - Image Resizer basic phase completion
 
+### Image Format Converter
+
+- Convert images between JPG/JPEG, PNG, WebP, BMP, and TIFF
+- Normalize supported image format extensions
+- Handle RGB and RGBA image modes
+- Safely convert transparent images to JPEG
+- Preserve original images during conversion
+- Automated image conversion testing
+
 ### Code Quality
 
 - Type hints
@@ -236,7 +245,8 @@ python-toolkit/
 │   ├── pdf_merger.py
 │   ├── pdf_splitter.py
 │   ├── pdf_extractor.py
-│   └── image_resizer.py
+│   ├── image_resizer.py
+│   └── image_converter.py
 │
 ├── tests/
 ├── docs/
@@ -584,6 +594,12 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 - Image Resizer CLI dry-run output preview
 - Automated Image Resizer CLI testing
 - Practical Image Resizer CLI verification
+- Image Format Converter module foundation
+- Image Format Converter common format support
+- Image Format Converter generic conversion
+- Image Format Converter RGB/RGBA mode handling
+- Image Format Converter automated testing
+- Image Format Converter basic phase completion
 
 ### Future Improvements
 
@@ -602,7 +618,7 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 
 Current Version:
 
-**v0.21.0**
+**v0.21.1**
 
 ---
 
