@@ -6,6 +6,49 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## [0.21.2] - 2026-09-09
+
+### Added
+
+- Added input validation for image existence and file type
+- Added validation for supported source and target formats
+- Added output path validation
+- Added clear handling for invalid conversion requests
+- Added clear error handling for corrupt and invalid image inputs
+- Added conversion failure handling
+
+### Improved
+
+- Improved image conversion safety for invalid input and output paths
+- Improved error messages for image conversion failures
+- Prevented conversion when input and output paths are identical
+
+### Tested
+
+- Missing input file handling
+- Non-image file rejection
+- Corrupt image rejection
+- Unsupported source format rejection
+- Unsupported target format rejection
+- Invalid output directory handling
+- Output directory path rejection
+- Input/output path collision handling
+- Uppercase and lowercase image extensions
+- Valid image conversion after validation
+- Full Image Format Converter test suite: **32 tests passed**
+- Full regression test suite: **200 tests passed**
+
+### Documentation
+
+- Updated project documentation for Image Format Converter validation and safe conversion
+- Updated application version to **v0.21.2**
+
+### Release
+
+- Completed the Image Format Converter Validation & Safe Conversion milestone
+
+---
+
 ## [0.21.1] - 2026-09-09
 
 ### Added

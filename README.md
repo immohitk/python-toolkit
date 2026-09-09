@@ -211,9 +211,14 @@ A collection of practical Python utilities for file management, automation, and 
 
 - Convert images between JPG/JPEG, PNG, WebP, BMP, and TIFF
 - Normalize supported image format extensions
+- Validate supported source and target formats
+- Reject non-image and corrupt input files
+- Validate output paths before conversion
+- Reject invalid input/output path combinations
 - Handle RGB and RGBA image modes
 - Safely convert transparent images to JPEG
 - Preserve original images during conversion
+- Provide clear conversion error handling
 - Automated image conversion testing
 
 ### Code Quality
@@ -597,9 +602,12 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 - Image Format Converter module foundation
 - Image Format Converter common format support
 - Image Format Converter generic conversion
-- Image Format Converter RGB/RGBA mode handling
-- Image Format Converter automated testing
-- Image Format Converter basic phase completion
+- Image Format Converter input validation
+- Image Format Converter source and target format validation
+- Image Format Converter output path validation
+- Image Format Converter error handling
+- Image Format Converter invalid-input testing
+- Image Format Converter basic validation phase completion
 
 ### Future Improvements
 
@@ -618,7 +626,7 @@ python main.py image-resizer "C:\Users\[YOUR SYSTEM NAME]\Desktop\TestFolder\sam
 
 Current Version:
 
-**v0.21.1**
+**v0.21.2**
 
 ---
 
