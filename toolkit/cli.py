@@ -60,7 +60,7 @@ from toolkit.image_converter import (
 logger = get_logger()
 
 APP_NAME = "python-toolkit"
-APP_VERSION = "0.21.4"
+APP_VERSION = "0.22.0"
 APP_DESCRIPTION = (
     "A collection of practical Python utilities for file management, "
     "automation, and data processing."

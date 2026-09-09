@@ -249,6 +249,15 @@ A collection of practical Python utilities for file management, automation, and 
 - Automated Image Format Converter validation testing
 - Practical Image Format Converter CLI verification
 - Image Format Converter CLI and dry-run phase completion
+- Final Image Format Converter unit-test review
+- Final Image Format Converter regression testing
+- Practical real-image conversion verification
+- Generated-file format and readability verification
+- Original source image preservation verification
+- Output filename collision verification
+- Dry-run filesystem safety verification
+- Final Image Format Converter engineering review
+- Image Format Converter basic phase completion
 
 ### Code Quality
 
@@ -456,7 +465,7 @@ python main.py image-resizer "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sa
 Convert a single image
 
 ```bash
-python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --format png
+python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\sample.jpg" --format png -o "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\converted"
 ```
 
 Convert multiple images
@@ -687,6 +696,12 @@ python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\
 - Automated Image Format Converter CLI testing
 - Automated Image Format Converter dry-run testing
 - Image Format Converter v0.21.4 completion
+- Image Format Converter final testing and polish
+- Image Format Converter practical real-image verification
+- Image Format Converter generated-file verification
+- Image Format Converter dry-run filesystem verification
+- Image Format Converter engineering review
+- Image Format Converter basic phase completion
 
 ### Future Improvements
 
@@ -705,7 +720,7 @@ python main.py image-converter "C:\Users\\[YOUR SYSTEM NAME]\Desktop\TestFolder\
 
 Current Version:
 
-**v0.21.4**
+**v0.22.0**
 
 ---
 

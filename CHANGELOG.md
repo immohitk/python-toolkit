@@ -6,6 +6,45 @@ This project follows semantic versioning for incremental development.
 
 ---
 
+## v0.22.0 — Final Image Format Converter Basic Phase
+
+### Completed
+
+- Completed the Image Format Converter Basic Phase
+- Completed final unit-test review
+- Completed final CLI integration and regression testing
+- Completed practical real-image conversion verification
+- Verified representative conversions across JPG, PNG, WebP, BMP, and TIFF workflows
+- Verified generated output files are readable and saved in the requested format
+- Verified original source images remain preserved during conversion
+- Verified output filename collision handling
+- Verified dry-run behavior without creating output files
+- Verified dry-run collision planning without modifying existing files
+- Completed final engineering review of the Image Format Converter
+- Confirmed the Image Format Converter remains independent from the Image Resizer
+
+### Testing
+
+- Image Format Converter test suite: **54 passed**
+- CLI and Image Format Converter combined tests: **100 passed**
+- Full project regression suite: **222 passed**
+- Practical real-image conversion verification completed
+- Generated-file verification completed
+- Dry-run filesystem verification completed
+- `git diff --check` completed successfully
+
+### Documentation
+
+- Finalized Image Format Converter documentation
+- Updated project version to **v0.22.0**
+
+### Release
+
+- Completed the Image Format Converter Basic Phase
+- Prepared the final **v0.22.0** release
+
+---
+
 ## v0.21.4 — CLI Integration and Dry-Run
 
 ### Added
